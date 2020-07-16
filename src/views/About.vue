@@ -7,9 +7,9 @@
 
     <draggable   class="list-group flex space-between"
         tag="div"   
-        v-bind="dragOptions" v-model="columns" group="columns" @start="drag=true" @end="drag=false , log()">
-       <div v-for="column in columns" :key='column.id'>
-       <columnCmp :column='column'> </columnCmp>
+        v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , log()">
+       <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
+       <columnCmp :taskGroup='taskGroup'> </columnCmp>
        </div>
     </draggable>
   </div>
@@ -21,12 +21,14 @@
 <script>
 import draggable from 'vuedraggable'
 import columnCmp from '../components/column.vue'
-import {boardService} from '../services/board-service.js'
+// import {boardService} from '../services/board-service.js'
+var boardService = require('../services/board-service copy.js');
+
 
 export default {
   data(){
     return {
-      columns : boardService.getColumns()
+      board : boardService.query()
     }
   },
  created() {
