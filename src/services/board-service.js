@@ -84,7 +84,7 @@ let gBoard = {
             color: "green",
             addedBy: '{}',
             tasks: [{
-                    id: "a104",
+                    id: "a107",
                     by: "minimaluser",
                     type: "DELETE_TASK",
                     task: 'minimalTask',

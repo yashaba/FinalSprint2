@@ -1,32 +1,13 @@
 <template>
   <div>
-  <div class="about">
-    
-    <h1>This is a test</h1>
-  </div>
-<div class="tasks-wrapper"> 
-  
 
-<div class="tasks1">
-<draggable   class="list-group"
-        tag="div"   
-        v-bind="dragOptions" v-model="this.card" group="people" @start="drag=true, log()" @end="drag=false , log()">
-   <div :style="{ 'background-color': task.color }" class="todo" v-for="task in myArray3" :key="task.id">
-     {{task.taskTitle}} <br>
-     {{task.taskContent}}
-     
-     
-     </div>
-</draggable>
-</div>
-</div>
 </div>
 </template>
 
 <script>
   import draggable from 'vuedraggable'
 export default {
-  props: ['cardProp'],
+  props: ['task'],
    computed: {
     dragOptions() {
       return {

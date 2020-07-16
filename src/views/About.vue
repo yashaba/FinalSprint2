@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     board(){
-    this.$store.getters.currBoard
+    // this.$store.getters.currBoard
     }
   },
 
