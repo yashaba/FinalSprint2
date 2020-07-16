@@ -1,172 +1,42 @@
-let gBoard = {
-    id: "s1001",
-    createdBy: {},
-    activites: ["{ activity }", "{ activity }"],
-    members: [],
-    taskGroups: [{
-            id: "s1001",
-            title: "Important",
-            style: {
-                bgColor: "green"
-            },
-            addedBy: '',
-            tasks: [{
-                    id: "a101",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "green",
-                    title: 'Clean'
-                },
-                {
-                    id: "a102",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "yellow",
-                    title: 'Add'
-                },
-                {
-                    id: "a103",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "purple",
-                    title: 'Remove '
-                }
-            ],
-        },
-        {
-            title: "Frontend",
-            id: "s1002",
-            color: "green",
-            addedBy: '{}',
-            tasks: [{
-                    id: "a104",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "red",
-                    title: 'Abrea'
-                },
-                {
-                    id: "a105",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "green",
-                },
-                {
-                    id: "a106",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "orange",
-                    title: 'dsad'
-                }
-            ]
-        },
-        {
-            title: "Frontend",
-            id: "s1052",
-            color: "green",
-            addedBy: '{}',
-            tasks: [{
-                    id: "a107",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "red",
-                    title: 'hhdfh'
-                },
-                {
-                    id: "a10555",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "green",
-                    title: 'gfdgdfgd'
-                },
-                {
-                    id: "a143406",
-                    by: "minimaluser",
-                    type: "DELETE_TASK",
-                    task: 'minimalTask',
-                    taskGroup: 'minimalGroup',
-                    at: 112223,
-                    bgColor: "orange",
-                    title: 'gfdgfd'
-                }
-            ]
-        }
-    ]
-}
-
-
-
 export const boardService = {
     query,
-    getById,
     remove,
-    save
+    save,
+    getById,
+    // getEmptyBoard
 }
+
+import axios from 'axios'
 
 function query() {
-    console.log('query triggered');
-    return Promise.resolve(gBoard);
+    return axios.get(`http://localhost:3000/board`)
+        .then(res => res.data)
 }
 
+// function getEmptyBoard() {
+//     return {
+//     }
+// }
+
 function getById(id) {
-    const taskGroups = gBoard.taskGroups
-    const group = taskGroups.find(group => group._id === id)
-    if (group) return Promise.resolve(group);
-    return Promise.reject('Board could not find');
+    return axios.get(`http://localhost:3000/board/${id}`)
+        .then(res => res.data)
 }
 
 function remove(id) {
-    const taskGroups = gBoard.taskGroups
-    const idx = taskGroups.findIndex(group => group._id === id)
-    if (idx >= 0) taskGroups.splice(idx, 1)
-    return Promise.resolve();
+    return axios.delete(`http://localhost:3000/board/${id}`)
 }
 
 function save(board) {
-    if (board._id) {
-        const idx = gBoard.taskGroups.findIndex(currTaskGroup => currTaskGroup._id === board._id)
-        gBoard.taskGroups.splice(idx, 1, board)
-    } else {
-        board._id = _makeId()
-        gBoard.taskGroups.unshift(board)
-    }
-    return Promise.resolve();
+    return (board._id) ? _update(board) : _add(board)
 }
 
+function _update(board) {
+    return axios.put(`http://localhost:3000/board/${board._id}`, board)
+        .then(res => res.data)
+}
 
-// function _saveBoardsToFile() {
-//     fs.writeFileSync('data/gBoard.json', JSON.stringify(gBoards, null, 2));
-// }
-
-function _makeId(length = 5) {
-    var txt = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < length; i++) {
-        txt += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return txt;
+function _add(board) {
+    return axios.post(`http://localhost:3000/board/`, board)
+        .then(res => res.data)
 }
