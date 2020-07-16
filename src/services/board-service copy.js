@@ -96,13 +96,13 @@ function remove(id) {
     return Promise.resolve();
 }
 
-function save(board) {
-    if (board._id) {
-        const idx = gBoards.findIndex(currBoard => currBoard._id === board._id)
-        gBoards.splice(idx, 1, board)
+function save(taskGroup) {
+    if (taskGroup._id) {
+        const idx = gBoard.taskGroups.findIndex(currTaskGroup => currTaskGroup._id === taskGroup._id)
+        gBoard.taskGroups.splice(idx, 1, taskGroup)
     } else {
-        board._id = _makeId()
-        gBoards.unshift(board)
+        taskGroup._id = _makeId()
+        gBoard.taskGroups.unshift(taskGroup)
     }
     return Promise.resolve();
 }
