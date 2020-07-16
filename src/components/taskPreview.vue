@@ -1,14 +1,18 @@
 <template>
   <div>
-<div :style="{ 'background-color': task.bgColor }" class="todo"> {{task.title}} </div>
+<div :style="{ 'background-color': task.bgColor }" class="todo" @click="onDetails"> {{task.title}} </div>
 </div>
 </template>
 
 <script>
-
+import { eventBus, SHOW_DETAILS } from '../services/event-bus.service.js'
 export default {
   props: ['task'],
-
+methods: {
+  onDetails() {
+      eventBus.$emit(SHOW_DETAILS, this.task);
+  }
+},
 components: {
 
 }

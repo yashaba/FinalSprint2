@@ -2,7 +2,7 @@
 <section class="column">
 
     <h1>This is an about page</h1>
- <div  >
+ <div>
 
 
     <draggable   class="list-group flex space-between"
@@ -11,6 +11,7 @@
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
        <task-group :taskGroup='taskGroup'> </task-group>
        </div>
+       <task-details/>
     </draggable>
   </div>
   </section>
@@ -21,6 +22,7 @@
 <script>
 import draggable from 'vuedraggable'
 import taskGroup from '../components/taskGroup.vue'
+import taskDetails from '../components/taskDetails.vue'
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
 
@@ -58,7 +60,8 @@ export default {
   },
 components: {
   taskGroup,
-  draggable
+  draggable,
+  taskDetails
 }
 }
 </script>
