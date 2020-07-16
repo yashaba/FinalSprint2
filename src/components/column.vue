@@ -6,8 +6,8 @@
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
 <draggable   class="list-group"
         tag="div"   
-        v-bind="dragOptions" v-model="this.taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
- <div v-for="task in this.taskGroup.tasks" :key="task.id">
+        v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
+ <div v-for="task in taskGroup.tasks" :key="task.id">
   <div :style="{ 'background-color': task.bgColor }" class="todo"> {{task.title}} </div>
    </div>
           
