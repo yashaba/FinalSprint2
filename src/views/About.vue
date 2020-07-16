@@ -9,7 +9,7 @@
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , log()">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
-       <columnCmp :taskGroup='taskGroup'> </columnCmp>
+       <task-group :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
   </div>
@@ -20,7 +20,7 @@
 
 <script>
 import draggable from 'vuedraggable'
-import columnCmp from '../components/column.vue'
+import taskGroup from '../components/taskGroup.vue'
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
 
@@ -57,7 +57,7 @@ export default {
     }
   },
 components: {
-  columnCmp,
+  taskGroup,
   draggable
 }
 }
