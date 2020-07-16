@@ -1,46 +1,121 @@
-var gColumns = [
-
-    {
-        id: "s1001",
-        columnTitle: 'test1',
-        cards: [{ color: 'blue', id: 1, taskTitle: 'Test', taskContent: 'This is a test' },
-            { color: 'yellow', id: 2, taskTitle: 'Test2', taskContent: 'This is a test2' },
-            { color: 'red', id: 3, taskTitle: 'Test3', taskContent: 'This is a test3' },
-            { color: 'purple', id: 4, taskTitle: 'Test4', taskContent: 'This is a test4' },
-            { color: 'green', id: 5, taskTitle: 'Test5', taskContent: 'This is a test5' }
-        ]
-    },
-
-    {
-        id: "s1002",
-        columnTitle: 'test2',
-        cards: [{ color: 'blue', id: 6, taskTitle: 'Test', taskContent: 'This is a test' },
-            { color: 'yellow', id: 7, taskTitle: 'Test7', taskContent: 'This is a test2' },
-            { color: 'red', id: 8, taskTitle: 'Test8', taskContent: 'This is a test3' },
-            { color: 'purple', id: 9, taskTitle: 'Test9', taskContent: 'This is a test4' },
-            { color: 'green', id: 10, taskTitle: 'Test10', taskContent: 'This is a test5' }
-        ]
-    },
-
-    {
-        id: "s1003",
-        columnTitle: 'test3',
-        cards: [{ color: 'blue', id: 11, taskTitle: 'Test11', taskContent: 'This is a test11' },
-            { color: 'yellow', id: 12, taskTitle: 'Test12', taskContent: 'This is a test12' },
-            { color: 'red', id: 13, taskTitle: 'Test13', taskContent: 'This is a test13' },
-            { color: 'purple', id: 14, taskTitle: 'Test14', taskContent: 'This is a test14' },
-            { color: 'green', id: 15, taskTitle: 'Test15', taskContent: 'This is a test15' }
-        ]
-    }
-]
-
-
-
-
-function getColumns() {
-    return gColumns
+let gBoard = {
+    id: "s1001",
+    createdBy: {},
+    activites: ["{ activity }", "{ activity }"],
+    members: [],
+    taskGroups: [{
+            id: "s1001",
+            title: "Important",
+            style: {
+                bgColor: "green"
+            },
+            addedBy: '',
+            tasks: [{
+                    id: "a101",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                },
+                {
+                    id: "a102",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                },
+                {
+                    id: "a103",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                }
+            ],
+        },
+        {
+            title: "Frontend",
+            id: "s1002",
+            color: "green",
+            addedBy: '{}',
+            tasks: [{
+                    id: "a104",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                },
+                {
+                    id: "a105",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                },
+                {
+                    id: "a106",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                }
+            ]
+        }
+    ]
 }
 
-export const boardService = {
-    getColumns
+module.exports = {
+    query,
+    getById,
+    remove,
+    save
+}
+
+function query() {
+    return gBoard;
+}
+
+function getById(id) {
+    const taskGroups = gBoard.taskGroups
+    const group = taskGroups.find(group => group._id === id)
+    if (group) return Promise.resolve(group);
+    return Promise.reject('Board could not find');
+}
+
+function remove(id) {
+    const taskGroups = gBoard.taskGroups
+    const idx = taskGroups.findIndex(group => group._id === id)
+    if (idx >= 0) taskGroups.splice(idx, 1)
+    return Promise.resolve();
+}
+
+function save(board) {
+    if (board._id) {
+        const idx = gBoard.taskGroups.findIndex(currTaskGroup => currTaskGroup._id === board._id)
+        gBoard.taskGroups.splice(idx, 1, board)
+    } else {
+        board._id = _makeId()
+        gBoard.taskGroups.unshift(board)
+    }
+    return Promise.resolve();
+}
+
+
+// function _saveBoardsToFile() {
+//     fs.writeFileSync('data/gBoard.json', JSON.stringify(gBoards, null, 2));
+// }
+
+function _makeId(length = 5) {
+    var txt = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return txt;
 }
