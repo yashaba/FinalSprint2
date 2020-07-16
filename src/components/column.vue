@@ -8,7 +8,7 @@
         tag="div"   
         v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
  <div v-for="task in taskGroup.tasks" :key="task.id">
-  <div :style="{ 'background-color': task.bgColor }" class="todo"> {{task.title}} </div>
+   <task-preview :task='task'> </task-preview>
    </div>
           
     
@@ -28,6 +28,7 @@
 
 <script>
   import draggable from 'vuedraggable'
+  import taskPreview from './taskPreview.vue'
   // import card from './card.vue'
 export default {
   props: ['taskGroup'],
@@ -98,6 +99,7 @@ export default {
 
 components: {
   draggable,
+  taskPreview
   // card
 }
 }

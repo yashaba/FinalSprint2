@@ -1,38 +1,16 @@
 <template>
   <div>
-
+<div :style="{ 'background-color': task.bgColor }" class="todo"> {{task.title}} </div>
 </div>
 </template>
 
 <script>
-  import draggable from 'vuedraggable'
+
 export default {
   props: ['task'],
-   computed: {
-    dragOptions() {
-      return {
-        animation: 200,
-        group: "description",
-        disabled: false,
-        ghostClass: "ghost"
-      }
-    }
-  },
-
-  methods: {
-   log() {
-     console.log('triggerrr');
-   }
-  },
-  data() {
-    return {
-      card: this.cardProp
-    }
-  },
-
 
 components: {
-  draggable
+
 }
 }
 </script>
