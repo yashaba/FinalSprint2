@@ -1,0 +1,13 @@
+// SETUP
+@import './setup/vars';
+@import './setup/mixins';
+// BASICS
+@import './basic/base';
+@import './basic/layout';
+@import './basic/helpers';
+// CMPS 
+// VIEWS
+@import './views/about';
+.about {
+    background-color: 'red';
+}
