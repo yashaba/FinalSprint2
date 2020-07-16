@@ -1,18 +1,17 @@
 <template>
-<section>
-  <div class="about">
+<section class="column">
+
     <h1>This is an about page</h1>
-  </div>
- <div>
+ <div  >
 
 
-    <draggable   class="list-group"
+    <draggable   class="list-group flex space-between"
         tag="div"   
-        v-bind="dragOptions" v-model="this.columns" group="people" @start="drag=true" @end="drag=false">
-  <div v-for="column in columns" :key='column.id'>
-  <columnCmp :key='column.id' :column='column'> </columnCmp>
-     </div>
-  </draggable>
+        v-bind="dragOptions" v-model="columns" group="columns" @start="drag=true" @end="drag=false , log()">
+       <div v-for="column in columns" :key='column.id'>
+       <columnCmp :column='column'> </columnCmp>
+       </div>
+    </draggable>
   </div>
   </section>
 </template>
@@ -31,7 +30,13 @@ export default {
     }
   },
  created() {
-   console.log(this.columns);
+   console.log( 'COLUMNSS',this.columns);
+
+ },
+ methods: {
+   log() {
+     console.log('CHANGED' , this.columns )
+   }
 
  },
     computed: {

@@ -1,5 +1,6 @@
 var gColumns = [
-    [{
+
+    {
         id: "s1001",
         columnTitle: 'test1',
         cards: [{ color: 'blue', id: 1, taskTitle: 'Test', taskContent: 'This is a test' },
@@ -8,9 +9,9 @@ var gColumns = [
             { color: 'purple', id: 4, taskTitle: 'Test4', taskContent: 'This is a test4' },
             { color: 'green', id: 5, taskTitle: 'Test5', taskContent: 'This is a test5' }
         ]
-    }],
+    },
 
-    [{
+    {
         id: "s1002",
         columnTitle: 'test2',
         cards: [{ color: 'blue', id: 6, taskTitle: 'Test', taskContent: 'This is a test' },
@@ -19,9 +20,9 @@ var gColumns = [
             { color: 'purple', id: 9, taskTitle: 'Test9', taskContent: 'This is a test4' },
             { color: 'green', id: 10, taskTitle: 'Test10', taskContent: 'This is a test5' }
         ]
-    }],
+    },
 
-    [{
+    {
         id: "s1003",
         columnTitle: 'test3',
         cards: [{ color: 'blue', id: 11, taskTitle: 'Test11', taskContent: 'This is a test11' },
@@ -30,7 +31,7 @@ var gColumns = [
             { color: 'purple', id: 14, taskTitle: 'Test14', taskContent: 'This is a test14' },
             { color: 'green', id: 15, taskTitle: 'Test15', taskContent: 'This is a test15' }
         ]
-    }]
+    }
 ]
 
 

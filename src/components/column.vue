@@ -1,36 +1,37 @@
 <template>
   <div>
-  <!-- <div class="about">
-    
-    <h1> {{task.taskContent}}</h1>
-  </div>
+
 <div class="tasks-wrapper"> 
   <div class="tasks1">
+    <h1> {{this.columns.columnTitle}}</h1>
 <draggable   class="list-group"
         tag="div"   
-        v-bind="dragOptions" v-model="this.tasks" group="people" @start="drag=true, log()" @end="drag=false , log()">
-   <div :style="{ 'background-color': task.color }" class="todo" v-for="task in column.cards" :key="task.id">
-          {{task.taskTitle}} <br>
+        v-bind="dragOptions" v-model="columns.cards" group="people" @start="drag=true" @end="drag=false">
+ <div v-for="card in columns.cards" :key="card.id">
+  <div :style="{ 'background-color': card.color }" class="todo"> {{card.taskTitle}} </div>
+   </div>
+          
     
-     </div>
+     
 </draggable>
 </div>
 
-</div> -->
+</div>
 </div>
 </template>
 
 <script>
   import draggable from 'vuedraggable'
+  // import card from './card.vue'
 export default {
   props: ['column'],
   data() { 
     return{
-      tasks : this.column
+      columns : this.column
     }
   },
   created() {
-    console.log('tasks', this.tasks);
+    console.log('tasks', this.columns);
   },
    computed: {
     dragOptions() {
@@ -89,7 +90,8 @@ export default {
 
 
 components: {
-  draggable
+  draggable,
+  // card
 }
 }
 </script>
