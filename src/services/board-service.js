@@ -17,6 +17,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: "green",
+                    title: 'Clean'
                 },
                 {
                     id: "a102",
@@ -25,6 +27,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: "yellow",
+                    title: 'Add'
                 },
                 {
                     id: "a103",
@@ -33,6 +37,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: "purple",
+                    title: 'Remove '
                 }
             ],
         },
@@ -48,6 +54,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: "red",
+                    title: 'Abrea'
                 },
                 {
                     id: "a105",
@@ -56,6 +64,7 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: "green",
                 },
                 {
                     id: "a106",
@@ -64,13 +73,54 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: "orange",
+                    title: 'dsad'
+                }
+            ]
+        },
+        {
+            title: "Frontend",
+            id: "s1052",
+            color: "green",
+            addedBy: '{}',
+            tasks: [{
+                    id: "a104",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                    bgColor: "red",
+                    title: 'hhdfh'
+                },
+                {
+                    id: "a10555",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                    bgColor: "green",
+                    title: 'gfdgdfgd'
+                },
+                {
+                    id: "a143406",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                    bgColor: "orange",
+                    title: 'gfdgfd'
                 }
             ]
         }
     ]
 }
 
-module.exports = {
+
+
+export const boardService = {
     query,
     getById,
     remove,
@@ -78,7 +128,8 @@ module.exports = {
 }
 
 function query() {
-    return gBoard;
+    console.log('query triggered');
+    return Promise.resolve(gBoard);
 }
 
 function getById(id) {

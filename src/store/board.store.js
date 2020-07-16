@@ -4,20 +4,24 @@ import { boardService } from '../services/board-service.js';
 export const boardStore = {
     state: {
         taskGroups: [],
+        currBoard: '',
         // filterBy: { name: '' },
-        filterBy: {searchStr: ''}
+        filterBy: { searchStr: '' }
     },
     getters: {
-        taskGroups(state) {
-            return state.taskGroups;
+        currBoard(state) {
+            return state.currBoard;
         },
     },
     mutations: {
+        setBoard(state, { currBoard }) {
+            state.currBoard = currBoard;
+        },
         setTaskGroups(state, { taskGroups }) {
-            state.taskGroups  = taskGroups ;
+            state.taskGroups = taskGroups;
         },
         removeTaskGroup(state, { id }) {
-            const idx = state.taskGroups .findIndex(taskGroup => taskGroup._id === id)
+            const idx = state.taskGroups.findIndex(taskGroup => taskGroup._id === id)
             state.taskGroups.splice(idx, 1);
         },
         addTaskGroup(state, { taskGroup }) {
@@ -28,15 +32,15 @@ export const boardStore = {
             state.taskGroups.splice(idx, 1, taskGroup)
         },
         setFilterBy(state, { filterBy }) {
-            state.filterBy = {...filterBy};
+            state.filterBy = {...filterBy };
         }
     },
     actions: {
-        loadtaskGroups({ commit, state }) {
-            return boardService.query(state.filterBy)
-                .then(taskGroups => {
-                    commit({ type: 'setTaskGroups ', taskGroups })
-                    return taskGroups
+        loadBoard({ commit, state }) {
+            return boardService.query()
+                .then(currBoard => {
+                    commit({ type: 'setBoard', currBoard })
+                    return currBoard
                 })
         },
         removetaskGroup({ commit }, { id }) {
@@ -50,7 +54,7 @@ export const boardStore = {
             return boardService.save(taskGroup)
                 .then((savedTaskGroup) => {
                     console.log('SAVED', savedTaskGroup);
-                    commit({ type, taskGroup: savedTaskGroup})
+                    commit({ type, taskGroup: savedTaskGroup })
                 })
         }
     },

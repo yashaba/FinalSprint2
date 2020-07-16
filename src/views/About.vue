@@ -28,12 +28,17 @@ var boardService = require('../services/board-service.js');
 export default {
   data(){
     return {
-      board : boardService.query()
+      board :  this.$store.getters.currBoard
     }
   },
- created() {
-   console.log( 'COLUMNSS',this.columns);
+  computed: {
+    board(){
+    this.$store.getters.currBoard
+    }
+  },
 
+  created() {
+      this.$store.dispatch({ type: 'loadBoard' })
  },
  methods: {
    log() {
