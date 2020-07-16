@@ -14,6 +14,12 @@
     
      
 </draggable>
+<div v-if="isAdding">
+<input  type="text" placeholder="enter task name"> <br>
+<button @click="addTask">add</button>
+<button @click="isAdding = !isAdding">X</button>
+</div>
+<button v-if="!isAdding" @click="isAdding = !isAdding">Add Card</button>
 </div>
 
 </div>
@@ -27,7 +33,8 @@ export default {
   props: ['column'],
   data() { 
     return{
-      columns : this.column
+      columns : this.column,
+      isAdding : false
     }
   },
   created() {
