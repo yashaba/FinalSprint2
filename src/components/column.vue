@@ -8,7 +8,7 @@
         tag="div"   
         v-bind="dragOptions" v-model="this.taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
  <div v-for="task in this.taskGroup.tasks" :key="task.id">
-  <div :style="{ 'background-color': task.style.bgColor }" class="todo"> {{task.title}} </div>
+  <div :style="{ 'background-color': task.bgColor }" class="todo"> {{task.title}} </div>
    </div>
           
     
@@ -38,7 +38,7 @@ export default {
     }
   },
   created() {
-    console.log('tasks', this.taskGroup);
+    console.log('tasks group', this.taskGroup);
   },
    computed: {
     dragOptions() {

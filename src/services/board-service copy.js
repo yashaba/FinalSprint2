@@ -17,6 +17,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: 'green',
+                    title: 'Add Crudle'
                 },
                 {
                     id: "a102",
@@ -25,6 +27,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: 'red',
+                    title: 'Add Background img'
                 },
                 {
                     id: "a103",
@@ -33,6 +37,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: 'purple',
+                    title: 'Animation'
                 }
             ],
         },
@@ -48,6 +54,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: 'yellow',
+                    title: 'Interpolation'
                 },
                 {
                     id: "a105",
@@ -56,6 +64,8 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: 'red',
+                    title: 'Design'
                 },
                 {
                     id: "a106",
@@ -64,6 +74,45 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
+                    bgColor: 'pink',
+                    title: 'Redesign'
+                }
+            ]
+        },
+        {
+            title: "Black",
+            id: "s1003",
+            color: "green",
+            addedBy: '{}',
+            tasks: [{
+                    id: "a104",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                    bgColor: 'yellow',
+                    title: 'Interpolation'
+                },
+                {
+                    id: "a105",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                    bgColor: 'red',
+                    title: 'Design'
+                },
+                {
+                    id: "a106",
+                    by: "minimaluser",
+                    type: "DELETE_TASK",
+                    task: 'minimalTask',
+                    taskGroup: 'minimalGroup',
+                    at: 112223,
+                    bgColor: 'pink',
+                    title: 'Redesign'
                 }
             ]
         }
