@@ -22,7 +22,7 @@
 import draggable from 'vuedraggable'
 import columnCmp from '../components/column.vue'
 // import {boardService} from '../services/board-service.js'
-var boardService = require('../services/board-service copy.js');
+var boardService = require('../services/board-service.js');
 
 
 export default {
