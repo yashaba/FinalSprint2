@@ -1,19 +1,16 @@
 let gBoard = {
     id: "s1001",
-    createdBy: {
-    },
-    activites: [{ activity }, { activity }],
+    createdBy: {},
+    activites: ["{ activity }", "{ activity }"],
     members: [],
-    taskGroups: [
-        {
+    taskGroups: [{
             id: "s1001",
             title: "Important",
             style: {
-                bgColor: green
+                bgColor: "green"
             },
-            addedBy,
-            tasks: [
-                {
+            addedBy: '',
+            tasks: [{
                     id: "a101",
                     by: "minimaluser",
                     type: "DELETE_TASK",
@@ -36,15 +33,15 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
-                }],
+                }
+            ],
         },
         {
             title: "Frontend",
             id: "s1002",
             color: "green",
-            addedBy: {},
-            tasks: [
-                {
+            addedBy: '{}',
+            tasks: [{
                     id: "a104",
                     by: "minimaluser",
                     type: "DELETE_TASK",
@@ -67,8 +64,10 @@ let gBoard = {
                     task: 'minimalTask',
                     taskGroup: 'minimalGroup',
                     at: 112223,
-                }]
-        }]
+                }
+            ]
+        }
+    ]
 }
 
 module.exports = {
@@ -79,7 +78,7 @@ module.exports = {
 }
 
 function query() {
-    return Promise.resolve(gBoard);
+    return gBoard;
 }
 
 function getById(id) {

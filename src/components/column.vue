@@ -3,12 +3,12 @@
 
 <div class="tasks-wrapper"> 
   <div class="tasks1">
-    <h1> {{this.columns.columnTitle}}</h1>
+    <!-- <h1> {{this.columns.columnTitle}}</h1> -->
 <draggable   class="list-group"
         tag="div"   
-        v-bind="dragOptions" v-model="columns.cards" group="people" @start="drag=true" @end="drag=false">
- <div v-for="card in columns.cards" :key="card.id">
-  <div :style="{ 'background-color': card.color }" class="todo"> {{card.taskTitle}} </div>
+        v-bind="dragOptions" v-model="this.taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
+ <div v-for="task in this.taskGroup.tasks" :key="task.id">
+  <div :style="{ 'background-color': task.style.bgColor }" class="todo"> {{task.title}} </div>
    </div>
           
     
@@ -30,15 +30,15 @@
   import draggable from 'vuedraggable'
   // import card from './card.vue'
 export default {
-  props: ['column'],
+  props: ['taskGroup'],
   data() { 
     return{
-      columns : this.column,
+      // taskGroup : this.taskGroup,
       isAdding : false
     }
   },
   created() {
-    console.log('tasks', this.columns);
+    console.log('tasks', this.taskGroup);
   },
    computed: {
     dragOptions() {
