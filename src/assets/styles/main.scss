@@ -12,6 +12,9 @@
 @import './cmps/task-edit.scss';
 // VIEWS
 @import './views/about';
+
+@import url("../../../node_modules/@fortawesome/fontawesome-free/css/all.css");
+
 .about {
     background-color: 'red';
 }
