@@ -7,7 +7,8 @@
     left: 50%;
     margin-left: -325px;
     background-color: #f6f6f6;
-    color: #002d3d;
+    color: rgb(23, 43, 77);;
+    
     border-radius: 4px;
     // display: flex;
     // flex-direction: column;
@@ -30,13 +31,17 @@
 
     .details-info {
         width: 65%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     .details-edit {
         display: flex;
         flex-wrap: wrap;
         margin: 20px 0 25px 21px;
-        .details-members {
-        //    flex-wrap: wrap;
+
+        .details-members *{
+           flex-wrap: wrap;
         }
     }
 
@@ -44,6 +49,24 @@
         margin-right: 10px;
     }
 
+    .details-desc {
+        display: flex;
+        flex-direction: column;
+        
+        i {
+            margin-right: 10px;
+            margin-bottom: 15px;
+        }
+        textarea {
+            outline: 0px;
+            border: 0px;
+            background-color: #f6f6f6;
+        }
+        
+    }
+    .details-desc *{
+        // flex-direction: row;
+    }
 
 
     .details-actions {
