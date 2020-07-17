@@ -43,8 +43,8 @@ export default {
       // taskGroup : this.taskGroup,
       isAdding: false,
       taskToSave: {
-        title: "",
-        _id: null
+        title: '',
+        bgColor: "green"
       }
     };
   },
@@ -83,8 +83,7 @@ export default {
     },
     saveNewTask() {
       // if (!this.taskToSave) return;
-      this.$store
-        .dispatch({ type: "saveTaskGroup", taskGroup: this.taskToSave })
+      this.$store.dispatch({ type: 'saveTask', task: this.taskToSave, taskGroup: this.taskGroup })
         .then(() => {
           this.close;
         });

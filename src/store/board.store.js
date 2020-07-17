@@ -40,6 +40,19 @@ export const boardStore = {
             boardService.save(state.currBoard)
 
         },
+        addTask(state, {task, taskGroup}) {
+            const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === taskGroup._id);
+            // let currTaskGroup = state.currBoard.taskGroups[idx];
+            state.currBoard.taskGroups[idx].tasks.unshift(task);
+            boardService.save(state.currBoard);
+        },
+        updateTask(state, {task}) {
+            const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
+            let currTaskGroup = state.currBoard.taskGroups[idx];
+            const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
+            state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
+            boardService.save(state.currBoard);
+        },
         addTaskGroup(state, { taskGroup }) {
             state.taskGroups.push(taskGroup)
         },
@@ -70,6 +83,10 @@ export const boardStore = {
 
             commit({ type: 'removeTask', task })
 
+        },
+        saveTask({commit}, {task, taskGroup}) {
+            const type = (task._id) ? 'updateTask' : 'addTask'
+            commit({type, task, taskGroup})
         },
         updateBoard({ commit }, { board }) {
             console.log('board', board);

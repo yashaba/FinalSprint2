@@ -16,6 +16,7 @@ methods: {
       eventBus.$emit(SHOW_DETAILS, this.task);
   },
   editTask() {
+    console.log(this.task._id);
     eventBus.$emit(SHOW_EDIT_TASK, this.task);
   }
 },

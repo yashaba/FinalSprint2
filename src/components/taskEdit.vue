@@ -2,7 +2,7 @@
   <section v-if="taskTitle" class="task-edit">
     <div>
       <button @click="close({}, true)">x</button>
-      <input type="text" :placeholder="taskTitle"/>
+      <input type="text" v-model="taskTitle.title"/>
       <button @click="saveTask">Save</button>
     </div>
   </section>
@@ -27,16 +27,17 @@ export default {
         }
       },
       saveTask() {
-        console.log('Done');
         // if (!this.taskToSave) return;
-        // this.$store.dispatch({ type: 'saveTask', task: this.taskToSave })
+        console.log(this.taskTitle._id);
+        this.$store.dispatch({ type: 'saveTask', task: this.taskTitle })
         this.taskTitle = null
         }
     },
 
     created() {
       eventBus.$on(SHOW_EDIT_TASK, task=>{
-        this.taskTitle = task.title;
+        console.log(task._id); 
+        this.taskTitle = task;
       })
       window.addEventListener('keydown', this.close);
   },
