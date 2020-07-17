@@ -1,6 +1,6 @@
 
 <template>
-  <section v-if="task" class="column">
+  <section v-if="task" class="task-details">
     <h1>{{task}}</h1>
     <button @click="closeDetails">close</button>
     <div></div>

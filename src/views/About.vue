@@ -2,16 +2,15 @@
 <section class="column">
 
     <h1>This is an about page</h1>
+       <task-details/>
+       
  <div>
-
-
     <draggable   class="list-group flex space-between"
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , log()">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
        <task-group :taskGroup='taskGroup'> </task-group>
        </div>
-       <task-details/>
     </draggable>
   </div>
   </section>
