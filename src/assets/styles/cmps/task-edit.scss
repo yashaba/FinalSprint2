@@ -1,7 +1,51 @@
-.task-edit div {
-    position: absolute;
-    width: 200px;
-    box-shadow: -1px 3px 15px 0px rgba(0, 0, 0, 0.75);
-    background-color: rgb(255, 255, 255);
-    left: 50%;
+// .task-edit div {
+//     position: absolute;
+//     width: 200px;
+//     box-shadow: -1px 3px 15px 0px rgba(0, 0, 0, 0.75);
+//     background-color: rgb(255, 255, 255);
+//     left: 50%;
+// }
+
+.task-edit {
+
+    input {
+        width: 220px;
+        height: 120px;
+        display: block;
+        border-radius: 4px;
+        outline: none;
+    }
+
+    .btn-save-task {
+        background-color: #5aac44;
+        color: #fbfdfb;
+        font-size: 0.9rem;
+        padding: 10px;
+        border-radius: 3px;
+        float: left;
+        margin-left: 10px;
+        // margin-bottom: 10px;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+  
+        &:hover {
+          background-color: #61bd4f;
+        }
+      }
+  
+      .btn-close {
+        float: left;
+        margin-left: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+  
+        &:hover {
+          color: #172b4d;
+        //   background-color: #ebecf0;
+        }
+      }
 }

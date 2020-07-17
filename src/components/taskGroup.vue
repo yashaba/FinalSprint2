@@ -20,17 +20,20 @@
           </div>
         </draggable>
 
-        <button class="btn-add-task" @click="addTask">+ Add another card</button>
-        <div v-if="isAdding">
-          <form @submit.prevent="saveNewTask">
-            <input
-              type="text"
-              v-model="taskToSave.title"
-              placeholder="Enter a title for this card..."
-            />
-            <button type="submit">Add</button>
-          </form>
-          <button @click="close">X</button>
+        <button v-if="!isAdding" class="btn-add-task" @click="addTask">
+          <i class="fas fa-plus fa-xs"></i> 
+          Add another card
+        </button>
+        <div class="add-new-task" v-if="isAdding">
+            <form @submit.prevent="saveNewTask">
+              <input
+                type="text"
+                v-model="taskToSave.title"
+                placeholder="Enter a title for this card..."
+              />
+              <button class="btn-save-task" type="submit">Add Card</button>
+            </form>
+            <button class="btn-close" @click="close"><i class="fas fa-times fa-lg"></i></button>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@
 
     .btn-edit {
       margin-right: 10px;
+      @include define-btn;
     }
 
     .btn-add-task {
@@ -20,6 +21,51 @@
       font-size: 1rem;
       float: left;
       margin-left: 10px;
+      @include define-btn;
+    }
+
+    .add-new-task input {
+      border: 0;
+      border-bottom: 1px solid #b2b9c5;
+      height: 63px;
+      border-radius: 3px;
+      width: 248px;
+      display: block;
+      margin: 10px;
+      outline: none;
+    }
+
+    .btn-save-task {
+      background-color: #5aac44;
+      color: #fbfdfb;
+      font-size: 0.9rem;
+      padding: 10px;
+      border-radius: 3px;
+      float: left;
+      margin-left: 10px;
+      margin-bottom: 10px;
+      border: 0;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-color: #61bd4f;
+      }
+    }
+
+    .btn-close {
+      float: left;
+      margin-left: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+      border: 0;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        color: #172b4d;
+        background-color: #ebecf0;
+      }
     }
 }
 

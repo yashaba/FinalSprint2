@@ -1,10 +1,10 @@
 <template>
   <section v-if="taskTitle" class="task-edit">
-    <div>
-      <button @click="close({}, true)">x</button>
+    <!-- <div class="edit-modal"> -->
       <input type="text" v-model="taskTitle.title"/>
-      <button @click="saveTask">Save</button>
-    </div>
+      <button class="btn-save-task" @click="saveTask">Save</button>
+      <button class="btn-close" @click="close({}, true)">x</button>
+    <!-- </div> -->
   </section>
 </template>
 

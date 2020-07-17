@@ -15,13 +15,24 @@
   }
 
   &:hover .edit:before{
-    content: "Edit";
+    font-family: "Font Awesome 5 Free";
+    content: "\f303";
+    // display: inline-block;
+    // padding-right: 3px;
+    // vertical-align: middle;
+    font-weight: 600;
+    font-size: 15px;
+    color: #7e899d;
   }
 
   .edit{
     width: 30px;
     text-align: center;
     background-color: #ffffff;
+  }
+
+  .edit:hover {
+    background-color: #ebecf0;
   }
 }
 
