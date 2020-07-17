@@ -29,7 +29,7 @@ export default {
       saveTask() {
         // if (!this.taskToSave) return;
         console.log(this.taskTitle._id);
-        this.$store.dispatch({ type: 'saveTask', task: this.taskTitle })
+        this.$store.dispatch({ type: 'updateTask', task: this.taskTitle })
         this.taskTitle = null
         },
       // makeId(length = 6) {
