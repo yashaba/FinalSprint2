@@ -14,6 +14,7 @@
        </div>
     </draggable>
   </div>
+  <div> <input type="text" v-model="newGroupTitle"> <button @click="createTaskGroup(newGroupTitle)">add</button> </div>
   </section>
 </template>
 
@@ -24,14 +25,17 @@ import draggable from 'vuedraggable'
 import taskGroup from '../components/taskGroup.vue'
 import taskDetails from '../components/taskDetails.vue'
 import taskEdit from '../components/taskEdit.vue';
+import taskGroupService from '../services/task-group-service.js'
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
+
 
 
 export default {
   data(){
     return {
-      board :  null
+      board :  null,
+      newGroupTitle: ''
     }
   },
   computed: {
@@ -61,6 +65,9 @@ export default {
      } )
      console.log(board);
      this.$store.dispatch({ type: 'updateBoard', board })
+   },
+   createTaskGroup(title) {
+     taskGroupService.makeNewTaskGroup(title)
    }
 
  },
