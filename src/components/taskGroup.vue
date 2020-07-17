@@ -5,7 +5,7 @@
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
         <draggable   class="list-group"
         tag="div"   
-        v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
+        v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
           <div v-for="task in taskGroup.tasks" :key="task.id">
             <task-preview :task='task'> </task-preview>
           </div>
@@ -63,6 +63,7 @@ export default {
      console.log('emitted');
      this.$emit ('updateBoardEv')
    },
+
    addTask() {
       this.isAdding = true;
    },

@@ -56,6 +56,9 @@ export default {
      this.$store.dispatch({ type: 'removeTask', task })
    },
    updateBoard(board) {
+     this.board.taskGroups.forEach( taskGroupItem => {
+       taskGroupItem.tasks.forEach(task => task.taskGroup = taskGroupItem._id )
+     } )
      console.log(board);
      this.$store.dispatch({ type: 'updateBoard', board })
    }
