@@ -5,10 +5,10 @@
         <p class="group-title">{{taskGroup.title}}</p> 
         <button class="btn-edit" @click="openTaskGroupModal">...</button>
         <div v-if="taskModalShown" class="title-modal column ">
-           <div @click="isAdding = true , taskModalShown = false"> Add new task </div>
-           <div @click="duplicateTaskGroup"> Duplicate List</div>
-           <div @click="removeTaskGroup"> Remove list</div>
-        </div>
+           <div @click="isAdding = true , taskModalShown = false"> <i class="fas fa-plus"></i> Add new task </div>
+           <div @click="duplicateTaskGroup"><i class="fas fa-copy"></i> Duplicate List</div>
+           <div  @click="removeTaskGroup"> <i class="far fa-trash-alt"></i> Remove list</div>
+            </div>
       </div>
       <div class="tasks1">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
@@ -86,11 +86,12 @@ export default {
      this.$emit ('updateBoardEv')
    },
    removeTaskGroup(){
-    
+    this.taskModalShown = false
      this.$emit ('removeTaskGroupEv' , this.taskGroup)
      console.log('button trigger', this.taskGroup);
    },
    duplicateTaskGroup() {
+     this.taskModalShown = false
      this.$emit ('duplicateTaskGroupEv' , this.taskGroup)
    },
 
@@ -128,9 +129,17 @@ components: {
   right: 1%;
   top: 95%;
   div {
-    margin-top: 7px;
+    // margin-top: 7px;
+    height: 30px;
     cursor: pointer;
   }
+      div:hover {
+        background-color: rgb(187, 185, 183)
+      }
     
+}
+.fa-trash-alt {
+  margin-left: 2px;
+  float: left;
 }
 </style>
