@@ -60,9 +60,6 @@ export const boardStore = {
                     commit({ type: 'removeTaskGroup', id })
                 })
         },
-<<<<<<< HEAD
-        saveTaskGroup({ commit }, { taskGroup }) {
-=======
         removeTask({ commit }, { task }) {
             // console.log('task inside action', task.task);
 
@@ -70,7 +67,6 @@ export const boardStore = {
 
         },
         savetaskGroup({ commit }, { taskGroup }) {
->>>>>>> 36a6a1d86fe077fd8b941374eb3038fa98120ea9
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
             return boardService.save(taskGroup)
                 .then((savedTaskGroup) => {
