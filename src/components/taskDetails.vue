@@ -2,6 +2,7 @@
 <template>
   <section v-if="task" class="task-details">
     <h1>{{task}}</h1>
+    <button @click="onRemove">remove</button>
     <button @click="closeDetails">close</button>
     <div></div>
   </section>
@@ -11,7 +12,7 @@
 import taskGroup from "../components/taskGroup.vue";
 // import {boardService} from '../services/board-service.js'
 var boardService = require("../services/board-service.js");
-import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
+import { eventBus, SHOW_DETAILS  } from "../services/event-bus.service.js";
 
 export default {
   data() {
@@ -19,6 +20,7 @@ export default {
       task: null
     };
   },
+
   computed: {
     board() {
       // this.$store.getters.currBoard
@@ -41,7 +43,12 @@ export default {
   methods: {
     closeDetails() {
         this.task = null
-    }
+    },
+
+          onRemove() {
+        console.log('remove', this.task);
+     this.$emit('removeTaskEv', this.task);
+  }
     },
   computed: {},
   components: {

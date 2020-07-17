@@ -2,7 +2,7 @@
 <section class="column" v-if="board">
 
     
-       <task-details/>
+       <task-details @removeTaskEv='removeTask'> </task-details>
        
  <div>
     <draggable   class="list-group flex space-between"
@@ -45,6 +45,13 @@ export default {
  methods: {
    log() {
      console.log('CHANGED' , this.columns )
+   },
+   updateBoard(){
+     console.log('update trigger');
+   },
+   removeTask(task) {
+     console.log(task);
+     this.$store.dispatch({ type: 'removeTask', task })
    }
 
  },

@@ -24,12 +24,23 @@ export const boardStore = {
             const idx = state.taskGroups.findIndex(taskGroup => taskGroup._id === id)
             state.taskGroups.splice(idx, 1);
         },
+        removeTask(state, { task }) {
+            console.log('mutator', task, task.taskGroup, task._id);
+            const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup)
+            let currTaskGroup = state.currBoard.taskGroups[idx]
+            console.log('curr task group', currTaskGroup);
+            const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id)
+            state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1)
+            console.log('state', state);
+            boardService.save(state.currBoard)
+
+        },
         addTaskGroup(state, { taskGroup }) {
             state.taskGroups.push(taskGroup)
         },
         updateTaskGroups(state, { taskGroup }) {
-            const idx = state.taskGroups.findIndex(t => t._id === taskGroup._id)
-            state.taskGroups.splice(idx, 1, taskGroup)
+            const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
+
         },
         setFilterBy(state, { filterBy }) {
             state.filterBy = {...filterBy };
@@ -48,6 +59,12 @@ export const boardStore = {
                 .then(() => {
                     commit({ type: 'removeTaskGroup', id })
                 })
+        },
+        removeTask({ commit }, { task }) {
+            // console.log('task inside action', task.task);
+
+            commit({ type: 'removeTask', task })
+
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
