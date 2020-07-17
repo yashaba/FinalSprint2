@@ -31,12 +31,25 @@ export default {
         console.log(this.taskTitle._id);
         this.$store.dispatch({ type: 'saveTask', task: this.taskTitle })
         this.taskTitle = null
-        }
+        },
+      // makeId(length = 6) {
+      //   var txt = '';
+      //   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+      //   for (var i = 0; i < length; i++) {
+      //     txt += possible.charAt(Math.floor(Math.random() * possible.length));
+      //   }
+
+      //   return txt;
+      // }
     },
 
     created() {
       eventBus.$on(SHOW_EDIT_TASK, task=>{
-        console.log(task._id); 
+        // if (!task._id) {
+        //   var id = this.makeId;
+        //   console.log(id);
+        // }
         this.taskTitle = task;
       })
       window.addEventListener('keydown', this.close);
