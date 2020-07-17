@@ -14,7 +14,7 @@
        </div>
     </draggable>
   </div>
-  <div> <input type="text" v-model="newGroupTitle"> <button @click.prevent="createTaskGroup(newGroupTitle)">add</button> </div>
+  <div> <input type="text" v-model="newGroupTitle"> <button @click.prevent="createTaskGroup(newGroupTitle),newGroupTitle = ''">add</button> </div>
   </section>
 </template>
 

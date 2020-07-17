@@ -53,7 +53,7 @@ export default {
         _id : taskGroupService.makeId(),
         title: '',
         bgColor: "green",
-        taskGroup: this.taskGroup
+        taskGroup: this.taskGroup._id
         
       }
     };
@@ -100,11 +100,16 @@ export default {
     },
     close() {
       this.isAdding = !this.isAdding;
+       this.taskToSave.title = ''
+     
     },
     saveNewTask() {
+      let taskToSaveCopy = JSON.parse(JSON.stringify(this.taskToSave))
       // if (!this.taskToSave) return;
-      this.$store.dispatch({ type: 'saveTask', task: this.taskToSave, taskGroup: this.taskGroup });
+      this.$store.dispatch({ type: 'saveTask', task: taskToSaveCopy, taskGroup: this.taskGroup });
       this.isAdding = !this.isAdding;
+      this.taskToSave.title = ''
+      
     }
   },
 
