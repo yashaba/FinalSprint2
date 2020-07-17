@@ -4,7 +4,7 @@
 @import 'setup/variables';
 @import 'setup/functions';
 // BASICS
-@import './basic/base';
+@import './basic/base.scss';
 @import './basic/layout';
 @import './basic/helpers';
 // CMPS 
@@ -14,6 +14,6 @@
 @import './cmps/task-preview.scss';
 // VIEWS
 @import './views/about';
-.about {
-    background-color: 'red';
-}
+
+
+

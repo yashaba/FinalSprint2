@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <!-- <div> -->
     <div class="task-group flex column">
-      <div class="flex space-between">
-        {{taskGroup.title}}
-        <button>edit</button>
+      <div class="flex space-between align-center">
+          <p class="group-title">{{taskGroup.title}}</p>
+        <button class="btn-edit">edit</button>
       </div>
       <div class="tasks1">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
@@ -15,7 +15,7 @@
           </div>
         </draggable>
 
-        <button @click="addTask">Add Card</button>
+        <button class="btn-add-task" @click="addTask">+ Add another card</button>
         <div v-if="isAdding">
           <form @submit.prevent="saveNewTask">
             <input
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </template>
 
 <script>
