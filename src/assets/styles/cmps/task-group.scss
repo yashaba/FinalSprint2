@@ -25,26 +25,31 @@
 
 // draggable
 
-.flip-list-move {
-  opacity: 0.2;
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-.list-group {
-  min-height: 20px;
-}
-.list-group-item {
-  cursor: move;
-}
-.list-group-item i {
-  cursor: pointer;
-} 
+// .flip-list-move {
+//     opacity: 1;
+//     transition: transform 0.5s;
+// }
+
+// .no-move {
+//     transition: transform 0s;
+// }
+
+// .ghost {
+//     opacity: 1;
+//     background: #c8ebfb;
+// }
+
+// .list-group {
+//     min-height: 20px;
+// }
+
+// .list-group-item {
+//     cursor: move;
+// }
+
+// .list-group-item i {
+//   cursor: pointer;
+// } 
 
 // .tasks-wrapper {
 //   display: flex;
@@ -54,3 +59,4 @@
 //  background-color: red;
 //  opacity: 1;
 // }
+
