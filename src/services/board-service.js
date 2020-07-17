@@ -8,7 +8,7 @@ export const boardService = {
     // getEmptyBoard
 }
 
-import axios from 'axios'
+// import axios from 'axios'
 
 
 function query() {
