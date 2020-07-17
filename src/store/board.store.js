@@ -54,7 +54,7 @@ export const boardStore = {
                     return currBoard
                 })
         },
-        removetaskGroup({ commit }, { id }) {
+        removeTaskGroup({ commit }, { id }) {
             return boardService.remove(id)
                 .then(() => {
                     commit({ type: 'removeTaskGroup', id })
@@ -73,7 +73,7 @@ export const boardStore = {
                     console.log('SAVED', savedTaskGroup);
                     commit({ type, taskGroup: savedTaskGroup })
                 })
-        }
+        },
     },
 
 }

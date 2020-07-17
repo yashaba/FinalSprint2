@@ -1,29 +1,28 @@
 <template>
   <div>
-
-<div class="tasks-wrapper"> 
-  <div class="tasks1">
+    <div class="tasks-wrapper"> 
+      <div class="tasks1">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
-<draggable   class="list-group"
+        <draggable   class="list-group"
         tag="div"   
         v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false">
- <div v-for="task in taskGroup.tasks" :key="task.id">
-   <task-preview :task='task'> </task-preview>
-   </div>
-          
-    
-     
-</draggable>
-<div v-if="isAdding">
-<input  type="text" placeholder="enter task name"> <br>
-<button @click="addTask">add</button>
-<button @click="isAdding = !isAdding">X</button>
-</div>
-<button v-if="!isAdding" @click="isAdding = !isAdding">Add Card</button>
-</div>
+          <div v-for="task in taskGroup.tasks" :key="task.id">
+            <task-preview :task='task'> </task-preview>
+          </div>
+        </draggable>
 
-</div>
-</div>
+        <button @click="addTask">Add Card</button>
+        <div v-if="isAdding">
+          <form @submit.prevent="saveNewTask">
+            <input type="text" v-model="taskToSave.title" placeholder="Enter a title for this card..." /> 
+            <button type="submit"> Add Card </button>
+          </form>
+          <button @click="close"> X </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -35,7 +34,11 @@ export default {
   data() { 
     return{
       // taskGroup : this.taskGroup,
-      isAdding : false
+      isAdding : false,
+      taskToSave: {
+        title: '',
+        _id: null
+      }
     }
   },
   created() {
@@ -55,7 +58,20 @@ export default {
   methods: {
    log() {
      console.log('triggerrr');
-   }
+   },
+   addTask() {
+      this.isAdding = true;
+   },
+   close() {
+     this.isAdding = !this.isAdding;
+   },
+  saveNewTask() {
+      // if (!this.taskToSave) return;
+      this.$store.dispatch({ type: 'saveTaskGroup', taskGroup: this.taskToSave })
+        .then(() => {
+          this.close;
+        })
+    },
   },
 
   // data() {
