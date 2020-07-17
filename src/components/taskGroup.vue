@@ -100,6 +100,7 @@ export default {
     },
     close() {
       this.isAdding = !this.isAdding;
+       this.taskToSave.title = ''
      
     },
     saveNewTask() {
