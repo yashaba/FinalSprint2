@@ -63,22 +63,19 @@ export default {
   },
 
   methods: {
-<<<<<<< HEAD
     log() {
       console.log("triggerrr");
     },
-    addTask() {
-=======
    log() {
      console.log('triggerrr');
    },
    updateBoardEv() {
+     console.log("group")
      console.log('emitted');
      this.$emit ('updateBoardEv')
    },
 
    addTask() {
->>>>>>> fb24c85f7ad53e6c429e6e7c83c1bcd354399c6c
       this.isAdding = true;
     },
     close() {
@@ -94,46 +91,6 @@ export default {
     }
   },
 
-<<<<<<< HEAD
-  // data() {
-  //   return {
-  //     myArray: [
-
-  //       { color: 'blue', id: 1 , taskTitle: 'Test' , taskContent: 'This is a test'} ,
-  //       { color: 'yellow', id: 2 , taskTitle: 'Test2' , taskContent: 'This is a test2'} ,
-  //       { color: 'red', id: 3 , taskTitle: 'Test3' , taskContent: 'This is a test3'} ,
-  //       { color: 'purple', id: 4 , taskTitle: 'Test4' , taskContent: 'This is a test4'} ,
-  //       { color: 'green', id: 5 , taskTitle: 'Test5' , taskContent: 'This is a test5'} ,
-
-  //     ],
-  //     myArray2: [
-
-  //       { color: 'blue', id: 6 , taskTitle: 'Test' , taskContent: 'This is a test'} ,
-  //       { color: 'yellow', id: 7 , taskTitle: 'Test7' , taskContent: 'This is a test2'} ,
-  //       { color: 'red', id: 8 , taskTitle: 'Test8' , taskContent: 'This is a test3'} ,
-  //       { color: 'purple', id: 9 , taskTitle: 'Test9' , taskContent: 'This is a test4'} ,
-  //       { color: 'green', id: 10 , taskTitle: 'Test10' , taskContent: 'This is a test5'} ,
-
-  //     ],
-  //     myArray3: [
-
-  //       { color: 'blue', id: 11 , taskTitle: 'Test11' , taskContent: 'This is a test11'} ,
-  //       { color: 'yellow', id: 12 , taskTitle: 'Test12' , taskContent: 'This is a test12'} ,
-  //       { color: 'red', id: 13 , taskTitle: 'Test13' , taskContent: 'This is a test13'} ,
-  //       { color: 'purple', id: 14 , taskTitle: 'Test14' , taskContent: 'This is a test14'} ,
-  //       { color: 'green', id: 15 , taskTitle: 'Test15' , taskContent: 'This is a test15'} ,
-
-  //     ],
-  //   }
-  // },
-
-  components: {
-    draggable,
-    taskPreview
-    // card
-  }
-};
-=======
  
 components: {
   draggable,
@@ -141,7 +98,6 @@ components: {
   // card
 }
 }
->>>>>>> fb24c85f7ad53e6c429e6e7c83c1bcd354399c6c
 </script>
 
 <style>
