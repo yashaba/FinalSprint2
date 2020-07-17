@@ -26,8 +26,12 @@ export const boardStore = {
         setTaskGroups(state, { taskGroups }) {
             state.taskGroups = taskGroups;
         },
-        removeTaskGroup(state, { _id }) {
-            const idx = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === _id)
+        removeTaskGroup(state, { taskGroup }) {
+            console.log(taskGroup._id);
+            let _id = taskGroup._id
+            console.log('iddd', _id);
+            const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === _id)
+            console.log(idx);
             state.currBoard.taskGroups.splice(idx, 1);
             boardService.save(state.currBoard);
         },
