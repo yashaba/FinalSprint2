@@ -14,6 +14,7 @@
        </div>
     </draggable>
   </div>
+  <div> <button>add</button> </div>
   </section>
 </template>
 
