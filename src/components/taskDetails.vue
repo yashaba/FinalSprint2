@@ -19,18 +19,20 @@
             <div v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
               <div :assignedUser="assignedUser">{{assignedUser.fullName}}</div>
             </div>
+            <div>
             <i class="fas fa-plus-circle"></i>
+            </div>
           </div>
           <div class="details-labels">Labels:</div>
           <div class="details-labels">Due Date:</div>
         </div>
         <div class="details-desc">
+          <div>
           <i class="fas fa-align-left"></i>
-          Description
-          <br />
-          {{task.desc}}
+          <span> Description</span>
+           </div>
+        <textarea placeholder="Add a more details description..." rows="1">{{task.desc}}</textarea>
         </div>
-        <textarea placeholder="Add a more details description..." rows="1"></textarea>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
           <br />
