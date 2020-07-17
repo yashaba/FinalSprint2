@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="task-group flex column">
-      <div class="flex space-between">
+      <div class="relative flex space-between">
         {{taskGroup.title}}
-        <button>edit</button>
+        <button @click="openTaskGroupModal">...</button>
+        <div v-if="taskModalShown" class="title-modal column ">
+           <div @click="isAdding = true , taskModalShown = false"> Add new task </div>
+           <div @click="duplicateTaskGroup"> Duplicate List</div>
+           <div @click="removeTaskGroup"> Remove list</div>
+            </div>
       </div>
       <div class="tasks1">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
@@ -23,7 +28,7 @@
               v-model="taskToSave.title"
               placeholder="Enter a title for this card..."
             />
-            <button type="submit">Add Card</button>
+            <button type="submit">Add</button>
           </form>
           <button @click="close">X</button>
         </div>
@@ -35,6 +40,7 @@
 <script>
 import draggable from "vuedraggable";
 import taskPreview from "./taskPreview.vue";
+import {taskGroupService} from '../services/task-group-service.js'
 // import card from './card.vue'
 export default {
   props: ["taskGroup"],
@@ -42,9 +48,13 @@ export default {
     return {
       // taskGroup : this.taskGroup,
       isAdding: false,
+      taskModalShown: false ,
       taskToSave: {
-        title: "",
-        _id: null
+        _id : taskGroupService.makeId(),
+        title: '',
+        bgColor: "green",
+        taskGroup: this.taskGroup
+        
       }
     };
   },
@@ -63,7 +73,8 @@ export default {
   },
 
   methods: {
-    log() {
+    openTaskGroupModal() {
+      this.taskModalShown = !this.taskModalShown
       console.log("triggerrr");
     },
    log() {
@@ -74,6 +85,14 @@ export default {
      console.log('emitted');
      this.$emit ('updateBoardEv')
    },
+   removeTaskGroup(){
+    
+     this.$emit ('removeTaskGroupEv' , this.taskGroup)
+     console.log('button trigger', this.taskGroup);
+   },
+   duplicateTaskGroup() {
+     this.$emit ('duplicateTaskGroupEv' , this.taskGroup)
+   },
 
    addTask() {
       this.isAdding = true;
@@ -83,11 +102,8 @@ export default {
     },
     saveNewTask() {
       // if (!this.taskToSave) return;
-      this.$store
-        .dispatch({ type: "saveTaskGroup", taskGroup: this.taskToSave })
-        .then(() => {
-          this.close;
-        });
+      this.$store.dispatch({ type: 'saveTask', task: this.taskToSave, taskGroup: this.taskGroup });
+      this.isAdding = !this.isAdding;
     }
   },
 
@@ -100,46 +116,21 @@ components: {
 }
 </script>
 
-<style>
-.tasks1 {
-  background-color: rgb(168, 164, 164);
-  padding: 10px;
-  overflow: auto;
-  display: block;
-  height: 1%;
-}
-.tasks-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-}
-.tasks-wrapper .todo-drag {
-  background-color: red;
-  opacity: 1;
-}
-.todo {
-  width: 150px;
-  height: 100px;
-  margin: 10px;
-}
+<style lang="scss" scoped>
 
-.flip-list-move {
-  opacity: 0.2;
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-.list-group {
-  min-height: 20px;
-}
-.list-group-item {
-  cursor: move;
-}
-.list-group-item i {
-  cursor: pointer;
+
+.title-modal{
+  width: 120px;
+  height: 85px;
+  position: absolute;
+  background-color: rgb(252, 250, 247);
+  justify-content: center;
+  right: 1%;
+  top: 95%;
+  div {
+    margin-top: 7px;
+    cursor: pointer;
+  }
+    
 }
 </style>

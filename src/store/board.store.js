@@ -1,4 +1,5 @@
 import { boardService } from '../services/board-service.js';
+import { taskGroupService } from '../services/task-group-service.js'
 
 
 export const boardStore = {
@@ -25,9 +26,10 @@ export const boardStore = {
         setTaskGroups(state, { taskGroups }) {
             state.taskGroups = taskGroups;
         },
-        removeTaskGroup(state, { id }) {
-            const idx = state.taskGroups.findIndex(taskGroup => taskGroup._id === id)
-            state.taskGroups.splice(idx, 1);
+        removeTaskGroup(state, { _id }) {
+            const idx = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === _id)
+            state.currBoard.taskGroups.splice(idx, 1);
+            boardService.save(state.currBoard);
         },
         removeTask(state, { task }) {
             console.log('mutator', task, task.taskGroup, task._id);
@@ -40,8 +42,22 @@ export const boardStore = {
             boardService.save(state.currBoard)
 
         },
-        addTaskGroup(state, { taskGroup }) {
-            state.taskGroups.push(taskGroup)
+        addTask(state, { task, taskGroup }) {
+            const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === taskGroup._id);
+            // let currTaskGroup = state.currBoard.taskGroups[idx];
+            state.currBoard.taskGroups[idx].tasks.unshift(task);
+            boardService.save(state.currBoard);
+        },
+        updateTask(state, { task }) {
+            const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
+            let currTaskGroup = state.currBoard.taskGroups[idx];
+            const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
+            state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
+            boardService.save(state.currBoard);
+        },
+        addTaskGroup(state, newTaskGroup) {
+            state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
+            boardService.save(state.currBoard);
         },
         updateTaskGroups(state, { taskGroup }) {
             const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
@@ -65,11 +81,39 @@ export const boardStore = {
                     commit({ type: 'removeTaskGroup', id })
                 })
         },
+        addTaskGroup({ commit }, { title }) {
+            var newTaskGroup = taskGroupService.makeNewTaskGroup(title)
+            console.log('actions', newTaskGroup);
+            commit({ type: 'addTaskGroup', newTaskGroup })
+        },
+        duplicateTaskGroup({ commit }, { taskGroup }) {
+            console.log('starting task group', taskGroup);
+            var newTaskGroup = taskGroupService.duplicateTaskGroup(taskGroup)
+            console.log('post func task group', newTaskGroup);
+            console.log('actions', newTaskGroup);
+            commit({ type: 'addTaskGroup', newTaskGroup })
+        },
         removeTask({ commit }, { task }) {
             // console.log('task inside action', task.task);
 
             commit({ type: 'removeTask', task })
 
+        },
+        removeTaskGroup({ commit }, { taskGroup }) {
+            // console.log('task inside action', task.task);
+            console.log('father triggr');
+            commit({ type: 'removeTaskGroup', taskGroup })
+
+        },
+        saveTask({ commit }, { task, taskGroup }) {
+            // const type = (task._id) ? 'updateTask' : 'addTask'
+            const type = 'addTask'
+            console.log(type);
+            commit({ type, task, taskGroup })
+        },
+        updateTask({ commit }, { task, taskGroup }) {
+
+            commit({ type: 'updateTask', task, taskGroup })
         },
         updateBoard({ commit }, { board }) {
             console.log('board', board);

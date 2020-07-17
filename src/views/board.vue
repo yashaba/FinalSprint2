@@ -3,17 +3,18 @@
 
     
        <task-edit/>
-       <task-details @removeTaskEv='removeTask'> </task-details>
+       <task-details  @removeTaskEv='removeTask'> </task-details>
        
  <div>
     <draggable   class="list-group flex flex-start"
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , updateBoard(board)">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
-       <task-group @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
+       <task-group @duplicateTaskGroupEv='duplicateTaskGroup' @removeTaskGroupEv='removeTaskGroup' @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
   </div>
+  <div> <input type="text" v-model="newGroupTitle"> <button @click.prevent="createTaskGroup(newGroupTitle)">add</button> </div>
   </section>
 </template>
 
@@ -24,14 +25,17 @@ import draggable from 'vuedraggable'
 import taskGroup from '../components/taskGroup.vue'
 import taskDetails from '../components/taskDetails.vue'
 import taskEdit from '../components/taskEdit.vue';
+import {taskGroupService} from '../services/task-group-service.js'
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
+
 
 
 export default {
   data(){
     return {
-      board :  null
+      board :  null,
+      newGroupTitle: ''
     }
   },
   computed: {
@@ -61,6 +65,17 @@ export default {
      } )
      console.log(board);
      this.$store.dispatch({ type: 'updateBoard', board })
+   },
+   createTaskGroup(title) {
+     
+     this.$store.dispatch({ type: 'addTaskGroup', title })
+   },
+   duplicateTaskGroup(taskGroup){
+      this.$store.dispatch({ type: 'duplicateTaskGroup', taskGroup })
+   },
+
+   removeTaskGroup(taskGroup){
+     this.$store.dispatch({ type: 'removeTaskGroup', taskGroup })
    }
 
  },
