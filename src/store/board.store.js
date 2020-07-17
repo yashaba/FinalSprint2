@@ -16,6 +16,11 @@ export const boardStore = {
     mutations: {
         setBoard(state, { currBoard }) {
             state.currBoard = currBoard;
+            boardService.save(state.currBoard)
+        },
+        updateBoard(state, { board }) {
+            state.currBoard = board;
+            boardService.save(state.currBoard)
         },
         setTaskGroups(state, { taskGroups }) {
             state.taskGroups = taskGroups;
@@ -82,6 +87,10 @@ export const boardStore = {
         saveTask({commit}, {task, taskGroup}) {
             const type = (task._id) ? 'updateTask' : 'addTask'
             commit({type, task, taskGroup})
+        },
+        updateBoard({ commit }, { board }) {
+            console.log('board', board);
+            commit({ type: 'updateBoard', board })
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
