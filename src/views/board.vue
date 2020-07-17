@@ -3,6 +3,7 @@
 
     
        <task-details/>
+       <task-edit/>
        
  <div>
     <draggable   class="list-group flex space-between"
@@ -22,6 +23,7 @@
 import draggable from 'vuedraggable'
 import taskGroup from '../components/taskGroup.vue'
 import taskDetails from '../components/taskDetails.vue'
+import taskEdit from '../components/taskEdit.vue';
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
 
@@ -61,7 +63,8 @@ export default {
 components: {
   taskGroup,
   draggable,
-  taskDetails
+  taskDetails,
+  taskEdit
 }
 }
 </script>

@@ -5,7 +5,7 @@ import board from '../views/board.vue';
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
