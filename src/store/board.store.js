@@ -26,9 +26,10 @@ export const boardStore = {
         setTaskGroups(state, { taskGroups }) {
             state.taskGroups = taskGroups;
         },
-        removeTaskGroup(state, { id }) {
-            const idx = state.taskGroups.findIndex(taskGroup => taskGroup._id === id)
-            state.taskGroups.splice(idx, 1);
+        removeTaskGroup(state, { _id }) {
+            const idx = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === _id)
+            state.currBoard.taskGroups.splice(idx, 1);
+            boardService.save(state.currBoard);
         },
         removeTask(state, { task }) {
             console.log('mutator', task, task.taskGroup, task._id);
@@ -85,10 +86,23 @@ export const boardStore = {
             console.log('actions', newTaskGroup);
             commit({ type: 'addTaskGroup', newTaskGroup })
         },
+        duplicateTaskGroup({ commit }, { taskGroup }) {
+            console.log('starting task group', taskGroup);
+            var newTaskGroup = taskGroupService.duplicateTaskGroup(taskGroup)
+            console.log('post func task group', newTaskGroup);
+            console.log('actions', newTaskGroup);
+            commit({ type: 'addTaskGroup', newTaskGroup })
+        },
         removeTask({ commit }, { task }) {
             // console.log('task inside action', task.task);
 
             commit({ type: 'removeTask', task })
+
+        },
+        removeTaskGroup({ commit }, { taskGroup }) {
+            // console.log('task inside action', task.task);
+            console.log('father triggr');
+            commit({ type: 'removeTaskGroup', taskGroup })
 
         },
         saveTask({ commit }, { task, taskGroup }) {

@@ -3,14 +3,14 @@
 
     
        <task-edit/>
-       <task-details @removeTaskEv='removeTask'> </task-details>
+       <task-details  @removeTaskEv='removeTask'> </task-details>
        
  <div>
     <draggable   class="list-group flex flex-start"
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , updateBoard(board)">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
-       <task-group @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
+       <task-group @duplicateTaskGroupEv='duplicateTaskGroup' @removeTaskGroupEv='removeTaskGroup' @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
   </div>
@@ -69,6 +69,13 @@ export default {
    createTaskGroup(title) {
      
      this.$store.dispatch({ type: 'addTaskGroup', title })
+   },
+   duplicateTaskGroup(taskGroup){
+      this.$store.dispatch({ type: 'duplicateTaskGroup', taskGroup })
+   },
+
+   removeTaskGroup(taskGroup){
+     this.$store.dispatch({ type: 'removeTaskGroup', taskGroup })
    }
 
  },

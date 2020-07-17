@@ -1,9 +1,14 @@
 <template>
   <div>
     <div class="task-group flex column">
-      <div class="flex space-between">
+      <div class="relative flex space-between">
         {{taskGroup.title}}
-        <button>edit</button>
+        <button @click="openTaskGroupModal">...</button>
+        <div v-if="taskModalShown" class="title-modal column ">
+           <div @click="isAdding = true , taskModalShown = false"> Add new task </div>
+           <div @click="duplicateTaskGroup"> Duplicate List</div>
+           <div @click="removeTaskGroup"> Remove list</div>
+            </div>
       </div>
       <div class="tasks1">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
@@ -43,6 +48,7 @@ export default {
     return {
       // taskGroup : this.taskGroup,
       isAdding: false,
+      taskModalShown: false ,
       taskToSave: {
         _id : taskGroupService.makeId(),
         title: '',
@@ -67,7 +73,8 @@ export default {
   },
 
   methods: {
-    log() {
+    openTaskGroupModal() {
+      this.taskModalShown = !this.taskModalShown
       console.log("triggerrr");
     },
    log() {
@@ -77,6 +84,14 @@ export default {
      console.log("group")
      console.log('emitted');
      this.$emit ('updateBoardEv')
+   },
+   removeTaskGroup(){
+    
+     this.$emit ('removeTaskGroupEv' , this.taskGroup)
+     console.log('button trigger', this.taskGroup);
+   },
+   duplicateTaskGroup() {
+     this.$emit ('duplicateTaskGroupEv' , this.taskGroup)
    },
 
    addTask() {
@@ -101,6 +116,21 @@ components: {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
+
+.title-modal{
+  width: 120px;
+  height: 85px;
+  position: absolute;
+  background-color: rgb(252, 250, 247);
+  justify-content: center;
+  right: 1%;
+  top: 95%;
+  div {
+    margin-top: 7px;
+    cursor: pointer;
+  }
+    
+}
 </style>
