@@ -5,6 +5,25 @@
 body {
     margin: 0;
     // font-family: 'Actor', sans-serif;
+    background-image: url(../imgs/background-pic.png);
+    background-repeat: no-repeat ;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    color: #7f8a9d;
+
+    &:hover {
+        background-color: #dadbe2;
+        border-radius: 4px;
+        padding: 5px 10px;
+        color: #4d5b76;
+    }
 }
 
 h1,

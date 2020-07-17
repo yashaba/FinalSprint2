@@ -1,50 +1,62 @@
-// .task-group{
-//     background-color: #ebecf0;
-//     margin-left: 10px;
+.task-group{
+    background-color: #ebecf0;
+    margin-left: 10px;
+    border-radius: 3px;
+    width: 270px;
+     
+    .group-title {
+      color: #263959;
+      margin-left: 10px;
+    }
+
+    .btn-edit {
+      margin-right: 10px;
+    }
+
+    .btn-add-task {
+      margin-bottom: 10px;
+      padding: 5px;
+      padding-right: 70px;
+      font-size: 1rem;
+      float: left;
+      margin-left: 10px;
+    }
+}
+
+// draggable
+
+// .flip-list-move {
+//     opacity: 1;
+//     transition: transform 0.5s;
 // }
 
-// .task-group .group-title {
-//     color: #475772;
+// .no-move {
+//     transition: transform 0s;
 // }
 
-.tasks1 {
-  background-color: rgb(168, 164, 164);
-  padding: 10px;
-  overflow: auto;
-  display: block;
-  height: 1%;
-}
-.tasks-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-}
-.tasks-wrapper .todo-drag {
-  background-color: red;
-  opacity: 1;
-}
-.todo {
-  width: 150px;
-  height: 100px;
-  margin: 10px;
-}
+// .ghost {
+//     opacity: 1;
+//     background: #c8ebfb;
+// }
 
-.flip-list-move {
-  opacity: 0.2;
-  transition: transform 0.5s;
-}
-.no-move {
-  transition: transform 0s;
-}
-.ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
-}
-.list-group {
-  min-height: 20px;
-}
-.list-group-item {
-  cursor: move;
-}
-.list-group-item i {
-  cursor: pointer;
-} 
+// .list-group {
+//     min-height: 20px;
+// }
+
+// .list-group-item {
+//     cursor: move;
+// }
+
+// .list-group-item i {
+//   cursor: pointer;
+// } 
+
+// .tasks-wrapper {
+//   display: flex;
+//   justify-content: space-evenly;
+// }
+// .tasks-wrapper .todo-drag {
+//  background-color: red;
+//  opacity: 1;
+// }
+

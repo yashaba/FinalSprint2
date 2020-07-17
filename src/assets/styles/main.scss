@@ -4,7 +4,7 @@
 @import 'setup/variables';
 @import 'setup/functions';
 // BASICS
-@import './basic/base';
+@import './basic/base.scss';
 @import './basic/layout';
 @import './basic/helpers';
 // CMPS 
@@ -17,6 +17,3 @@
 
 @import url("../../../node_modules/@fortawesome/fontawesome-free/css/all.css");
 
-.about {
-    background-color: 'red';
-}

@@ -27,7 +27,10 @@ function makeId(length = 10) {
 function duplicateTaskGroup(taskGroup) {
     var newTaskGroup = JSON.parse(JSON.stringify(taskGroup))
     newTaskGroup._id = makeId()
-    newTaskGroup.tasks.forEach((task) => task._id = makeId())
+    newTaskGroup.tasks.forEach((task) => {
+        task._id = makeId()
+        task.taskGroup = newTaskGroup._id
+    })
     return newTaskGroup
 }
 
