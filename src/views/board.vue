@@ -1,7 +1,7 @@
 <template>
-<section class="column">
+<section class="column" v-if="board">
 
-    <h1>This is an about page</h1>
+    
        <task-details/>
        
  <div>
@@ -29,7 +29,7 @@ var boardService = require('../services/board-service.js');
 export default {
   data(){
     return {
-      board :  this.$store.getters.currBoard
+      board :  null
     }
   },
   computed: {
@@ -40,6 +40,7 @@ export default {
 
   created() {
       this.$store.dispatch({ type: 'loadBoard' })
+        .then(board => this.board = board);
  },
  methods: {
    log() {
