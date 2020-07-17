@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const boardService = {
     query,
     remove,
@@ -7,6 +9,7 @@ export const boardService = {
 }
 
 import axios from 'axios'
+
 
 function query() {
     return axios.get(`http://localhost:3000/board`)
