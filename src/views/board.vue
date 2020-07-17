@@ -6,7 +6,7 @@
        <task-details @removeTaskEv='removeTask'> </task-details>
        
  <div>
-    <draggable   class="list-group flex space-between"
+    <draggable   class="list-group flex flex-start"
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , updateBoard(board)">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
