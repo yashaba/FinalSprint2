@@ -12,15 +12,18 @@
     </div>
     <div class="details-container">
       <div class="details-info">
-        <div class="details-members">
-          Members:
-          <br />
-          <div v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
-            <div :assignedUser="assignedUser">{{assignedUser.fullName}}</div>
+        <div class="details-edit">
+          <div class="details-members">
+            Members:
+            <br />
+            <div v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
+              <div :assignedUser="assignedUser">{{assignedUser.fullName}}</div>
+            </div>
+            <i class="fas fa-plus-circle"></i>
           </div>
-          <i class="fas fa-plus-circle"></i>
+          <div class="details-labels">Labels:</div>
+          <div class="details-labels">Due Date:</div>
         </div>
-        <div class="details-labels">Labels:</div>
         <div class="details-desc">
           <i class="fas fa-align-left"></i>
           Description
