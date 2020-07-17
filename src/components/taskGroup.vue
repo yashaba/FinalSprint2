@@ -35,6 +35,7 @@
 <script>
 import draggable from "vuedraggable";
 import taskPreview from "./taskPreview.vue";
+import {taskGroupService} from '../services/task-group-service.js'
 // import card from './card.vue'
 export default {
   props: ["taskGroup"],
@@ -43,9 +44,11 @@ export default {
       // taskGroup : this.taskGroup,
       isAdding: false,
       taskToSave: {
+        _id : taskGroupService.makeId(),
         title: '',
         bgColor: "green",
-        taskGroup: this.taskGroup._id
+        taskGroup: this.taskGroup
+        
       }
     };
   },

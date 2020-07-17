@@ -1,12 +1,12 @@
 function makeNewTaskGroup(title) {
     return {
-        _id: makeId,
+        _id: makeId(),
         title: title,
         style: {
             bgColor: "green"
         },
         addedBy: "",
-        tasks: [{}]
+        tasks: []
     }
 
 }

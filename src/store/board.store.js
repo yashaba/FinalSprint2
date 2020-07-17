@@ -1,4 +1,5 @@
 import { boardService } from '../services/board-service.js';
+import { taskGroupService } from '../services/task-group-service.js'
 
 
 export const boardStore = {
@@ -40,21 +41,22 @@ export const boardStore = {
             boardService.save(state.currBoard)
 
         },
-        addTask(state, {task, taskGroup}) {
+        addTask(state, { task, taskGroup }) {
             const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === taskGroup._id);
             // let currTaskGroup = state.currBoard.taskGroups[idx];
             state.currBoard.taskGroups[idx].tasks.unshift(task);
             boardService.save(state.currBoard);
         },
-        updateTask(state, {task}) {
+        updateTask(state, { task }) {
             const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
             let currTaskGroup = state.currBoard.taskGroups[idx];
             const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
             state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
             boardService.save(state.currBoard);
         },
-        addTaskGroup(state, { taskGroup }) {
-            state.taskGroups.push(taskGroup)
+        addTaskGroup(state, newTaskGroup) {
+            state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
+            boardService.save(state.currBoard);
         },
         updateTaskGroups(state, { taskGroup }) {
             const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
@@ -78,15 +80,26 @@ export const boardStore = {
                     commit({ type: 'removeTaskGroup', id })
                 })
         },
+        addTaskGroup({ commit }, { title }) {
+            var newTaskGroup = taskGroupService.makeNewTaskGroup(title)
+            console.log('actions', newTaskGroup);
+            commit({ type: 'addTaskGroup', newTaskGroup })
+        },
         removeTask({ commit }, { task }) {
             // console.log('task inside action', task.task);
 
             commit({ type: 'removeTask', task })
 
         },
-        saveTask({commit}, {task, taskGroup}) {
-            const type = (task._id) ? 'updateTask' : 'addTask'
-            commit({type, task, taskGroup})
+        saveTask({ commit }, { task, taskGroup }) {
+            // const type = (task._id) ? 'updateTask' : 'addTask'
+            const type = 'addTask'
+            console.log(type);
+            commit({ type, task, taskGroup })
+        },
+        updateTask({ commit }, { task, taskGroup }) {
+
+            commit({ type: 'updateTask', task, taskGroup })
         },
         updateBoard({ commit }, { board }) {
             console.log('board', board);
