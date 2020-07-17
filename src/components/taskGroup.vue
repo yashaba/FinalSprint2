@@ -44,7 +44,8 @@ export default {
       isAdding: false,
       taskToSave: {
         title: '',
-        bgColor: "green"
+        bgColor: "green",
+        taskGroup: this.taskGroup._id
       }
     };
   },
