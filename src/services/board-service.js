@@ -13,7 +13,12 @@ export const boardService = {
 
 function query() {
     return axios.get(`http://localhost:3000/board`)
-        .then(res => res.data)
+        .then(res =>
+
+            {
+                console.log('DATA', res.data);
+                return res.data
+            })
 }
 
 // function getEmptyBoard() {
@@ -27,11 +32,11 @@ function getById(id) {
 }
 
 // function remove(taskGroupId) {
-//     return axios.delete(`http://localhost:3000/board/${taskGroupId}`)
+// return axios.delete(`http://localhost:3000/board/${taskGroupId}`)
 // }
 
 function remove(id) {
-    return axios.delete(`http://localhost:3000/board/${id}`)
+    return axios.delete(`http://localhost:3000/board/${id}/djaosi/djsanhdj`)
 }
 
 function save(board) {

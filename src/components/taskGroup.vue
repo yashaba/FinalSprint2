@@ -6,16 +6,10 @@
         <button>edit</button>
       </div>
       <div class="tasks1">
-        <!-- <h1> {{this.columns.columnTitle}}</h1> -->
-        <draggable
-          class="list-group"
-          tag="div"
-          v-bind="dragOptions"
-          v-model="taskGroup.tasks"
-          group="people"
-          @start="drag=true"
-          @end="drag=false"
-        >
+    <!-- <h1> {{this.columns.columnTitle}}</h1> -->
+        <draggable   class="list-group"
+        tag="div"   
+        v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
           <div v-for="task in taskGroup.tasks" :key="task.id">
             <task-preview :task="task"></task-preview>
           </div>
@@ -69,10 +63,22 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
     log() {
       console.log("triggerrr");
     },
     addTask() {
+=======
+   log() {
+     console.log('triggerrr');
+   },
+   updateBoardEv() {
+     console.log('emitted');
+     this.$emit ('updateBoardEv')
+   },
+
+   addTask() {
+>>>>>>> fb24c85f7ad53e6c429e6e7c83c1bcd354399c6c
       this.isAdding = true;
     },
     close() {
@@ -88,6 +94,7 @@ export default {
     }
   },
 
+<<<<<<< HEAD
   // data() {
   //   return {
   //     myArray: [
@@ -126,6 +133,15 @@ export default {
     // card
   }
 };
+=======
+ 
+components: {
+  draggable,
+  taskPreview
+  // card
+}
+}
+>>>>>>> fb24c85f7ad53e6c429e6e7c83c1bcd354399c6c
 </script>
 
 <style>
