@@ -12,28 +12,23 @@
     // display: flex;
     // flex-direction: column;
     padding: 20px;
-
+    z-index: 1;
     .header {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
     }
-
     .details-container {
         display: flex;
     }
-
     .details-info {
         width: 65%;
     }
-
     .details-actions {
         width: 30%;
         display: flex;
         flex-direction: column;
         column-gap: 10px;
-        
     }
-
 }
