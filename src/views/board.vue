@@ -4,8 +4,8 @@
     
        <task-edit/>
        <task-details  @removeTaskEv='removeTask'> </task-details>
-       
- <div>
+      <div >
+ <div class="flex">
     <draggable   class="list-group flex flex-start"
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , updateBoard(board)">
@@ -13,8 +13,17 @@
        <task-group @duplicateTaskGroupEv='duplicateTaskGroup' @removeTaskGroupEv='removeTaskGroup' @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
+  <div @click="addingTask=!addingTask" class="task-add flex justify-center align-center"> 
+    <div v-if="!addingTask">
+    Add task group
+    </div>
+    <div class="flex column" v-if="addingTask">
+    <input type="text" v-model="newGroupTitle"> 
+    <button @click.prevent="createTaskGroup(newGroupTitle),newGroupTitle = ''">add</button>
+    </div>
+     </div>
   </div>
-  <div> <input type="text" v-model="newGroupTitle"> <button @click.prevent="createTaskGroup(newGroupTitle),newGroupTitle = ''">add</button> </div>
+  </div> 
   </section>
 </template>
 
@@ -35,7 +44,8 @@ export default {
   data(){
     return {
       board :  null,
-      newGroupTitle: ''
+      newGroupTitle: '',
+      addingTask: false
     }
   },
   computed: {
