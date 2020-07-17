@@ -2,14 +2,14 @@
 <section class="column" v-if="board">
 
     
-       <task-details @removeTaskEv='removeTask'> </task-details>
+       <task-details  @removeTaskEv='removeTask'> </task-details>
        
  <div>
     <draggable   class="list-group flex space-between"
         tag="div"   
-        v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , log()">
+        v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , updateBoard(board)">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
-       <task-group :taskGroup='taskGroup'> </task-group>
+       <task-group @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
   </div>
@@ -46,12 +46,16 @@ export default {
    log() {
      console.log('CHANGED' , this.columns )
    },
-   updateBoard(){
-     console.log('update trigger');
-   },
+  //  updateBoard(){
+  //    console.log('update trigger');
+  //  },
    removeTask(task) {
      console.log(task);
      this.$store.dispatch({ type: 'removeTask', task })
+   },
+   updateBoard(board) {
+     console.log(board);
+     this.$store.dispatch({ type: 'updateBoard', board })
    }
 
  },
