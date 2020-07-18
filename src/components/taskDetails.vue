@@ -66,7 +66,7 @@
           <i class="far fa-window-maximize"></i>Cover
         </button>
         <button @click="onRemove">
-          <i class="far fa-trash-alt"></i>remove
+          <i class="far fa-trash-alt"></i>Remove
         </button>
       </div>
     </div>
