@@ -114,6 +114,7 @@ export const boardStore = {
             const type = 'addTask'
             console.log(type);
             commit({ type, task, taskGroup })
+
         },
         updateTask({ commit }, { task, taskGroup }) {
 

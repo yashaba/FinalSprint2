@@ -13,13 +13,18 @@
        <task-group @duplicateTaskGroupEv='duplicateTaskGroup' @removeTaskGroupEv='removeTaskGroup' @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
-  <div @click="addingTask=!addingTask" class="task-add flex justify-center align-center"> 
+  <div @click="addingTask = true" class="task-add flex justify-center align-center"> 
     <div v-if="!addingTask">
     Add task group
     </div>
-    <div class="flex column" v-if="addingTask">
-    <input type="text" v-model="newGroupTitle"> 
-    <button @click.prevent="createTaskGroup(newGroupTitle),newGroupTitle = ''">add</button>
+    <div class="add-group-inputs flex column" v-if="addingTask">
+
+    <input  placeholder="Enter a title" type="text" v-model="newGroupTitle"> 
+    <div>
+    <button class="btn-save-group" @click.stop="createTaskGroup(newGroupTitle),newGroupTitle = '' ">Add Group</button>
+    <button class="btn-close" @click.stop="addingTask = !addingTask"><i class="fas fa-times fa-lg"></i></button>
+    </div>
+
     </div>
      </div>
   </div>
@@ -49,7 +54,8 @@ export default {
     }
   },
   computed: {
-    board(){
+    closeAddMenu(){
+      return this.addingTask = false
     // this.$store.getters.currBoard
     }
   },
@@ -68,6 +74,7 @@ export default {
    removeTask(task) {
      console.log(task);
      this.$store.dispatch({ type: 'removeTask', task })
+     this.task = null
    },
    updateBoard(board) {
      this.board.taskGroups.forEach( taskGroupItem => {
@@ -77,8 +84,9 @@ export default {
      this.$store.dispatch({ type: 'updateBoard', board })
    },
    createTaskGroup(title) {
-     
+     this.addingTask = false
      this.$store.dispatch({ type: 'addTaskGroup', title })
+     
    },
    duplicateTaskGroup(taskGroup){
       this.$store.dispatch({ type: 'duplicateTaskGroup', taskGroup })
@@ -108,6 +116,55 @@ components: {
 }
 </script>
 
-<style>
+<style lang="scss" >
 
+
+ .btn-save-group {
+      background-color: #5aac44;
+      color: #fbfdfb;
+      font-size: 0.9rem;
+      padding: 10px;
+      border-radius: 3px;
+      float: left;
+      margin-left: 10px;
+      margin-bottom: 10px;
+      border: 0;
+      cursor: pointer;
+      outline: none;
+
+      &:hover {
+        background-color: #61bd4f;
+      }
+      }
+        .add-group-inputs {
+
+          margin-top: 10px ;
+          justify-content: center;
+          align-items: center;
+          .btn-close {
+        float: left;
+        margin-left: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+        width: 30px;
+        background: rgba($color: #cfcdcd, $alpha: 0.1);
+  
+        &:hover {
+          color: #172b4d;
+          // background-color: #ebecf0;
+        }
+      }
+           input {
+                   outline: 0px;
+              border: 0px;
+              background-color: #f6f6f6;
+        }
+        div {
+          margin-top: 5px;
+        }
+      
+    }
 </style>
