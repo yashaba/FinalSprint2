@@ -3,7 +3,7 @@
     <div class="preview-content flex space-between" @click="onDetails">
       {{task.title}}
       <div class="members">
-        <avatar :users="task.assignedUsers" />
+        <avatar  class="flex" :users="task.assignedUsers" />
       </div>
       <div class="edit" @click.stop="editTask"></div>
     </div>
