@@ -112,6 +112,7 @@ export default {
     onRemove() {
       console.log("remove", this.task);
       this.$emit("removeTaskEv", this.task);
+       this.task = null;
     }
   },
   computed: {},
