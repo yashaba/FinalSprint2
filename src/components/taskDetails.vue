@@ -1,6 +1,6 @@
 
 <template>
-  <section v-if="task" class="task-details">
+  <section v-if="task"  class="task-details">
     <div class="header">
       <div>
         <i class="fas fa-window-maximize"></i>
@@ -17,7 +17,7 @@
             Members:
             <br />
             <div v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
-              <div :assignedUser="assignedUser">{{assignedUser.fullName}}</div>
+              <div :assignedUser="assignedUser">{{assignedUser.fullName}}<avatar :users="task.assignedUsers"/></div>
             </div>
             <div class="add">
             <i class="fas fa-plus"></i>
@@ -78,8 +78,10 @@ import taskGroup from "../components/taskGroup.vue";
 // import {boardService} from '../services/board-service.js'
 var boardService = require("../services/board-service.js");
 import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
+import Avatar from '../components/avatar.vue'
 
 export default {
+  name: 'task-details',
   data() {
     return {
       task: null
@@ -117,7 +119,8 @@ export default {
   },
   computed: {},
   components: {
-    taskGroup
+    taskGroup,
+     Avatar
   }
 };
 </script>
