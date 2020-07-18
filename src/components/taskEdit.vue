@@ -4,6 +4,15 @@
       <input type="text" v-model="taskTitle.title"/>
       <button class="btn-save-task" @click="saveTask">Save</button>
       <button class="btn-close" @click="close({}, true)">x</button>
+      <!-- <button>
+        <i class="fas fa-plus-circle"></i>
+        Edit Labels
+      </button>
+      <button>Change Members</button>
+      <button>Move</button>
+      <button>Copy</button>
+      <button>Change Due Date</button>
+      <button>Archive</button> -->
     <!-- </div> -->
   </section>
 </template>

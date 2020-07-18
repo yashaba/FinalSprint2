@@ -7,11 +7,11 @@
   border-bottom: 1px solid #b2b9c5;
 
   &:hover {
-    background-color: #f4f5f7;
+    background-color: #f4f5f788;
   }
 
   &:hover .edit {
-    background-color: #f4f5f7;
+    background-color: rgba(244, 245, 247, .7);
   }
 
   &:hover .edit:before{
@@ -28,7 +28,8 @@
   .edit{
     width: 30px;
     text-align: center;
-    background-color: #ffffff;
+    border-radius: 3px;
+    // background-color: #ffffff;
   }
 
   .edit:hover {

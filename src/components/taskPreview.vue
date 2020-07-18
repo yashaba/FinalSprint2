@@ -1,11 +1,10 @@
 <template>
-  <div class="task-preview">
+  <div :style="{ 'background-color': task.bgColor }" class="task-preview">
     <div class="preview-content flex space-between" @click="onDetails"> 
       {{task.title}} 
       <div class="edit" @click.stop="editTask"></div>
     </div>
   </div>
-  <!-- :style="{ 'background-color': task.bgColor }" -->
 </template>
 
 <script>

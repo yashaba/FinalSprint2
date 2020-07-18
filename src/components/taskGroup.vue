@@ -55,7 +55,7 @@ export default {
       taskToSave: {
         _id : taskGroupService.makeId(),
         title: '',
-        bgColor: "green",
+        bgColor: "",
         taskGroup: this.taskGroup._id
         
       }
