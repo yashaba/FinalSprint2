@@ -3,7 +3,7 @@
       <div>
         <input type="text" v-model="taskTitle.title"/>
         <button class="btn-save-task" @click="saveTask">Save</button>
-        <button class="btn-close" @click="close({}, true)">x</button>
+        <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
       <div class="btns-edit-container flex column">
         <button class="btn-edit-modal">

@@ -26,22 +26,15 @@ export default {
     editTask() {
       console.log(this.task._id);
       eventBus.$emit(SHOW_EDIT_TASK, this.task);
-    }
-  },
-<<<<<<< HEAD
-  components: {
-    Avatar
-  }
-};
-=======
-  editTask() {
-    eventBus.$emit(SHOW_EDIT_TASK, {task: this.task, position: {positionX: event.clientX, positionY: event.clientY}});
+    },
+    editTask() {
+      eventBus.$emit(SHOW_EDIT_TASK, {task: this.task, position: {positionX: event.clientX, positionY: event.clientY}});
   }
 },
-components: {
+  components: { 
+    Avatar
+  },
 }
-}
->>>>>>> some changes
 </script>
 
 <style>
