@@ -62,6 +62,7 @@ export default {
 
     created() {
       eventBus.$on(SHOW_EDIT_TASK, task=>{
+        debugger;
         this.taskTitle = task.task;
         this.positionX = `${task.position.positionX}px`;
         this.positionY = `${task.position.positionY}px`;
