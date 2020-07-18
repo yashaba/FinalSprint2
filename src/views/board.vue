@@ -2,7 +2,7 @@
 <section class="column" v-if="board">
   <!-- <div @click="log" class="overlay"> test</div> -->
     
-       <task-edit/>
+       <task-edit @removeTaskEv='removeTask'/>
        <task-details  @updateTaskEv='updateTask' @removeTaskEv='removeTask'> </task-details>
       <div >
  <div class="flex closer">
@@ -86,7 +86,6 @@ export default {
   //    console.log('update trigger');
   //  },
    removeTask(task) {
-     console.log(task);
      this.$store.dispatch({ type: 'removeTask', task })
      this.task = null
    },

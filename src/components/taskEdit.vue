@@ -1,7 +1,7 @@
 <template>
   <section :style="{'top': positionY, 'left': positionX}" v-if="taskTitle" class="task-edit flex">
       <div>
-        <input type="text" v-model="taskTitle.title"/>
+        <input type="text" v-model="taskTitle"/>
         <button class="btn-save-task" @click="saveTask">Save</button>
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
@@ -26,7 +26,7 @@
           <i class="far fa-clock"></i>
           Change Due Date
         </button>
-        <button class="btn-edit-modal">
+        <button class="btn-edit-modal" @click="onRemove">
           <i class="far fa-trash-alt"></i>
           Remove
         </button>
@@ -43,6 +43,7 @@ export default {
     data() {
       return {
         taskTitle: null,
+        task: null,
         positionX: null,
         positionY: null
       }
@@ -51,19 +52,23 @@ export default {
     methods: {
       close(ev = {}, click = false) {
         if (ev.key == 'Escape' || click) {
-          this.taskTitle = null
+          this.taskTitle = null;
         }
       },
       saveTask() {
         this.$store.dispatch({ type: 'updateTask', task: this.taskTitle })
-        this.taskTitle = null
+        this.taskTitle = null;
         },
+      onRemove() {
+        this.$emit("removeTaskEv", this.task);
+        this.taskTitle = null;
+      }
     },
 
     created() {
       eventBus.$on(SHOW_EDIT_TASK, task=>{
-        debugger;
-        this.taskTitle = task.task;
+        this.task = task.task;
+        this.taskTitle = task.task.title;
         this.positionX = `${task.position.positionX}px`;
         this.positionY = `${task.position.positionY}px`;
       })
