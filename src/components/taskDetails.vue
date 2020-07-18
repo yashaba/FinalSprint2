@@ -139,5 +139,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  textarea {
+    resize: none;
+  }
 </style>

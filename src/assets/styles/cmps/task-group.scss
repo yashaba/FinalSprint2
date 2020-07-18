@@ -52,17 +52,19 @@
         }
     }
     .btn-close {
-        float: left;
-        margin-left: 10px;
-        margin-top: 10px;
-        font-size: 16px;
-        border: 0;
-        cursor: pointer;
-        outline: none;
-        &:hover {
-            color: #172b4d;
-            background-color: #ebecf0;
-        }
+      float: left;
+      margin-left: 10px;
+      // margin-top: 10px;
+      font-size: 2rem;
+      border: 0;
+      cursor: pointer;
+      outline: none;
+      color: #7b8799;
+
+      &:hover {
+        color: #172b4d;
+        background-color: #ebecf0;
+      }
     }
 }
 

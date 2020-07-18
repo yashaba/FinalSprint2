@@ -1,32 +1,36 @@
 <template>
-  <section v-if="taskTitle" class="task-edit flex">
-    <!-- <div class="edit-modal"> -->
+  <section :style="{'top': positionY, 'left': positionX}" v-if="taskTitle" class="task-edit flex">
       <div>
         <input type="text" v-model="taskTitle.title"/>
         <button class="btn-save-task" @click="saveTask">Save</button>
         <button class="btn-close" @click="close({}, true)">x</button>
       </div>
-      <div class="flex column">
-        <button>
+      <div class="btns-edit-container flex column">
+        <button class="btn-edit-modal">
           <i class="fas fa-tag"></i>
           Edit Labels
         </button>
-        <button>
+        <button class="btn-edit-modal">
           <i class="far fa-user"></i>
           Change Members
         </button>
-        <button>Move</button>
-        <button>Copy</button>
-        <button>
+        <button class="btn-edit-modal">
+          <i class="fas fa-arrow-right"></i>
+          Move
+        </button>
+        <button class="btn-edit-modal">
+          <i class="fas fa-copy"></i>
+          Copy
+        </button>
+        <button class="btn-edit-modal">
           <i class="far fa-clock"></i>
           Change Due Date
         </button>
-        <button>
+        <button class="btn-edit-modal">
           <i class="far fa-trash-alt"></i>
           Remove
         </button>
       </div>
-    <!-- </div> -->
   </section>
 </template>
 
@@ -38,7 +42,9 @@ export default {
 
     data() {
       return {
-        taskTitle: null
+        taskTitle: null,
+        positionX: null,
+        positionY: null
       }
     },
 
@@ -49,30 +55,16 @@ export default {
         }
       },
       saveTask() {
-        // if (!this.taskToSave) return;
-        console.log(this.taskTitle._id);
         this.$store.dispatch({ type: 'updateTask', task: this.taskTitle })
         this.taskTitle = null
         },
-      // makeId(length = 6) {
-      //   var txt = '';
-      //   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-      //   for (var i = 0; i < length; i++) {
-      //     txt += possible.charAt(Math.floor(Math.random() * possible.length));
-      //   }
-
-      //   return txt;
-      // }
     },
 
     created() {
       eventBus.$on(SHOW_EDIT_TASK, task=>{
-        // if (!task._id) {
-        //   var id = this.makeId;
-        //   console.log(id);
-        // }
-        this.taskTitle = task;
+        this.taskTitle = task.task;
+        this.positionX = `${task.position.positionX}px`;
+        this.positionY = `${task.position.positionY}px`;
       })
       window.addEventListener('keydown', this.close);
   },
@@ -85,5 +77,8 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+  .task-edit {
+    position: absolute;
+  }
 </style>
