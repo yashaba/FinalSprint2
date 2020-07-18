@@ -1,6 +1,6 @@
 
 <template>
-  <section v-if="task"  class="task-details">
+  <section v-if="task" class="task-details">
     <div class="header">
       <div>
         <i class="fas fa-window-maximize"></i>
@@ -16,11 +16,16 @@
           <div class="details-members">
             Members:
             <br />
-            <div v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
-              <div :assignedUser="assignedUser">{{assignedUser.fullName}}<avatar :users="task.assignedUsers"/></div>
-            </div>
-            <div class="add">
-            <i class="fas fa-plus"></i>
+            <!-- <div class="members" v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
+            <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
+            <div class="members">
+              <div class="avatars">
+                <avatar :users="task.assignedUsers" />
+
+                <div class="add">
+                  <i class="fas fa-plus"></i>
+                </div>
+              </div>
             </div>
           </div>
           <div class="details-labels">Labels:</div>
@@ -28,10 +33,10 @@
         </div>
         <div class="details-desc">
           <div>
-          <i class="fas fa-align-left"></i>
-          <span> Description</span>
-           </div>
-        <textarea placeholder="Add a more details description..." rows="1">{{task.desc}}</textarea>
+            <i class="fas fa-align-left"></i>
+            <span>Description</span>
+          </div>
+          <textarea placeholder="Add a more details description..." rows="1">{{task.desc}}</textarea>
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
@@ -78,10 +83,10 @@ import taskGroup from "../components/taskGroup.vue";
 // import {boardService} from '../services/board-service.js'
 var boardService = require("../services/board-service.js");
 import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
-import Avatar from '../components/avatar.vue'
+import Avatar from "../components/avatar.vue";
 
 export default {
-  name: 'task-details',
+  name: "task-details",
   data() {
     return {
       task: null
@@ -96,10 +101,10 @@ export default {
 
   created() {
     console.log("tft");
-     eventBus.$on('closer-clicked', () => {
-             console.log('event bus working');
-           this.task = null
-           })
+    eventBus.$on("closer-clicked", () => {
+      console.log("event bus working");
+      this.task = null;
+    });
 
     eventBus.$on(SHOW_DETAILS, task => {
       this.task = task;
@@ -115,16 +120,16 @@ export default {
       this.task = null;
     },
 
-     onRemove() {
+    onRemove() {
       console.log("remove", this.task);
       this.$emit("removeTaskEv", this.task);
-       this.task = null;
+      this.task = null;
     }
   },
   computed: {},
   components: {
     taskGroup,
-     Avatar
+    Avatar
   }
 };
 </script>

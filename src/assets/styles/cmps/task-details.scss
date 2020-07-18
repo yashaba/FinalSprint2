@@ -32,6 +32,9 @@
             // font-weight: 400;
             cursor: pointer;
             transition: background-color 85ms,color 85ms;
+            border: 0px;
+            outline: 0;
+
         }
         button:hover { 
             background-color: rgba(9, 30, 66, .08);
@@ -53,14 +56,11 @@
         margin: 20px 0 25px 21px;
 
         .details-members{
-            flex-wrap: wrap;
            .add{
             background-color: rgba(9, 30, 66, .06);
         //     -webkit-transition: all .3s;
             color: grey;
             transition: all .3s;
-        //     border: 0;
-        //     outline: 0;
             height: 30px;
             width: 30px;
             padding-top: 3px;
@@ -76,6 +76,32 @@
     }
     .details-edit * {
         margin-right: 10px;
+        // flex-wrap: wrap;
+        .members {
+        display: flex;
+        // width: 28px;
+        // height: 28px;
+        }
+        .avatars {
+            // width: 100px;
+            // flex-direction: row;
+            // position: relative;
+        }
+        .avatars *{
+        //     flex-direction: row;
+        // flex-wrap: wrap;
+        }
+        .members *{
+        margin-right: 0px;
+        // flex-wrap: wrap;
+        // width: 28px;
+        }
+    }
+
+    .members {
+        display: flex;
+              flex-direction: row;
+        flex-wrap: wrap;
     }
 
     .details-desc {
