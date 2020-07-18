@@ -1,12 +1,15 @@
 <template>
   <div :style="{ 'background-color': task.bgColor }" class="task-preview">
     <div class="preview-content flex space-between" @click="onDetails">
-      {{task.title}}
+      {{task.title}} 
+      <div class="flex"> 
       <div class="members">
         <avatar  class="flex" :users="task.assignedUsers" />
       </div>
       <div class="edit" @click.stop="editTask"></div>
+      </div>
     </div>
+      <i class="fas fa-tasks"></i>
   </div>
 </template>
 
