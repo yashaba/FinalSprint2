@@ -11,8 +11,10 @@
     <div class="members">
       {{task.title}}
       <avatar class="flex" :users="task.assignedUsers" />
-    </div>
-      <!-- <i class="fas fa-tasks"></i> -->
+    </div >
+    <div v-if="task.checkLists">
+     <check-list-preview :task='task'></check-list-preview>
+     </div>
   </div>
 </template>
 
@@ -23,6 +25,7 @@ import {
   SHOW_EDIT_TASK
 } from "../services/event-bus.service.js";
 import Avatar from "../components/avatar.vue";
+import checkListPreview from './checkListPreview.vue'
 export default {
   props: ["task"],
   methods: {
@@ -41,7 +44,8 @@ export default {
     });
   },
   components: {
-    Avatar
+    Avatar,
+    checkListPreview
   }
 };
 </script>
