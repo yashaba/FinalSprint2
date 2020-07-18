@@ -15,12 +15,12 @@ data() {return {
 }},
 computed: {
  calcDone: function() {
-     return this.task.checkLists[0].list.map( item => item.isDone ).length
+     return this.task.checkLists[0].list.filter( item => item.isDone ).length
  }
 },
 
 created() {
-    console.log( 'dsadsadas',this.task.checkLists[0].list.map( item => item.isDone ).length)
+    console.log( 'dsadsadas',this.task.checkLists[0].list.filter( item => item.isDone ).length)
 }
 }
 

@@ -166,7 +166,9 @@ export default {
     addChecklist(checklistTitle) {
       console.log(checklistTitle);
       let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle))
-      this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: checklistTitleCopy, task: this.task})
+     
+      this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: {title: checklistTitleCopy , list: []}, task: this.task})
+     
     }
   },
   computed: {},

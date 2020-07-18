@@ -70,10 +70,14 @@ export const boardStore = {
         setFilterBy(state, { filterBy }) {
             state.filterBy = {...filterBy };
         },
-        addNewChecklist(state, {checklistToSave, task }) {
+        addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
             const taskidx = state.currBoard.taskGroups[taskGroupidx].tasks.findIndex(taskItem => taskItem._id === task._id);
-            state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checklists.push(checklistToSave);
+            if (!state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checkLists) state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checkLists = []
+            console.log('teskkk', checklistToSave);
+            state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checkLists.push(checklistToSave);
+
+
             boardService.save(state.currBoard);
         }
     },
@@ -138,7 +142,7 @@ export const boardStore = {
                     commit({ type, taskGroup: savedTaskGroup })
                 })
         },
-        addNewChecklist({commit}, {checklistToSave, task}) {
+        addNewChecklist({ commit }, { checklistToSave, task }) {
             commit({ type: 'addNewChecklist', checklistToSave, task })
         }
     },
