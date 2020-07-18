@@ -1,15 +1,18 @@
 <template>
   <div :style="{ 'background-color': task.bgColor }" class="task-preview">
-    <div class="preview-content flex space-between" @click="onDetails">
-      {{task.title}} 
-      <div class="flex"> 
-      <div class="members">
-        <avatar  class="flex" :users="task.assignedUsers" />
-      </div>
-      <div class="edit" @click.stop="editTask"></div>
+        <div class="edit" @click.stop="editTask"></div>
+    <div class="preview-header">
+      <div class="preview-content" @click="onDetails">
+        <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
+            <img :src="`${attachment}`" />
+        </div>
       </div>
     </div>
-      <i class="fas fa-tasks"></i>
+    <div class="members">
+      {{task.title}}
+      <avatar class="flex" :users="task.assignedUsers" />
+    </div>
+      <!-- <i class="fas fa-tasks"></i> -->
   </div>
 </template>
 
@@ -32,12 +35,15 @@ export default {
     }
   },
   editTask() {
-    eventBus.$emit(SHOW_EDIT_TASK, {task: this.task, position: {positionX: event.clientX, positionY: event.clientY}});
+    eventBus.$emit(SHOW_EDIT_TASK, {
+      task: this.task,
+      position: { positionX: event.clientX, positionY: event.clientY }
+    });
   },
-components: {
-  Avatar
-}
-}
+  components: {
+    Avatar
+  }
+};
 </script>
 
 <style>

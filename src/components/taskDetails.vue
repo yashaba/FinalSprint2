@@ -24,7 +24,7 @@
                 <avatar class="flex" :users="task.assignedUsers" />
                 
 
-                <div class="add">
+                  <div class="add">
                   <i class="fas fa-plus"></i>
                 </div>
               </div>
@@ -42,8 +42,10 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
+            <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
+            <div :attachment ="attachment"><img :src="`${attachment}`"></div>
+            </div>
           <br />
-          {{task.attachments}}
         </div>
         <div class="details-checkList">
           <i class="far fa-check-square"></i>
