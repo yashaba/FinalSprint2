@@ -33,7 +33,7 @@
               />
               <button class="btn-save-task" type="submit">Add Card</button>
             </form>
-            <button class="btn-close" @click="close"><i class="fas fa-times fa-lg"></i></button>
+            <button class="btn-close" @click="close">&times;</button>
         </div>
       </div>
     </div>

@@ -28,10 +28,20 @@ export default {
       eventBus.$emit(SHOW_EDIT_TASK, this.task);
     }
   },
+<<<<<<< HEAD
   components: {
     Avatar
   }
 };
+=======
+  editTask() {
+    eventBus.$emit(SHOW_EDIT_TASK, {task: this.task, position: {positionX: event.clientX, positionY: event.clientY}});
+  }
+},
+components: {
+}
+}
+>>>>>>> some changes
 </script>
 
 <style>
