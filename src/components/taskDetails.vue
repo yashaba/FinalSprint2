@@ -42,7 +42,8 @@
           <i class="far fa-check-square"></i>
           CheckList:
           <br />
-          {{task.checkList}}
+          <check-list/>
+          <!-- {{task.checkList}} -->
         </div>
       </div>
       <div class="details-actions">
@@ -79,6 +80,7 @@ import taskGroup from "../components/taskGroup.vue";
 var boardService = require("../services/board-service.js");
 import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
 import Avatar from '../components/avatar.vue'
+import checkList from './checkList.vue'
 
 export default {
   name: 'task-details',
@@ -124,7 +126,8 @@ export default {
   computed: {},
   components: {
     taskGroup,
-     Avatar
+     Avatar,
+     checkList
   }
 };
 </script>

@@ -87,7 +87,13 @@ export default {
 
   methods: {
     openTaskGroupModal() {
-      setTimeout(()=> {this.taskModalShown = !this.taskModalShown}, 0.2)
+      setTimeout(()=> {
+        
+          this.taskModalShown = true
+        
+        
+        
+        }, 0.2)
       
       console.log("triggerrr");
     },
