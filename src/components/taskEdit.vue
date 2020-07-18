@@ -1,18 +1,31 @@
 <template>
-  <section v-if="taskTitle" class="task-edit">
+  <section v-if="taskTitle" class="task-edit flex">
     <!-- <div class="edit-modal"> -->
-      <input type="text" v-model="taskTitle.title"/>
-      <button class="btn-save-task" @click="saveTask">Save</button>
-      <button class="btn-close" @click="close({}, true)">x</button>
-      <!-- <button>
-        <i class="fas fa-plus-circle"></i>
-        Edit Labels
-      </button>
-      <button>Change Members</button>
-      <button>Move</button>
-      <button>Copy</button>
-      <button>Change Due Date</button>
-      <button>Archive</button> -->
+      <div>
+        <input type="text" v-model="taskTitle.title"/>
+        <button class="btn-save-task" @click="saveTask">Save</button>
+        <button class="btn-close" @click="close({}, true)">x</button>
+      </div>
+      <div class="flex column">
+        <button>
+          <i class="fas fa-tag"></i>
+          Edit Labels
+        </button>
+        <button>
+          <i class="far fa-user"></i>
+          Change Members
+        </button>
+        <button>Move</button>
+        <button>Copy</button>
+        <button>
+          <i class="far fa-clock"></i>
+          Change Due Date
+        </button>
+        <button>
+          <i class="far fa-trash-alt"></i>
+          Remove
+        </button>
+      </div>
     <!-- </div> -->
   </section>
 </template>
