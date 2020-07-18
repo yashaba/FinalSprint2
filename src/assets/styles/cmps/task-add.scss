@@ -10,22 +10,4 @@
     &:hover {
         background-color: rgba($color: #c5bebe, $alpha: 0.5);
     }
-    button {
-        width: 100px;
-    }
-    .group-title {
-        color: #263959;
-        margin-left: 10px;
-    }
-    .btn-edit {
-        margin-right: 10px;
-    }
-    .btn-add-task {
-        margin-bottom: 10px;
-        padding: 5px;
-        padding-right: 70px;
-        font-size: 1rem;
-        float: left;
-        margin-left: 10px;
-    }
 }
