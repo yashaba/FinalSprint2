@@ -19,7 +19,7 @@
             <!-- <div class="members" v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
             <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
             <div class="members flex">
-              <div class="avatars">
+              <div class="avatars flex">
                 <div class="flex">
                 <avatar class="flex" :users="task.assignedUsers" />
                 </div>
