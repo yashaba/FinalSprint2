@@ -3,23 +3,21 @@
   font-size: .875rem;
   background-color:  #ffffff;
   margin: 10px;
-  padding: 10px;
+  // padding: 10px;
+  padding: 0px 0px 10px 0px;
   border-radius: 3px;
   cursor: pointer;
   border-bottom: 1px solid #b2b9c5;
   word-break: break-all;
+  position: relative;
   
   &:hover {
     background-color: #f4f5f788;
   }
   
-  .preview-content {
-    overflow-wrap: break-word;
-  }
-
-  &:hover .edit {
-    background-color: rgba(244, 245, 247, .7);
-  }
+  // &:hover .edit {
+    // background-color: rgba(244, 245, 247, .7);
+  // }
 
   &:hover .edit:before{
     font-family: "Font Awesome 5 Free";
@@ -27,15 +25,35 @@
     font-weight: 600;
     font-size: 15px;
     color: #7e899d;
+    padding: 8px 10px;
+    border-radius: 5px;
+    background-color: rgba(244, 245, 247, .7)
   }
 
   .edit{
-    width: 30px;
-    text-align: center;
-    border-radius: 3px;
+    position: absolute;
+    top: 5px;
+    right: 0px;
   }
 
-  .edit:hover {
-    background-color: #ebecf0;
+  .members {
+    margin: 10px;
+    padding-top: 10px;
+  }
+
+  // .edit:hover {
+    // background-color: #cdcdcee8;
+  // }
+
+  .preview-header {
+    flex-direction: row;
+  }
+
+  .attachments {
+    img {
+    width: 100%;
+    height: 140px;
+    border-radius: 5px;
+    }
   }
 }

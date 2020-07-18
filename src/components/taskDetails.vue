@@ -18,11 +18,13 @@
             <br />
             <!-- <div class="members" v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
             <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
-            <div class="members">
-              <div class="avatars">
-                <avatar :users="task.assignedUsers" />
+            <div class="members flex">
+              <div class="avatars flex">
+                
+                <avatar class="flex" :users="task.assignedUsers" />
+                
 
-                <div class="add">
+                  <div class="add">
                   <i class="fas fa-plus"></i>
                 </div>
               </div>
@@ -40,14 +42,20 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
+            <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
+            <div :attachment ="attachment"><img :src="`${attachment}`"></div>
+            </div>
           <br />
-          {{task.attachments}}
         </div>
         <div class="details-checkList">
           <i class="far fa-check-square"></i>
           CheckList:
           <br />
-          <check-list/>
+          <div v-for="(checkList , idx) in task.checkLists " :key="idx">
+           <h4> {{checkList.title}} </h4>
+          <check-list @updateChecklistEv='updateCheckLists' :idx="idx" :checkList="checkList"> </check-list>
+          
+          </div>
           <!-- {{task.checkList}} -->
         </div>
       </div>
@@ -133,6 +141,11 @@ export default {
   },
 
   methods: {
+    updateCheckLists(updatedCheckList) {
+     console.log( updatedCheckList);
+      this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
+      this.$emit('updateTaskEv', this.task)
+    },
     closeDetails() {
       this.task = null;
     },

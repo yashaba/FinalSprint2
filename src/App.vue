@@ -44,32 +44,32 @@
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  // text-align: center;
-  color: #2c3e50;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  // // text-align: center;
+  // color: #2c3e50;
 }
 
 #nav {
-  padding: 30px;
+  // padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  // a {
+  //   font-weight: bold;
+  //   color: #a09c9c;
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  //   &.router-link-exact-active {
+  //     color: #f5f4f4ce;
+  //   }
+  // }
 
-  .link {
-      font-weight: bold;
-      color: #2c3e50;
+  // .link {
+  //     font-weight: bold;
+  //     color: #a7a3a3e7;
 
-      &:active {
-        color: #42b983;
-      }
-  }
+  //     &:active {
+  //       color: #f1f1f1c2;
+  //     }
+  // }
 }
 </style>
