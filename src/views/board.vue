@@ -3,7 +3,7 @@
   <!-- <div @click="log" class="overlay"> test</div> -->
     
        <task-edit/>
-       <task-details  @removeTaskEv='removeTask'> </task-details>
+       <task-details  @updateTaskEv='updateTask' @removeTaskEv='removeTask'> </task-details>
       <div >
  <div class="flex closer">
     <draggable   class="list-group closer flex flex-start"
@@ -96,6 +96,9 @@ export default {
      } )
      console.log(board);
      this.$store.dispatch({ type: 'updateBoard', board })
+   },
+   updateTask(task){
+         this.$store.dispatch({ type: 'updateTask', task: task })
    },
    createTaskGroup(title) {
      this.addingTask = false

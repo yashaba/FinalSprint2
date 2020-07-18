@@ -20,9 +20,9 @@
             <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
             <div class="members flex">
               <div class="avatars flex">
-                <div class="flex">
+                
                 <avatar class="flex" :users="task.assignedUsers" />
-                </div>
+                
 
                   <div class="add">
                   <i class="fas fa-plus"></i>
@@ -51,7 +51,11 @@
           <i class="far fa-check-square"></i>
           CheckList:
           <br />
-          <check-list/>
+          <div v-for="(checkList , idx) in task.checkLists " :key="idx">
+           <h4> {{checkList.title}} </h4>
+          <check-list @updateChecklistEv='updateCheckLists' :idx="idx" :checkList="checkList"> </check-list>
+          
+          </div>
           <!-- {{task.checkList}} -->
         </div>
       </div>
@@ -122,6 +126,11 @@ export default {
   },
 
   methods: {
+    updateCheckLists(updatedCheckList) {
+     console.log( updatedCheckList);
+      this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
+      this.$emit('updateTaskEv', this.task)
+    },
     closeDetails() {
       this.task = null;
     },
