@@ -19,8 +19,8 @@
             <div v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
               <div :assignedUser="assignedUser">{{assignedUser.fullName}}</div>
             </div>
-            <div>
-            <i class="fas fa-plus-circle"></i>
+            <div class="add">
+            <i class="fas fa-plus"></i>
             </div>
           </div>
           <div class="details-labels">Labels:</div>
