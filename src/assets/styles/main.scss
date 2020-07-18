@@ -4,11 +4,11 @@
 @import 'setup/variables';
 @import 'setup/functions';
 @import 'setup/typography';
-
 // BASICS
 @import './basic/base.scss';
 @import './basic/layout';
 @import './basic/helpers';
+@import './basic/overlay.scss';
 // CMPS 
 @import './cmps/task-details.scss';
 @import './cmps/task-edit.scss';

@@ -1,23 +1,23 @@
 <template>
 <section class="column" v-if="board">
-
+  <!-- <div @click="log" class="overlay"> test</div> -->
     
        <task-edit/>
        <task-details  @removeTaskEv='removeTask'> </task-details>
       <div >
- <div class="flex">
-    <draggable   class="list-group flex flex-start"
+ <div class="flex closer">
+    <draggable   class="list-group closer flex flex-start"
         tag="div"   
         v-bind="dragOptions" v-model="board.taskGroups" group="columns" @start="drag=true" @end="drag=false , updateBoard(board)">
        <div v-for="taskGroup in board.taskGroups" :key='taskGroup.id'>
        <task-group @duplicateTaskGroupEv='duplicateTaskGroup' @removeTaskGroupEv='removeTaskGroup' @updateBoardEv='updateBoard(board)' :taskGroup='taskGroup'> </task-group>
        </div>
     </draggable>
-  <div @click="addingTask = true" class="task-add flex justify-center align-center"> 
-    <div v-if="!addingTask">
+  <div @click="addingTask = true" class="task-add flex justify-center align-center closer"> 
+    <div @click="addingTask = true" class="closer" v-if="!addingTask">
     Add task group
     </div>
-    <div class="add-group-inputs flex column" v-if="addingTask">
+    <div class="add-group-inputs flex column " v-if="addingTask">
 
     <input  placeholder="Enter a title" type="text" v-model="newGroupTitle"> 
     <div>
@@ -42,6 +42,7 @@ import taskEdit from '../components/taskEdit.vue';
 import {taskGroupService} from '../services/task-group-service.js'
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
+import {eventBus} from '../services/event-bus.service'
 
 
 
@@ -63,10 +64,23 @@ export default {
   created() {
       this.$store.dispatch({ type: 'loadBoard' })
         .then(board => this.board = board);
+        window.onclick = function(ev) {
+          if ( ev.target.classList.contains("closer")){
+            console.log('trigger');
+           this.addingTask = false
+           eventBus.$emit('closer-clicked')
+          }
+          // console.log('window clickied', ev.target.classList[0]);
+           }
+
+           eventBus.$on('closer-clicked', () => {
+             console.log('event bus working');
+             this.addingTask = false
+           })
  },
  methods: {
    log() {
-     console.log('CHANGED' , this.columns )
+     console.log('CHANGED'  )
    },
   //  updateBoard(){
   //    console.log('update trigger');
@@ -103,7 +117,9 @@ export default {
         animation: 200,
         group: "description",
         disabled: false,
-        ghostClass: "ghost"
+        ghostClass: "ghost",
+        chosenClass: "chosen-class",
+        dragClass: "drag-class"
       }
     }
   },

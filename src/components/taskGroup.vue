@@ -1,18 +1,18 @@
 <template>
   <!-- <div> -->
-    <div class="task-group flex column">
-      <div class="relative flex space-between align-center">
+    <div class="task-group flex column closer">
+      <div class="closer relative flex space-between align-center">
         <p class="group-title">{{taskGroup.title}}</p> 
-        <button class="btn-edit" @click="openTaskGroupModal">...</button>
+        <button class="btn-edit closer" @click="openTaskGroupModal">...</button>
         <div v-if="taskModalShown" class="title-modal column ">
            <div @click="isAdding = true , taskModalShown = false"> <i class="fas fa-plus"></i> Add new task </div>
            <div @click="duplicateTaskGroup"><i class="fas fa-copy"></i> Duplicate List</div>
            <div  @click="removeTaskGroup"> <i class="far fa-trash-alt"></i> Remove list</div>
             </div>
       </div>
-      <div class="tasks1">
+      <div class="tasks1 closer">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
-        <draggable   class="list-group"
+        <draggable   class="list-group closer"
         tag="div"   
         v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
           <div v-for="task in taskGroup.tasks" :key="task.id">
@@ -20,11 +20,11 @@
           </div>
         </draggable>
 
-        <button v-if="!isAdding" class="btn-add-task" @click="addTask">
+        <button v-if="!isAdding" class="btn-add-task closer" @click="addTask">
           <i class="fas fa-plus fa-xs"></i> 
           Add another card
         </button>
-        <div class="add-new-task" v-if="isAdding">
+        <div class="add-new-task " v-if="isAdding">
             <form @submit.prevent="saveNewTask">
               <input
                 type="text"
@@ -44,6 +44,8 @@
 import draggable from "vuedraggable";
 import taskPreview from "./taskPreview.vue";
 import {taskGroupService} from '../services/task-group-service.js'
+import {eventBus} from '../services/event-bus.service'
+
 // import card from './card.vue'
 export default {
   props: ["taskGroup"],
@@ -62,6 +64,11 @@ export default {
     };
   },
   created() {
+    eventBus.$on('closer-clicked', () => {
+             console.log('event bus working');
+             this.isAdding = false
+             this.taskModalShown = false
+           })
     console.log("tasks group", this.taskGroup);
   },
   computed: {
@@ -70,14 +77,18 @@ export default {
         animation: 200,
         group: "description",
         disabled: false,
-        ghostClass: "ghost"
+        ghostClass: "ghost",
+        chosenClass: "chosen-class",
+        dragClass: "drag-class"
+
       };
     }
   },
 
   methods: {
     openTaskGroupModal() {
-      this.taskModalShown = !this.taskModalShown
+      setTimeout(()=> {this.taskModalShown = !this.taskModalShown}, 0.2)
+      
       console.log("triggerrr");
     },
    log() {
@@ -99,7 +110,8 @@ export default {
    },
 
    addTask() {
-      this.isAdding = true;
+     setTimeout(()=> {this.isAdding = true;}, 0.3)
+      
     },
     close() {
       this.isAdding = !this.isAdding;

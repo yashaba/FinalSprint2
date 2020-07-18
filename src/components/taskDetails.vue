@@ -94,6 +94,10 @@ export default {
 
   created() {
     console.log("tft");
+     eventBus.$on('closer-clicked', () => {
+             console.log('event bus working');
+           this.task = null
+           })
 
     eventBus.$on(SHOW_DETAILS, task => {
       this.task = task;

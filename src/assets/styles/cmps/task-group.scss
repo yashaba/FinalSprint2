@@ -1,105 +1,92 @@
-.task-group{
+.task-group {
+    z-index: 1;
     font-family: Opensans-bold, sans-serif;
     font-size: .8500rem;
     background-color: #ebecf0;
     margin-left: 10px;
     border-radius: 3px;
     width: 270px;
-     
     .group-title {
-      color: #263959;
-      margin-left: 10px;
+        color: #263959;
+        margin-left: 10px;
     }
-
     .btn-edit {
-      margin-right: 10px;
-      @include define-btn;
+        margin-right: 10px;
+        @include define-btn;
     }
-
     .btn-add-task {
-      font-family: Opensans-bold, sans-serif;
-      margin-bottom: 10px;
-      padding: 5px;
-      padding-right: 70px;
-      font-size: .8500rem;
-      float: left;
-      margin-left: 10px;
-      @include define-btn;
+        z-index: 1;
+        font-family: Opensans-bold, sans-serif;
+        margin-bottom: 10px;
+        padding: 5px;
+        padding-right: 70px;
+        font-size: .8500rem;
+        float: left;
+        margin-left: 10px;
+        @include define-btn;
     }
-
     .add-new-task input {
-      border: 0;
-      border-bottom: 1px solid #b2b9c5;
-      height: 63px;
-      border-radius: 3px;
-      width: 248px;
-      display: block;
-      margin: 10px;
-      outline: none;
+        border: 0;
+        border-bottom: 1px solid #b2b9c5;
+        height: 63px;
+        border-radius: 3px;
+        width: 248px;
+        display: block;
+        margin: 10px;
+        outline: none;
     }
-
     .btn-save-task {
-      background-color: #5aac44;
-      color: #fbfdfb;
-      font-size: 0.9rem;
-      padding: 10px;
-      border-radius: 3px;
-      float: left;
-      margin-left: 10px;
-      margin-bottom: 10px;
-      border: 0;
-      cursor: pointer;
-      outline: none;
-
-      &:hover {
-        background-color: #61bd4f;
-      }
+        background-color: #5aac44;
+        color: #fbfdfb;
+        font-size: 0.9rem;
+        padding: 10px;
+        border-radius: 3px;
+        float: left;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+        &:hover {
+            background-color: #61bd4f;
+        }
     }
-
     .btn-close {
-      float: left;
-      margin-left: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-      border: 0;
-      cursor: pointer;
-      outline: none;
-
-      &:hover {
-        color: #172b4d;
-        background-color: #ebecf0;
-      }
+        float: left;
+        margin-left: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+        border: 0;
+        cursor: pointer;
+        outline: none;
+        &:hover {
+            color: #172b4d;
+            background-color: #ebecf0;
+        }
     }
 }
 
 // draggable
-
 // .flip-list-move {
 //     opacity: 1;
 //     transition: transform 0.5s;
 // }
-
 // .no-move {
 //     transition: transform 0s;
 // }
-
 // .ghost {
 //     opacity: 1;
 //     background: #c8ebfb;
 // }
-
 // .list-group {
 //     min-height: 20px;
 // }
-
 // .list-group-item {
 //     cursor: move;
 // }
-
 // .list-group-item i {
 //   cursor: pointer;
 // } 
-
 // .tasks-wrapper {
 //   display: flex;
 //   justify-content: space-evenly;
@@ -108,4 +95,15 @@
 //  background-color: red;
 //  opacity: 1;
 // }
-
+// .chosen-class {
+//     opacity: 1;
+// }
+// .drag-class {
+//     // opacity: 1;
+//     // background-color: rgba($color: #ec1b1b, $alpha: 1.0);
+//     // transition-delay: 1s;
+//     rotate: 4deg;
+// }
+.ghost {
+    opacity: 0;
+}
