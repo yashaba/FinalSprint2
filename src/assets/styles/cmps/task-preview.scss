@@ -8,15 +8,16 @@
   border-radius: 3px;
   cursor: pointer;
   border-bottom: 1px solid #b2b9c5;
+  word-break: break-all;
   position: relative;
   
   &:hover {
     background-color: #f4f5f788;
   }
   
-  &:hover .edit {
+  // &:hover .edit {
     // background-color: rgba(244, 245, 247, .7);
-  }
+  // }
 
   &:hover .edit:before{
     font-family: "Font Awesome 5 Free";
@@ -36,16 +37,21 @@
   }
 
   .members {
-    margin: 10px;
+    margin: 15px 5px 0px 0px;
     padding-top: 10px;
   }
 
-  .edit:hover {
+  // .edit:hover {
     // background-color: #cdcdcee8;
-  }
+  // }
 
   .preview-header {
     flex-direction: row;
+  }
+
+  .task-title {
+    margin: 10px;
+    padding-top: 10px;
   }
 
   .attachments {

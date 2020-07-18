@@ -162,4 +162,45 @@
 
        
     }
+
+    .checklist-modal {
+        background-color: #ffffff;
+        position: absolute;
+        top: 32%;
+        left: 60%;
+        height: 150px;
+        width: 240px;
+
+        .checklist-modal-container {
+            margin: 10px;
+
+            .btn-close {
+                @include define-close-btn;
+                background-color: #ffffff;
+                float: right;
+                font-size: 1rem;
+            }
+
+            h6 {
+                color: #5e6c84;
+                text-align: center;
+            }
+    
+            label {
+                color: #67758b;
+            }
+    
+            input {
+                display: block;
+                border: 1px solid #dfe1e6;
+                background-color: #fafbfc;
+                padding: 10px;
+                outline: none;
+            }
+    
+            .btn-add-checklist {
+                @include define-green-btn;
+            }
+        }
+    }
 }

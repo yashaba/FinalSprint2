@@ -67,7 +67,7 @@
         <button>
           <i class="fas fa-tag"></i>Labels
         </button>
-        <button>
+        <button @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
         <button>
@@ -82,6 +82,17 @@
         <button @click="onRemove">
           <i class="far fa-trash-alt"></i>Remove
         </button>
+      </div>
+    </div>
+
+    <div class="checklist-modal" v-if="isChecklistModal">
+      <div class="checklist-modal-container">
+        <button class="btn-close" @click="close">&times;</button>
+        <h6>Add CheckList</h6>
+        <hr>
+        <label>Title</label>
+        <input type="text" v-model="checklistTitle" placeholder="Checklist"/>
+        <button class="btn-add-checklist" @click="addChecklist(checklistTitle)">Add</button>
       </div>
     </div>
   </section>
@@ -99,7 +110,11 @@ export default {
   name: "task-details",
   data() {
     return {
-      task: null
+      task: null,
+      isChecklistModal: false,
+      positionX: null,
+      positionY: null,
+      checklistTitle: ''
     };
   },
 
@@ -139,6 +154,19 @@ export default {
       console.log("remove", this.task);
       this.$emit("removeTaskEv", this.task);
       this.task = null;
+    },
+    openChecklistModal() {
+      this.isChecklistModal = true;
+      // this.positionX = `${event.clientX}px`;
+      // this.positionY = `${event.clientY}px`;
+    },
+    close() {
+      this.isChecklistModal = !this.isChecklistModal;
+    },
+    addChecklist(checklistTitle) {
+      console.log(checklistTitle);
+      let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle))
+      this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: checklistTitleCopy, task: this.task})
     }
   },
   computed: {},
