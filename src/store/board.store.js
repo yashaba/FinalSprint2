@@ -36,13 +36,13 @@ export const boardStore = {
             boardService.save(state.currBoard);
         },
         removeTask(state, { task }) {
-            console.log('mutator', task, task.taskGroup, task._id);
+            // console.log('mutator', task, task.taskGroup, task._id);
             const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup)
             let currTaskGroup = state.currBoard.taskGroups[idx]
-            console.log('curr task group', currTaskGroup);
+            // console.log('curr task group', currTaskGroup);
             const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id)
             state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1)
-            console.log('state', state);
+            // console.log('state', state);
             boardService.save(state.currBoard)
 
         },
@@ -105,9 +105,7 @@ export const boardStore = {
         },
         removeTask({ commit }, { task }) {
             // console.log('task inside action', task.task);
-
             commit({ type: 'removeTask', task })
-
         },
         removeTaskGroup({ commit }, { taskGroup }) {
             // console.log('task inside action', task.task);
