@@ -36,7 +36,7 @@
   }
 
   .members {
-    margin: 10px;
+    margin: 15px 5px 0px 0px;
     padding-top: 10px;
   }
 
@@ -46,6 +46,11 @@
 
   .preview-header {
     flex-direction: row;
+  }
+
+  .task-title {
+    margin: 10px;
+    padding-top: 10px;
   }
 
   .attachments {

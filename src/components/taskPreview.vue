@@ -1,16 +1,16 @@
 <template>
-  <div :style="{ 'background-color': task.bgColor }" class="task-preview">
-        <div class="edit" @click.stop="editTask"></div>
+  <div :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
+    <div class="edit" @click.stop="editTask"></div>
     <div class="preview-header">
-      <div class="preview-content" @click="onDetails">
+      <div class="preview-content">
         <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
             <img :src="`${attachment}`" />
         </div>
       </div>
     </div>
+      <div class="task-title">{{task.title}}</div>
     <div class="members">
-      {{task.title}}
-      <avatar class="flex" :users="task.assignedUsers" />
+      <avatar class="flex justify-end" :users="task.assignedUsers" />
     </div>
   </div>
 </template>
@@ -30,15 +30,19 @@ export default {
     },
     editTask() {
       console.log(this.task._id);
-      eventBus.$emit(SHOW_EDIT_TASK, this.task);
-    }
-  },
-  editTask() {
-    eventBus.$emit(SHOW_EDIT_TASK, {
+      // eventBus.$emit(SHOW_EDIT_TASK, this.task);
+      eventBus.$emit(SHOW_EDIT_TASK, {
       task: this.task,
       position: { positionX: event.clientX, positionY: event.clientY }
     });
+    }
   },
+  // editTask() {
+  //   eventBus.$emit(SHOW_EDIT_TASK, {
+  //     task: this.task,
+  //     position: { positionX: event.clientX, positionY: event.clientY }
+  //   });
+  // },
   components: {
     Avatar
   }
