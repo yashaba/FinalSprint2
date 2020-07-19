@@ -118,10 +118,11 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
-      positionX: null,
-      positionY: null,
       checklistTitle: '',
       value1: null,
+      // positionX: null,
+      // positionY: null,
+      checklistTitle: ''
     };
   },
 
@@ -174,8 +175,10 @@ export default {
     addChecklist(checklistTitle) {
       
       let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle))
-     
+      this.checklistTitle = '';
       this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: {title: checklistTitleCopy , list: []}, task: this.task})
+
+      this.close();
       this.isChecklistModal = false
      
     }

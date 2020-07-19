@@ -121,9 +121,10 @@ export const boardStore = {
             commit({ type, task, taskGroup })
 
         },
-        updateTask({ commit }, { task, taskGroup }) {
+        updateTask({ commit }, { task }) {
+            console.log(task);
 
-            commit({ type: 'updateTask', task, taskGroup })
+            commit({ type: 'updateTask', task })
         },
         updateBoard({ commit }, { board }) {
 

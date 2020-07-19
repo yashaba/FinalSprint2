@@ -26,11 +26,15 @@
         </button>
         <div class="add-new-task " v-if="isAdding">
             <form @submit.prevent="saveNewTask">
-              <input
-                type="text"
-                v-model="taskToSave.title"
-                placeholder="Enter a title for this card..."
+               <textarea-autosize
+                  class="add-textarea"
+                  placeholder="Enter a title for this card..."
+                  ref="myTextarea"
+                  v-model="taskToSave.title"
+                  :min-height="30"
+                  :max-height="350"
               />
+                  <!-- @focus.native="onFocusTextarea" -->
               <button class="btn-save-task" type="submit">Add Card</button>
             </form>
             <button class="btn-close" @click="close">&times;</button>
