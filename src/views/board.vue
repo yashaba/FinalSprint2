@@ -69,10 +69,7 @@ export default {
         .then(board => this.board = board);
         window.onclick = function(ev) {
           if ( ev.target.classList.contains("closer")){
-<<<<<<< HEAD
-=======
            
->>>>>>> 6123366fbede76cfe281caa373180fa0e54dbe9a
            this.addingTask = false
            eventBus.$emit('closer-clicked')
           }
