@@ -31,7 +31,12 @@
             </div>
           </div>
           <div class="details-labels">Labels:</div>
-          <div class="details-labels">Due Date:</div>
+          <div class="details-labels">Due Date:
+             <el-date-picker
+               v-model="value1"
+               type="date"
+               placeholder="Pick a day">
+          </el-date-picker></div>
         </div>
         <div class="details-desc">
           <div>
@@ -53,6 +58,7 @@
           <br />
           <div v-for="(checkList , idx) in task.checkLists " :key="idx">
            <h4> {{checkList.title}} </h4>
+           
           <check-list @updateChecklistEv='updateCheckLists' :idx="idx" :checkList="checkList"> </check-list>
           
           </div>
@@ -70,7 +76,7 @@
         <button @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
-        <button>
+        <button @click="$emit('pick', new Date())">
           <i class="far fa-clock"></i>Due Date
         </button>
         <button>
@@ -114,7 +120,8 @@ export default {
       isChecklistModal: false,
       positionX: null,
       positionY: null,
-      checklistTitle: ''
+      checklistTitle: '',
+      value1: null,
     };
   },
 
