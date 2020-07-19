@@ -1,7 +1,16 @@
 <template>
   <section :style="{'top': positionY, 'left': positionX}" v-if="taskTitle" class="task-edit flex">
       <div>
-        <input type="text" v-model="taskTitle"/>
+        <textarea-autosize
+          placeholder="Type something here..."
+          ref="myTextarea"
+          v-model="taskTitle"
+          :min-height="30"
+          :max-height="350"
+          @focus.native="onFocusTextarea"
+        />
+        <!-- <textarea v-model="taskTitle"></textarea> -->
+        <!-- <input type="text" v-model="taskTitle"/> -->
         <button class="btn-save-task" @click="saveTask">Save</button>
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
@@ -62,7 +71,14 @@ export default {
       onRemove() {
         this.$emit("removeTaskEv", this.task);
         this.taskTitle = null;
-      }
+      },
+      // onFocusTextarea() {
+      //   this.$nextTick(() => {
+      //   this.$refs.myTextarea.focus()
+      // })
+        // this.$refs.myTextarea.$el.select()
+        // this.$refs.myTextarea.$el.focus();
+      // }
     },
 
     created() {
@@ -87,4 +103,5 @@ export default {
   .task-edit {
     position: absolute;
   }
+
 </style>

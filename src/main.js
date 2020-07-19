@@ -4,6 +4,10 @@ import router from './router'
 import store from './store'
 import '@/assets/styles/main.scss';
 
+import TextareaAutosize from 'vue-textarea-autosize'
+ 
+Vue.use(TextareaAutosize)
+
 Vue.config.productionTip = false
 
 new Vue({

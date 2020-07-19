@@ -1,14 +1,15 @@
 .task-edit {
   z-index: 2;
 
-    input {
-        width: 220px;
-        height: 120px;
-        display: block;
-        border-radius: 4px;
-        outline: none;
-        border: 0;
-    }
+    // input {
+        // width: 220px;
+        // height: 120px;
+        // display: block;
+        // border-radius: 4px;
+        // outline: none;
+        // border: 0;
+        // resize: none
+    // }
 
     .btn-save-task {
         @include define-green-btn;
