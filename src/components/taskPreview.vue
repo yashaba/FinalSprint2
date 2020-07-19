@@ -1,5 +1,6 @@
 <template>
   <div :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
+    <task-preview-labels-list :labels="task.labels"/>
     <div class="edit" @click.stop="editTask"></div>
     <div class="preview-header">
       <div class="preview-content">
@@ -29,7 +30,9 @@ import {
   SCREEN_MODE
 } from "../services/event-bus.service.js";
 import Avatar from "../components/avatar.vue";
-import checkListPreview from './checkListPreview.vue'
+import checkListPreview from './checkListPreview.vue';
+import taskPreviewLabelsList from './taskPreviewLabelsList.vue';
+
 export default {
   props: ["task"],
   methods: {
@@ -54,7 +57,8 @@ export default {
   // },
   components: {
     Avatar,
-    checkListPreview
+    checkListPreview,
+    taskPreviewLabelsList
   }
 };
 </script>

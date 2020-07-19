@@ -62,8 +62,8 @@ export default {
         _id : taskGroupService.makeId(),
         title: '',
         bgColor: "",
-        taskGroup: this.taskGroup._id
-        
+        taskGroup: this.taskGroup._id,
+        labels: []
       }
     };
   },

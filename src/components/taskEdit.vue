@@ -14,10 +14,11 @@
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
       <div class="btns-edit-container">
-        <button class="btn-edit-modal">
+        <button class="btn-edit-modal" @click="editLabels = !editLabels">
           <i class="fas fa-tag"></i>
           Edit Labels
         </button>
+        <labels-modal v-if="editLabels" :task="task"/>
         <button class="btn-edit-modal">
           <i class="far fa-user"></i>
           Change Members
@@ -44,15 +45,21 @@
 
 <script>
 import { eventBus, SHOW_EDIT_TASK, STOP_SCREEN_MODE } from '../services/event-bus.service.js';
+import labelsModal from "./labelsModal.vue";
 
 export default {
     name: 'task-edit',
+
+    components: {
+      labelsModal
+    },
 
     data() {
       return {
         task: null,
         positionX: null,
-        positionY: null
+        positionY: null,
+        editLabels: false
       }
     },
 
