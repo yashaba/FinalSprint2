@@ -16,7 +16,7 @@ function query() {
         .then(res =>
 
             {
-                console.log('DATA', res.data);
+                // console.log('DATA', res.data);
                 return res.data
             })
 }
