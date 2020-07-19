@@ -9,10 +9,11 @@
       </div>
     </div>
       <div class="task-title">{{task.title}}</div>
-      <div>
+      <div class="flex align-end space-between">
         <div v-if="task.checkLists">
      <check-list-preview :task='task'></check-list-preview>
-     </div>
+     </div> 
+     <div v-if="!task.checkLists"></div>
     <div class="members">
       <avatar class="flex justify-end" :users="task.assignedUsers" />
     </div>

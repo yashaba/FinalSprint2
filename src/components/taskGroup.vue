@@ -147,6 +147,7 @@ components: {
 
 
 .title-modal{
+  z-index: 1;
   width: 120px;
   height: 85px;
   position: absolute;

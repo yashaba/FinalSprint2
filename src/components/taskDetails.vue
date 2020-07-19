@@ -145,6 +145,7 @@ export default {
      console.log( updatedCheckList);
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
       this.$emit('updateTaskEv', this.task)
+      
     },
     closeDetails() {
       this.task = null;
@@ -170,6 +171,7 @@ export default {
       this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: {title: checklistTitleCopy , list: []}, task: this.task})
 
       this.close();
+      this.isChecklistModal = false
      
     }
   },
