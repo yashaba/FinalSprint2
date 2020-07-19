@@ -1,7 +1,7 @@
 <template>
-<section class="column" v-if="board">
+<section class="column" v-if="board" :class="{screen: screen.isScreen}">
+  <!-- :class="{screen: screen.isScreen}" -->
   <!-- <div @click="log" class="overlay"> test</div> -->
-    
        <task-edit @removeTaskEv='removeTask'/>
        <task-details  @updateTaskEv='updateTask' @removeTaskEv='removeTask'> </task-details>
       <div >
@@ -42,7 +42,7 @@ import taskEdit from '../components/taskEdit.vue';
 import {taskGroupService} from '../services/task-group-service.js'
 // import {boardService} from '../services/board-service.js'
 var boardService = require('../services/board-service.js');
-import {eventBus} from '../services/event-bus.service'
+import {eventBus, SCREEN_MODE, STOP_SCREEN_MODE} from '../services/event-bus.service'
 
 
 
@@ -51,7 +51,10 @@ export default {
     return {
       board :  null,
       newGroupTitle: '',
-      addingTask: false
+      addingTask: false,
+      screen: {
+        isScreen: false
+      }
     }
   },
   computed: {
@@ -66,7 +69,6 @@ export default {
         .then(board => this.board = board);
         window.onclick = function(ev) {
           if ( ev.target.classList.contains("closer")){
-            console.log('trigger');
            this.addingTask = false
            eventBus.$emit('closer-clicked')
           }
@@ -74,10 +76,24 @@ export default {
            }
 
            eventBus.$on('closer-clicked', () => {
-             console.log('event bus working');
              this.addingTask = false
            })
+
+      eventBus.$on(SCREEN_MODE, () => {
+          this.screen.isScreen = true;
+      })
+
+       eventBus.$on(STOP_SCREEN_MODE, () => {
+          this.screen.isScreen = false;
+      })
  },
+
+  // $watch() {
+  //      eventBus.$on(SCREEN_MODE, () => {
+  //        console.log('hello');
+  //         this.screen.isScreen = true;
+  //     })
+  // },
  methods: {
    log() {
      console.log('CHANGED'  )

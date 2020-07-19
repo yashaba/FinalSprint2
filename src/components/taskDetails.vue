@@ -112,8 +112,8 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
-      positionX: null,
-      positionY: null,
+      // positionX: null,
+      // positionY: null,
       checklistTitle: ''
     };
   },

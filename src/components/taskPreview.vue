@@ -25,7 +25,8 @@
 import {
   eventBus,
   SHOW_DETAILS,
-  SHOW_EDIT_TASK
+  SHOW_EDIT_TASK,
+  SCREEN_MODE
 } from "../services/event-bus.service.js";
 import Avatar from "../components/avatar.vue";
 import checkListPreview from './checkListPreview.vue'
@@ -38,6 +39,7 @@ export default {
     editTask() {
       console.log(this.task._id);
       // eventBus.$emit(SHOW_EDIT_TASK, this.task);
+      eventBus.$emit(SCREEN_MODE, {});
       eventBus.$emit(SHOW_EDIT_TASK, {
       task: this.task,
       position: { positionX: event.clientX, positionY: event.clientY }

@@ -1,20 +1,19 @@
 <template>
-  <section :style="{'top': positionY, 'left': positionX}" v-if="taskTitle" class="task-edit flex">
+  <section :style="{'top': positionY, 'left': positionX}" class="task-edit flex" v-if="task">
       <div>
         <textarea-autosize
+          class="edit-textarea"
           placeholder="Type something here..."
           ref="myTextarea"
-          v-model="taskTitle"
+          v-model="task.title"
           :min-height="30"
           :max-height="350"
-          @focus.native="onFocusTextarea"
         />
-        <!-- <textarea v-model="taskTitle"></textarea> -->
-        <!-- <input type="text" v-model="taskTitle"/> -->
+          <!-- @focus.native="onFocusTextarea" -->
         <button class="btn-save-task" @click="saveTask">Save</button>
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
-      <div class="btns-edit-container flex column">
+      <div class="btns-edit-container">
         <button class="btn-edit-modal">
           <i class="fas fa-tag"></i>
           Edit Labels
@@ -44,14 +43,13 @@
 </template>
 
 <script>
-import { eventBus, SHOW_EDIT_TASK } from '../services/event-bus.service.js';
+import { eventBus, SHOW_EDIT_TASK, STOP_SCREEN_MODE } from '../services/event-bus.service.js';
 
 export default {
     name: 'task-edit',
 
     data() {
       return {
-        taskTitle: null,
         task: null,
         positionX: null,
         positionY: null
@@ -61,30 +59,37 @@ export default {
     methods: {
       close(ev = {}, click = false) {
         if (ev.key == 'Escape' || click) {
-          this.taskTitle = null;
+          eventBus.$emit(STOP_SCREEN_MODE, {});
+          this.task = null;
         }
       },
       saveTask() {
-        this.$store.dispatch({ type: 'updateTask', task: this.taskTitle })
-        this.taskTitle = null;
+        this.$store.dispatch({ type: 'updateTask', task: this.task });
+        eventBus.$emit(STOP_SCREEN_MODE, {});
+        this.task = null;
         },
       onRemove() {
         this.$emit("removeTaskEv", this.task);
-        this.taskTitle = null;
+        this.task = null;
       },
       // onFocusTextarea() {
       //   this.$nextTick(() => {
       //   this.$refs.myTextarea.focus()
       // })
         // this.$refs.myTextarea.$el.select()
-        // this.$refs.myTextarea.$el.focus();
+      //   this.$refs.myTextarea.focus()
       // }
     },
 
     created() {
+      eventBus.$on("closer-clicked", () => {
+      eventBus.$emit(STOP_SCREEN_MODE, {});
+      this.task = null;
+      })
+
       eventBus.$on(SHOW_EDIT_TASK, task=>{
+        console.log(task.task);
         this.task = task.task;
-        this.taskTitle = task.task.title;
         this.positionX = `${task.position.positionX}px`;
         this.positionY = `${task.position.positionY}px`;
       })

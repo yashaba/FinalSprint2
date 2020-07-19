@@ -17,7 +17,7 @@
 
 <script>
   import userLogin from './components/userLogin.vue';
-  import userSignup from './components/userSignup.vue'
+  import userSignup from './components/userSignup.vue';
 
   export default {
     data() {
