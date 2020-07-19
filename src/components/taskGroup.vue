@@ -69,11 +69,11 @@ export default {
   },
   created() {
     eventBus.$on('closer-clicked', () => {
-             console.log('event bus working');
+             
              this.isAdding = false
              this.taskModalShown = false
            })
-    console.log("tasks group", this.taskGroup);
+    
   },
   computed: {
     dragOptions() {
@@ -99,20 +99,19 @@ export default {
         
         }, 0.2)
       
-      console.log("triggerrr");
+      
     },
    log() {
-     console.log('triggerrr');
+    
    },
    updateBoardEv() {
-     console.log("group")
-     console.log('emitted');
+     
      this.$emit ('updateBoardEv')
    },
    removeTaskGroup(){
     this.taskModalShown = false
      this.$emit ('removeTaskGroupEv' , this.taskGroup)
-     console.log('button trigger', this.taskGroup);
+    
    },
    duplicateTaskGroup() {
      this.taskModalShown = false

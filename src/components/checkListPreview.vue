@@ -24,7 +24,7 @@ computed: {
 },
 
 created() {
-    console.log( this.calcAllDone)
+   
 }
 }
 

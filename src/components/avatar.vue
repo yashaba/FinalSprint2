@@ -13,7 +13,7 @@ export default {
         }
     },
     created(){
-        console.log(this.users)
+        // console.log(this.users)
     },
   components: {
     Avatar

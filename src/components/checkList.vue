@@ -38,7 +38,7 @@ data() {return {
 }},
 methods: {
     log(checkListItem){
-    console.log(checkListItem);
+  
     },
     removeItem(id) {
        let idx = this.checkListItems.findIndex( item => item.id === id)
@@ -46,7 +46,7 @@ methods: {
         this.updateTask()
     },
     updateTask() {
-        console.log("emited");
+        
         this.$emit('updateChecklistEv' , {list: this.checkListItems, idx: this.idx})
     },
     addItem() {

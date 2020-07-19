@@ -69,6 +69,10 @@ export default {
         .then(board => this.board = board);
         window.onclick = function(ev) {
           if ( ev.target.classList.contains("closer")){
+<<<<<<< HEAD
+=======
+           
+>>>>>>> 6123366fbede76cfe281caa373180fa0e54dbe9a
            this.addingTask = false
            eventBus.$emit('closer-clicked')
           }
@@ -76,6 +80,7 @@ export default {
            }
 
            eventBus.$on('closer-clicked', () => {
+            
              this.addingTask = false
            })
 
@@ -96,7 +101,7 @@ export default {
   // },
  methods: {
    log() {
-     console.log('CHANGED'  )
+   
    },
   //  updateBoard(){
   //    console.log('update trigger');
@@ -109,7 +114,7 @@ export default {
      this.board.taskGroups.forEach( taskGroupItem => {
        taskGroupItem.tasks.forEach(task => task.taskGroup = taskGroupItem._id )
      } )
-     console.log(board);
+     
      this.$store.dispatch({ type: 'updateBoard', board })
    },
    updateTask(task){

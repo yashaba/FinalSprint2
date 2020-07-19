@@ -128,7 +128,7 @@ export const boardService = {
 }
 
 function query() {
-    console.log('query triggered');
+
     return Promise.resolve(gBoard);
 }
 
