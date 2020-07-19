@@ -31,12 +31,17 @@
             </div>
           </div>
           <div class="details-labels">Labels:</div>
-          <div class="details-labels">Due Date:
+          <div  v-if="task.dueDate" class="details-labels">Due Date:
              <el-date-picker
-               v-model="value1"
+             style="opacity: 0"
+             ref="datepicker"
+               v-model="task.dueDate"
                type="date"
                placeholder="Pick a day">
-          </el-date-picker></div>
+          </el-date-picker>
+          <date-picker :dueDate='task.dueDate'></date-picker>
+          
+          </div>
         </div>
         <div class="details-desc">
           <div>
@@ -76,7 +81,7 @@
         <button @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
-        <button @click="$emit('pick', new Date())">
+        <button @click="focusOnPicker">
           <i class="far fa-clock"></i>Due Date
         </button>
         <button>
@@ -111,6 +116,7 @@ var boardService = require("../services/board-service.js");
 import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
 import Avatar from '../components/avatar.vue'
 import checkList from './checkList.vue'
+import datePicker from './datePicker'
 
 export default {
   name: "task-details",
@@ -122,7 +128,8 @@ export default {
       value1: null,
       // positionX: null,
       // positionY: null,
-      checklistTitle: ''
+      checklistTitle: '',
+      // taskDueDate: task.dueDate
     };
   },
 
@@ -149,6 +156,11 @@ export default {
   },
 
   methods: {
+    focusOnPicker(){
+      this.task.dueDate = Date.now()
+      setTimeout(()=> {this.$refs.datepicker.focus()}, 0.1)
+     
+    },
     updateCheckLists(updatedCheckList) {
      
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
@@ -165,6 +177,7 @@ export default {
       this.task = null;
     },
     openChecklistModal() {
+     
       this.isChecklistModal = true;
       // this.positionX = `${event.clientX}px`;
       // this.positionY = `${event.clientY}px`;
@@ -187,7 +200,8 @@ export default {
   components: {
     taskGroup,
      Avatar,
-     checkList
+     checkList,
+     datePicker
   }
 };
 </script>
