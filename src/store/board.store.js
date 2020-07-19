@@ -13,6 +13,9 @@ export const boardStore = {
         currBoard(state) {
             return state.currBoard;
         },
+        getLabels(state) {
+            return state.currBoard.labels;
+        }
     },
     mutations: {
         setBoard(state, { currBoard }) {
@@ -68,7 +71,7 @@ export const boardStore = {
 
         },
         setFilterBy(state, { filterBy }) {
-            state.filterBy = {...filterBy };
+            state.filterBy = { ...filterBy };
         },
         addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
@@ -77,6 +80,30 @@ export const boardStore = {
 
             state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checkLists.push(checklistToSave);
 
+
+            boardService.save(state.currBoard);
+        },
+
+        updateLabel(state, { id, name }) {
+            let label = state.currBoard.labels.find(labelElement => labelElement._id === id);
+            label.name = name;
+
+            boardService.save(state.currBoard);
+        },
+
+        toggleLabelInTask(state, { labelId, task }) {
+            let taskGroup = state.currBoard.taskGroups.find(taskGroupElement => taskGroupElement._id === task.taskGroup);
+            let taskInTaskGroup = taskGroup.tasks.find(taskElement => taskElement._id === task._id);
+            let labelsInTask = taskInTaskGroup.labels;
+
+            if (labelsInTask.includes(labelId)) {
+                // Remove labelId from labels
+                const labelIndex = taskInTaskGroup.labels.findIndex(element => element === labelId);
+                taskInTaskGroup.labels.splice(labelIndex, 1);
+            } else {
+                // Add labelId to labels
+                taskInTaskGroup.labels.push(labelId);
+            }
 
             boardService.save(state.currBoard);
         }
@@ -140,6 +167,16 @@ export const boardStore = {
         },
         addNewChecklist({ commit }, { checklistToSave, task }) {
             commit({ type: 'addNewChecklist', checklistToSave, task })
+        },
+
+        updateLabel({ commit }, { label }) {
+            console.log(label);
+
+            commit('updateLabel', label);
+        },
+
+        toggleLabelInTask({ commit }, { labelId, task }) {
+            commit('toggleLabelInTask', { labelId, task });
         }
     },
 
