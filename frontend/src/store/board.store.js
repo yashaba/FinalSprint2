@@ -26,6 +26,9 @@ export const boardStore = {
             state.currBoard = board;
             boardService.save(state.currBoard)
         },
+        // addAttachment(state, { savedAttachment }) {
+        //     state.attachments.unshift(savedAttachment)
+        // },
         setTaskGroups(state, { taskGroups }) {
             state.taskGroups = taskGroups;
         },

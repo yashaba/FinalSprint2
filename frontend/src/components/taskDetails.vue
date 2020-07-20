@@ -20,11 +20,9 @@
             <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
             <div class="members flex">
               <div class="avatars flex">
-                
                 <avatar class="flex" :users="task.assignedUsers" />
-                
 
-                  <div class="add">
+                <div class="add">
                   <i class="fas fa-plus"></i>
                 </div>
               </div>
@@ -42,9 +40,12 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
-            <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
-            <div :attachment ="attachment"><img :src="`${attachment}`"></div>
+          <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
+            <div :attachment="attachment">
+              <img :src="`${attachment}`" />
             </div>
+            <img :src="img" />
+          </div>
           <br />
         </div>
         <div class="details-checkList">
@@ -52,9 +53,8 @@
           CheckList:
           <br />
           <div v-for="(checkList , idx) in task.checkLists " :key="idx">
-           <h4> {{checkList.title}} </h4>
-          <check-list @updateChecklistEv='updateCheckLists' :idx="idx" :checkList="checkList"> </check-list>
-          
+            <h4>{{checkList.title}}</h4>
+            <check-list @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
           </div>
           <!-- {{task.checkList}} -->
         </div>
@@ -75,6 +75,7 @@
         </button>
         <button>
           <i class="fas fa-paperclip"></i>Attachment
+          <input type="file" @change="onUploadImg" />
         </button>
         <button>
           <i class="far fa-window-maximize"></i>Cover
@@ -89,9 +90,9 @@
       <div class="checklist-modal-container">
         <button class="btn-close" @click="close">&times;</button>
         <h6>Add CheckList</h6>
-        <hr>
+        <hr />
         <label>Title</label>
-        <input type="text" v-model="checklistTitle" placeholder="Checklist"/>
+        <input type="text" v-model="checklistTitle" placeholder="Checklist" />
         <button class="btn-add-checklist" @click="addChecklist(checklistTitle)">Add</button>
       </div>
     </div>
@@ -103,8 +104,9 @@ import taskGroup from "../components/taskGroup.vue";
 // import {boardService} from '../services/board-service.js'
 var boardService = require("../services/board-service.js");
 import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
-import Avatar from '../components/avatar.vue'
-import checkList from './checkList.vue'
+import Avatar from "../components/avatar.vue";
+import checkList from "./checkList.vue";
+import { uploadImg } from "../services/imgUpload.service";
 
 export default {
   name: "task-details",
@@ -114,7 +116,9 @@ export default {
       isChecklistModal: false,
       // positionX: null,
       // positionY: null,
-      checklistTitle: ''
+      checklistTitle: "",
+      img: '',
+      taskToEdit: ''
     };
   },
 
@@ -125,15 +129,13 @@ export default {
   },
 
   created() {
-    
     eventBus.$on("closer-clicked", () => {
-      
       this.task = null;
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
       this.task = task;
-     
+      this.taskToEdit = task;
     });
   },
   destroyed() {
@@ -141,18 +143,20 @@ export default {
   },
 
   methods: {
+    async onUploadImg(ev) {
+      var res = await uploadImg(ev);
+      let img = res.url;
+      this.img = res.url;
+    },
     updateCheckLists(updatedCheckList) {
-     
-      this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
-      this.$emit('updateTaskEv', this.task)
-      
+      this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
+      this.$emit("updateTaskEv", this.task);
     },
     closeDetails() {
       this.task = null;
     },
 
     onRemove() {
-     
       this.$emit("removeTaskEv", this.task);
       this.task = null;
     },
@@ -165,27 +169,37 @@ export default {
       this.isChecklistModal = !this.isChecklistModal;
     },
     addChecklist(checklistTitle) {
-      
-      let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle))
-      this.checklistTitle = '';
-      this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: {title: checklistTitleCopy , list: []}, task: this.task})
+      let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle));
+      this.checklistTitle = "";
+      this.$store.dispatch({
+        type: "addNewChecklist",
+        checklistToSave: { title: checklistTitleCopy, list: [] },
+        task: this.task
+      });
 
       this.close();
-      this.isChecklistModal = false
-     
-    }
+      this.isChecklistModal = false;
+    },
+    //   uploadImg() {
+    //   debugger
+    //   task.attachments.unshift(this.img)
+    //    this.$store
+    //     .dispatch({ type: "saveTask", task: this.taskToEdit })
+    //     console.log(task);
+        
+    // }
   },
   computed: {},
   components: {
     taskGroup,
-     Avatar,
-     checkList
+    Avatar,
+    checkList
   }
 };
 </script>
 
 <style scoped>
-  textarea {
-    resize: none;
-  }
+textarea {
+  resize: none;
+}
 </style>

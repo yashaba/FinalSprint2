@@ -1,6 +1,5 @@
 <template>
   <div :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
-    <task-preview-labels-list :labels="task.labels"/>
     <div class="edit" @click.stop="editTask"></div>
     <div class="preview-header">
       <div class="preview-content">
@@ -9,6 +8,7 @@
         </div>
       </div>
     </div>
+    <task-preview-labels-list :labels="task.labels"/>
       <div class="task-title">{{task.title}}</div>
       <div class="flex align-end space-between">
         <div v-if="task.checkLists">
