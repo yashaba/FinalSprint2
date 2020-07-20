@@ -7,7 +7,8 @@ module.exports = {
 }
 
 // Database Name
-const dbName = 'TRELLO_DB';
+const dbName = 'projify';
+// const dbName = 'TRELLO_DB';
 
 var dbConn = null;
 

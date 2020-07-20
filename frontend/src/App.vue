@@ -5,6 +5,8 @@
       <div class="flex">
         <router-link to="/">Home</router-link> |
         <router-link to="/board">Board</router-link> |
+        <router-link to="/u">Dashboard</router-link> |
+        
         <div class="link" @click="loginModal">Login</div> |
         <div class="link" @click="signupModal">Signup</div>
       </div>

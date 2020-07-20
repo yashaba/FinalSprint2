@@ -65,7 +65,7 @@ export default {
   },
 
   created() {
-      this.$store.dispatch({ type: 'loadBoard' })
+      this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id })
         .then(board => this.board = board);
         window.onclick = function(ev) {
           if ( ev.target.classList.contains("closer")){

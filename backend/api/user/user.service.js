@@ -8,13 +8,25 @@ module.exports = {
     getByEmail,
     remove,
     update,
-    add
+    add,
+    query2
 }
 
 async function query() {
     try {
         const collection = await dbService.getCollection('user')
         return collection
+    } catch (err) {
+        console.log('ERROR: cannot find users')
+        throw err;
+    }
+}
+async function query2() {
+    try {
+        const collection = await dbService.getCollection('board')
+        const board = await collection.find({ "members._id": "u101" }).toArray()
+        console.log('BOOOARDD', board);
+        return board
     } catch (err) {
         console.log('ERROR: cannot find users')
         throw err;

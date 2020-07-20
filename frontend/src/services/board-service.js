@@ -13,7 +13,8 @@ export const boardService = {
 //     return `${BASE_URL}/${id}`;
 // }
 
-function _getUrl(id = '0123456789ab0123456789ab') {
+function _getUrl(id) {
+    console.log('get url', );
     return `board/${id}`;
 }
 
@@ -30,8 +31,8 @@ function _getUrl(id = '0123456789ab0123456789ab') {
 //         .then(res => res.data)
 // }
 
-function query() {
-    return httpService.get(_getUrl())
+function query(id) {
+    return httpService.get(`board/${id}`)
 }
 
 // function query(filterBy) {
@@ -41,7 +42,7 @@ function query() {
 
 function getEmptyBoard() {
     return {
-       
+
     }
 }
 

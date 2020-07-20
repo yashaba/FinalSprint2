@@ -11,7 +11,8 @@ module.exports = {
 
 async function query() {
     try {
-        const collection = await dbService.getCollection('boards')
+        const collection = await dbService.getCollection('board')
+        console.log(' collectionnnnnn', collection);
         return collection
     } catch (err) {
         console.log('ERROR: cannot find boards')
@@ -32,16 +33,16 @@ async function query() {
 // }
 
 async function getById(boardId) {
-    const collection = await dbService.getCollection('boards')
+    const collection = await dbService.getCollection('board')
     try {
         console.log(boardId);
         const board = await collection.findOne({ "_id": ObjectId(boardId) })
         console.log(board);
-            // board.givenReviews = await reviewService.query({byboardId: ObjectId(board._id) })
-            // board.givenReviews = board.givenReviews.map(review => {
-            //     delete review.byboard
-            //     return review
-            // })
+        // board.givenReviews = await reviewService.query({byboardId: ObjectId(board._id) })
+        // board.givenReviews = board.givenReviews.map(review => {
+        //     delete review.byboard
+        //     return review
+        // })
         return board
     } catch (err) {
         console.log(`ERROR: while finding board ${boardId}`)
@@ -50,7 +51,7 @@ async function getById(boardId) {
 } // 0-9 a-f a === 10 0f03dr03
 
 async function remove(boardId) {
-    const collection = await dbService.getCollection('boards')
+    const collection = await dbService.getCollection('board')
     try {
         await collection.deleteOne({ "_id": ObjectId(boardId) })
     } catch (err) {
@@ -60,7 +61,7 @@ async function remove(boardId) {
 }
 
 async function update(board) {
-    const collection = await dbService.getCollection('boards')
+    const collection = await dbService.getCollection('board')
     board._id = ObjectId(board._id);
 
     try {
@@ -73,7 +74,7 @@ async function update(board) {
 }
 
 async function add(board) {
-    const collection = await dbService.getCollection('boards')
+    const collection = await dbService.getCollection('board')
     try {
         await collection.insertOne(board);
         return board;
@@ -91,7 +92,7 @@ function _buildCriteria(filterBy) {
     // if (filterBy.inStock) {
     //     criteria.inStock = filterBy.inStock
     // }
-    
+
     // console.log('server criteria:',criteria)
     if (filterBy.name) criteria.name = { $regex: new RegExp(filterBy.name, 'i') };
     if (filterBy.type !== '') criteria.type = filterBy.type;
