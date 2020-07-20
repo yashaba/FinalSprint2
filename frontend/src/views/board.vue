@@ -137,9 +137,9 @@ export default {
         animation: 200,
         group: "description",
         disabled: false,
-        ghostClass: "ghost",
-        chosenClass: "chosen-class",
-        dragClass: "drag-class"
+        ghostClass: "tghost",
+        chosenClass: "tchosen-class",
+        dragClass: "tdrag-class"
       }
     }
   },
@@ -153,6 +153,16 @@ components: {
 </script>
 
 <style lang="scss" >
+      .tghost{
+        }
+    .tchosen-class{
+      
+      .tdrag-class{ 
+        
+        rotate: 10deg;
+         background: rgba($color: #e71818, $alpha: 1.0);
+      }
+     }
 
 
  .btn-save-group {

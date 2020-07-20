@@ -32,6 +32,7 @@ import {
 import Avatar from "../components/avatar.vue";
 import checkListPreview from './checkListPreview.vue';
 import taskPreviewLabelsList from './taskPreviewLabelsList.vue';
+import dueDatePreview from './dueDatePreview.vue'
 
 export default {
   props: ["task"],
@@ -58,7 +59,8 @@ export default {
   components: {
     Avatar,
     checkListPreview,
-    taskPreviewLabelsList
+    taskPreviewLabelsList,
+    dueDatePreview
   }
 };
 </script>

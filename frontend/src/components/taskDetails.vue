@@ -1,5 +1,6 @@
 
 <template>
+  <!-- גגםשדןגםןדשחג -->
   <section v-if="task" class="task-details">
     <div class="header">
       <div>
@@ -29,7 +30,18 @@
             </div>
           </div>
           <div class="details-labels">Labels:</div>
-          <div class="details-labels">Due Date:</div>
+          <div  v-if="task.dueDate.date" class="details-labels">Due Date:
+             <el-date-picker
+             @input="updateTask"
+             style="opacity: 0"
+             ref="datepicker"
+               v-model="task.dueDate.date"
+               type="date"
+               placeholder="Pick a day">
+          </el-date-picker>
+          <date-picker :dueDate='task.dueDate'></date-picker>
+          
+          </div>
         </div>
         <div class="details-desc">
           <div>
@@ -53,8 +65,10 @@
           CheckList:
           <br />
           <div v-for="(checkList , idx) in task.checkLists " :key="idx">
-            <h4>{{checkList.title}}</h4>
-            <check-list @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
+           <h4> {{checkList.title}} </h4>
+           
+          <check-list @updateChecklistEv='updateCheckLists' :idx="idx" :checkList="checkList"> </check-list>
+          
           </div>
           <!-- {{task.checkList}} -->
         </div>
@@ -70,7 +84,7 @@
         <button @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
-        <button>
+        <button @click="focusOnPicker">
           <i class="far fa-clock"></i>Due Date
         </button>
         <button>
@@ -107,6 +121,7 @@ import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
 import Avatar from "../components/avatar.vue";
 import checkList from "./checkList.vue";
 import { uploadImg } from "../services/imgUpload.service";
+import datePicker from './datePicker'
 
 export default {
   name: "task-details",
@@ -114,6 +129,8 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
+      checklistTitle: '',
+      value1: null,
       // positionX: null,
       // positionY: null,
       checklistTitle: "",
@@ -148,9 +165,17 @@ export default {
       let img = res.url;
       this.img = res.url;
     },
+    focusOnPicker(){
+      this.task.dueDate.date = Date.now()
+      setTimeout(()=> {this.$refs.datepicker.focus()}, 0.1)
+     
+    },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
       this.$emit("updateTaskEv", this.task);
+    },
+    updateTask(){
+      this.$emit('updateTaskEv', this.task)
     },
     closeDetails() {
       this.task = null;
@@ -161,6 +186,7 @@ export default {
       this.task = null;
     },
     openChecklistModal() {
+     
       this.isChecklistModal = true;
       // this.positionX = `${event.clientX}px`;
       // this.positionY = `${event.clientY}px`;
@@ -192,8 +218,9 @@ export default {
   computed: {},
   components: {
     taskGroup,
-    Avatar,
-    checkList
+     Avatar,
+     checkList,
+     datePicker
   }
 };
 </script>
