@@ -1,6 +1,5 @@
 <template>
   <div :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
-    <task-preview-labels-list :labels="task.labels"/>
     <div class="edit" @click.stop="editTask"></div>
     <div class="preview-header">
       <div class="preview-content">
@@ -9,11 +8,17 @@
         </div>
       </div>
     </div>
+    <task-preview-labels-list :labels="task.labels"/>
       <div class="task-title">{{task.title}}</div>
       <div class="flex align-end space-between">
+        <div class="flex align-center">
         <div v-if="task.checkLists">
      <check-list-preview :task='task'></check-list-preview>
      </div> 
+     <div class="duedate">
+     <due-date-preview  v-if="task.dueDate.date" :dueDate="task.dueDate"></due-date-preview>
+     </div>
+     </div>
      <div v-if="!task.checkLists"></div>
     <div class="members">
       <avatar class="flex justify-end" :users="task.assignedUsers" />
@@ -32,6 +37,7 @@ import {
 import Avatar from "../components/avatar.vue";
 import checkListPreview from './checkListPreview.vue';
 import taskPreviewLabelsList from './taskPreviewLabelsList.vue';
+import dueDatePreview from './dueDatePreview.vue'
 
 export default {
   props: ["task"],
@@ -58,10 +64,14 @@ export default {
   components: {
     Avatar,
     checkListPreview,
-    taskPreviewLabelsList
+    taskPreviewLabelsList,
+    dueDatePreview
   }
 };
 </script>
 
-<style>
+<style lang='scss' >
+ .duedate {
+   margin-left: 10px;
+ }
 </style>

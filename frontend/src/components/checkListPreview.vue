@@ -39,11 +39,11 @@ created() {
      margin-left: 10px ;
 
     //  background-color: aqua;
-     height: 30px;
+     height: 25px;
      width: 60px;
  }
  .alldone {
-  background-color: rgba($color: #7af143, $alpha: 1.0);
+      background: rgba($color: #81f769, $alpha: 1);
  }
 </style>
 
