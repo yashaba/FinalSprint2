@@ -35,7 +35,7 @@
              <el-date-picker
              style="opacity: 0"
              ref="datepicker"
-               v-model="task.dueDate"
+               v-model="task.dueDate.date"
                type="date"
                placeholder="Pick a day">
           </el-date-picker>
@@ -157,7 +157,7 @@ export default {
 
   methods: {
     focusOnPicker(){
-      this.task.dueDate = Date.now()
+      this.task.dueDate.date = Date.now()
       setTimeout(()=> {this.$refs.datepicker.focus()}, 0.1)
      
     },
