@@ -14,11 +14,11 @@
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
       <div class="btns-edit-container">
-        <button class="btn-edit-modal" @click="editLabels = !editLabels">
+        <button class="btn-edit-modal" @click="openLabels">
           <i class="fas fa-tag"></i>
           Edit Labels
         </button>
-        <labels-modal v-if="editLabels" :task="task"/>
+        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal"/>
         <button class="btn-edit-modal">
           <i class="far fa-user"></i>
           Change Members
@@ -68,17 +68,25 @@ export default {
         if (ev.key == 'Escape' || click) {
           eventBus.$emit(STOP_SCREEN_MODE, {});
           this.task = null;
+          this.editLabels = !this.editLabels
         }
       },
       saveTask() {
         this.$store.dispatch({ type: 'updateTask', task: this.task });
         eventBus.$emit(STOP_SCREEN_MODE, {});
         this.task = null;
+        this.editLabels = !this.editLabels
         },
       onRemove() {
         this.$emit("removeTaskEv", this.task);
         this.task = null;
       },
+      openLabels() {
+        this.editLabels = true;
+      },
+      closeLabelModal() {
+        this.editLabels = !this.editLabels;
+      }
       // onFocusTextarea() {
       //   this.$nextTick(() => {
       //   this.$refs.myTextarea.focus()
@@ -92,6 +100,7 @@ export default {
       eventBus.$on("closer-clicked", () => {
       eventBus.$emit(STOP_SCREEN_MODE, {});
       this.task = null;
+      this.editLabels = !this.editLabels
       })
 
       eventBus.$on(SHOW_EDIT_TASK, task=>{
