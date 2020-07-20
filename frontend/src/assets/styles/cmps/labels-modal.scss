@@ -19,7 +19,6 @@
     }
 
     h5 {
-        text-align: center;
         color: #838ea0;
     }
 
@@ -36,6 +35,7 @@
             position: relative;
             width: 100%;
             margin-bottom: 7px;
+            cursor: pointer;
         }
 
         input {
@@ -77,6 +77,8 @@
             position: absolute;
             top: 10px;
             right: 10px;
+            color: #ffffff;
+            font-size: 0.9rem;
         }
     }
 

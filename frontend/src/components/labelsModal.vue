@@ -71,12 +71,16 @@ export default {
         },
 
         saveLabelChanges() {
-            const label = {
-                id: this.editingLabelId,
-                name: this.editedLabelName
-            };
-
-            this.$store.dispatch('updateLabel', {label});
+            if (!this.editedLabelName) {
+                this.close();
+            } else {
+                const label = {
+                    id: this.editingLabelId,
+                    name: this.editedLabelName
+                };  
+                this.$store.dispatch('updateLabel', {label});
+                this.close();
+            }    
         },
 
         labelClicked(labelId) {

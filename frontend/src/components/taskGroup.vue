@@ -12,13 +12,15 @@
       </div>
       <div class="tasks1 closer">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
-        <draggable   class="list-group closer"
-        tag="div"   
-        v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
+        <div class="tasks-container">
+          <draggable   class="list-group closer"
+          tag="div"   
+          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
           <div v-for="task in taskGroup.tasks" :key="task.id">
             <task-preview :task="task"></task-preview>
           </div>
-        </draggable>
+          </draggable>
+        </div>
 
         <button v-if="!isAdding" class="btn-add-task closer" @click="addTask">
           <i class="fas fa-plus fa-xs"></i> 

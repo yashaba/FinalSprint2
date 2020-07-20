@@ -68,14 +68,14 @@ export default {
         if (ev.key == 'Escape' || click) {
           eventBus.$emit(STOP_SCREEN_MODE, {});
           this.task = null;
-          this.editLabels = !this.editLabels
+          this.editLabels = false;
         }
       },
       saveTask() {
         this.$store.dispatch({ type: 'updateTask', task: this.task });
         eventBus.$emit(STOP_SCREEN_MODE, {});
         this.task = null;
-        this.editLabels = !this.editLabels
+        this.editLabels = false;
         },
       onRemove() {
         this.$emit("removeTaskEv", this.task);
@@ -85,14 +85,14 @@ export default {
         this.editLabels = true;
       },
       closeLabelModal() {
-        this.editLabels = !this.editLabels;
-      }
+        this.editLabels = false;
+      },
       // onFocusTextarea() {
       //   this.$nextTick(() => {
       //   this.$refs.myTextarea.focus()
       // })
         // this.$refs.myTextarea.$el.select()
-      //   this.$refs.myTextarea.focus()
+      //   this.$refs.myTextarea.focus();
       // }
     },
 
@@ -100,7 +100,7 @@ export default {
       eventBus.$on("closer-clicked", () => {
       eventBus.$emit(STOP_SCREEN_MODE, {});
       this.task = null;
-      this.editLabels = !this.editLabels
+      this.editLabels = false;
       })
 
       eventBus.$on(SHOW_EDIT_TASK, task=>{

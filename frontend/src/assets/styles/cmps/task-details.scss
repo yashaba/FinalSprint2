@@ -146,7 +146,7 @@
         display: flex;
         flex-direction: column;
         column-gap: 10px;
-        button {
+        .btn-details-actions {
             font-family: Opensans, sans-serif;
             text-align: left;
             margin-bottom: 10px;
@@ -162,7 +162,7 @@
                 margin-right: 7px;
             }
         }
-        button:hover {
+        .btn-details-actions:hover {
             background-color: rgba(9, 30, 66, .08);
             // border-radius: 4px;
         }
@@ -172,29 +172,41 @@
 
     .checklist-modal {
         background-color: #ffffff;
+        padding: 10px;
         position: absolute;
         top: 32%;
         left: 60%;
-        height: 150px;
-        width: 240px;
+        width: 280px;
+        border-radius: 4px;
+        height: 180px;
 
         .checklist-modal-container {
-            margin: 10px;
+            margin: 5px;
 
             .btn-close {
                 @include define-close-btn;
                 background-color: #ffffff;
-                float: right;
-                font-size: 1rem;
+                color: #6f7b8f;
+                font-size: 1.4rem;
+            
+                &:hover {
+                    color: #172b4d;
+                    background-color: #ffffff;
+                  }
             }
 
-            h6 {
-                color: #5e6c84;
-                text-align: center;
+            h5 {
+                color: #838ea0;
+            }
+
+            hr {
+                border: 1px solid #dfe2e7;
             }
     
             label {
                 color: #67758b;
+                font-size: 0.8rem;
+                padding: 5px;
             }
     
             input {
@@ -203,10 +215,14 @@
                 background-color: #fafbfc;
                 padding: 10px;
                 outline: none;
+                border-radius: 3px;
+                width: 100%;
+                margin-bottom: 15px;
             }
     
             .btn-add-checklist {
                 @include define-green-btn;
+                margin-left: 0;
             }
         }
     }
