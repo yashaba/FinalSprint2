@@ -164,6 +164,8 @@ export default {
       var res = await uploadImg(ev);
       let img = res.url;
       this.img = res.url;
+      this.taskToEdit.attachments.unshift(this.img)
+      this.updateTask();
     },
     focusOnPicker(){
       this.task.dueDate.date = Date.now()
