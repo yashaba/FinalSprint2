@@ -39,7 +39,7 @@
     }
     
     .btn-save-task {
-       @include define-green-btn;
+        @include define-green-btn;
     }
     .btn-close {
         @include define-close-btn;
@@ -47,13 +47,16 @@
 }
 
 // draggable
-// .flip-list-move {
-//     opacity: 1;
-//     transition: transform 0.5s;
-// }
-// .no-move {
-//     transition: transform 0s;
-// }
+.flip-list-move {
+    opacity: 1;
+    transition: transform 0.5s;
+}
+
+.no-move {
+    opacity: 1;
+    transition: transform 0s;
+}
+
 // .ghost {
 //     opacity: 1;
 //     background: #c8ebfb;
@@ -61,9 +64,10 @@
 // .list-group {
 //     min-height: 20px;
 // }
-// .list-group-item {
-//     cursor: move;
-// }
+.list-group-item {
+    cursor: move;
+}
+
 // .list-group-item i {
 //   cursor: pointer;
 // } 
@@ -85,5 +89,5 @@
 //     rotate: 4deg;
 // }
 .ghost {
-    opacity: 0;
+    opacity: 0.5;
 }

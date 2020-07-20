@@ -90,6 +90,10 @@ export default {
   },
 
   methods: {
+    setDragImg() {
+      
+    },
+
     openTaskGroupModal() {
       setTimeout(()=> {
         
