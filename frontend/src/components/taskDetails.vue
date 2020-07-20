@@ -56,7 +56,7 @@
             <div :attachment="attachment">
               <img :src="`${attachment}`" />
             </div>
-            <img :src="img" />
+            <!-- <img :src="img" /> -->
           </div>
           <br />
         </div>
