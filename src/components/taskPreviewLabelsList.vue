@@ -10,7 +10,9 @@
 import taskPreviewLabelsListItem from './taskPreviewLabelsListItem.vue';
 
 export default {
-  components: {taskPreviewLabelsListItem},
+  components: {
+    taskPreviewLabelsListItem
+  },
   
   name: 'task-preview-labels-list',
   
@@ -21,7 +23,7 @@ export default {
       if (!this.labels) return;
       return this.labels.sort((a, b) => a > b ? 1 : -1);
     }
-  }
+  },
 }
 </script>
 

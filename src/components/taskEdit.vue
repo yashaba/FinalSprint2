@@ -95,7 +95,6 @@ export default {
       })
 
       eventBus.$on(SHOW_EDIT_TASK, task=>{
-        console.log(task.task);
         this.task = task.task;
         this.positionX = `${task.position.positionX}px`;
         this.positionY = `${task.position.positionY}px`;
