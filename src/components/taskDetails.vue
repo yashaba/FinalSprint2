@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="details-labels">Labels:</div>
-          <div  v-if="task.dueDate" class="details-labels">Due Date:
+          <div  v-if="task.dueDate.date" class="details-labels">Due Date:
              <el-date-picker
              style="opacity: 0"
              ref="datepicker"
