@@ -34,6 +34,7 @@
           <div class="details-labels">Labels:</div>
           <div  v-if="task.dueDate.date" class="details-labels">Due Date:
              <el-date-picker
+             @input="updateTask"
              style="opacity: 0"
              ref="datepicker"
                v-model="task.dueDate.date"
@@ -167,6 +168,9 @@ export default {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
       this.$emit('updateTaskEv', this.task)
       
+    },
+    updateTask(){
+      this.$emit('updateTaskEv', this.task)
     },
     closeDetails() {
       this.task = null;
