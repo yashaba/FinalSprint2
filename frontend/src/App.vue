@@ -34,11 +34,9 @@
     methods: {
       loginModal() {
         this.isLoginModal = true;
-        this.isSignupModal = false;
       },
       signupModal() {
         this.isSignupModal = true;
-        this.isLoginModal = false;
       },
     }
 }
