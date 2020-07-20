@@ -11,9 +11,14 @@
     <task-preview-labels-list :labels="task.labels"/>
       <div class="task-title">{{task.title}}</div>
       <div class="flex align-end space-between">
+        <div class="flex align-center">
         <div v-if="task.checkLists">
      <check-list-preview :task='task'></check-list-preview>
      </div> 
+     <div class="duedate">
+     <due-date-preview  v-if="task.dueDate.date" :dueDate="task.dueDate"></due-date-preview>
+     </div>
+     </div>
      <div v-if="!task.checkLists"></div>
     <div class="members">
       <avatar class="flex justify-end" :users="task.assignedUsers" />
@@ -65,5 +70,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang='scss' >
+ .duedate {
+   margin-left: 10px;
+ }
 </style>

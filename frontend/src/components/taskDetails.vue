@@ -30,7 +30,8 @@
             </div>
           </div>
           <div class="details-labels">Labels:</div>
-          <div  v-if="task.dueDate.date" class="details-labels">Due Date:
+          <div  v-if="task.dueDate.date" class="details-labels ">Due Date:
+
              <el-date-picker
              @input="updateTask"
              style="opacity: 0"
@@ -39,8 +40,10 @@
                type="date"
                placeholder="Pick a day">
           </el-date-picker>
+          <div class="flex">
           <date-picker :dueDate='task.dueDate'></date-picker>
-          
+        <el-checkbox class="el-checkbox" @input="updateTask" v-model="task.dueDate.isDone"></el-checkbox>
+          </div>
           </div>
         </div>
         <div class="details-desc">
