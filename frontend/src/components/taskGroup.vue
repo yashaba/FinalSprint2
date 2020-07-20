@@ -63,7 +63,22 @@ export default {
         title: '',
         bgColor: "",
         taskGroup: this.taskGroup._id,
-        labels: []
+        labels: [],
+        attachments: [],
+        activites: [],
+        assignedUsers: [],
+        checkList: [],
+        at: Date.now(),
+        by: {
+        fullName: "Brian Cernd",
+        imgUrl: "http://some-img",
+        _id: "u102"
+        },
+        desc: "",
+        dueDate: {
+          date: "",
+          isDone: false
+        },
       }
     };
   },

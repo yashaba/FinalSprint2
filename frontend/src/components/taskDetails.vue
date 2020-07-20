@@ -55,12 +55,18 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
-          <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
+          <div class="attachments" v-for="(attachment, idx) in taskToEdit.attachments" :key="idx">
             <div :attachment="attachment">
               <img :src="`${attachment}`" />
+              <button @click="deleteAttachment(attachment, idx)">Delete</button>
             </div>
-            <img :src="img" />
+            <br />
           </div>
+          <button v-if="taskToEdit.attachments">
+            Add an attachment
+            <input type="file" @change="onUploadImg" />
+          </button>
+
           <br />
         </div>
         <div class="details-checkList">
@@ -68,10 +74,9 @@
           CheckList:
           <br />
           <div v-for="(checkList , idx) in task.checkLists " :key="idx">
-           <h4> {{checkList.title}} </h4>
-           
-          <check-list @updateChecklistEv='updateCheckLists' :idx="idx" :checkList="checkList"> </check-list>
-          
+            <h4>{{checkList.title}}</h4>
+
+            <check-list @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
           </div>
           <!-- {{task.checkList}} -->
         </div>
@@ -124,7 +129,7 @@ import { eventBus, SHOW_DETAILS } from "../services/event-bus.service.js";
 import Avatar from "../components/avatar.vue";
 import checkList from "./checkList.vue";
 import { uploadImg } from "../services/imgUpload.service";
-import datePicker from './datePicker'
+import datePicker from "./datePicker";
 
 export default {
   name: "task-details",
@@ -132,13 +137,13 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
-      checklistTitle: '',
+      checklistTitle: "",
       value1: null,
       // positionX: null,
       // positionY: null,
       checklistTitle: "",
-      img: '',
-      taskToEdit: ''
+      img: "",
+      taskToEdit: "",
     };
   },
 
@@ -167,20 +172,21 @@ export default {
       var res = await uploadImg(ev);
       let img = res.url;
       this.img = res.url;
-      this.taskToEdit.attachments.unshift(this.img)
+      this.taskToEdit.attachments.unshift(this.img);
       this.updateTask();
     },
-    focusOnPicker(){
-      this.task.dueDate.date = Date.now()
-      setTimeout(()=> {this.$refs.datepicker.focus()}, 0.1)
-     
+    focusOnPicker() {
+      this.task.dueDate.date = Date.now();
+      setTimeout(() => {
+        this.$refs.datepicker.focus();
+      }, 0.1);
     },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
       this.$emit("updateTaskEv", this.task);
     },
-    updateTask(){
-      this.$emit('updateTaskEv', this.task)
+    updateTask() {
+      this.$emit("updateTaskEv", this.task);
     },
     closeDetails() {
       this.task = null;
@@ -190,8 +196,11 @@ export default {
       this.$emit("removeTaskEv", this.task);
       this.task = null;
     },
+    deleteAttachment(idx) {
+      this.taskToEdit.attachments.splice(idx, 1);
+      this.updateTask();
+    },
     openChecklistModal() {
-     
       this.isChecklistModal = true;
       // this.positionX = `${event.clientX}px`;
       // this.positionY = `${event.clientY}px`;
@@ -210,22 +219,14 @@ export default {
 
       this.close();
       this.isChecklistModal = false;
-    },
-    //   uploadImg() {
-    //   debugger
-    //   task.attachments.unshift(this.img)
-    //    this.$store
-    //     .dispatch({ type: "saveTask", task: this.taskToEdit })
-    //     console.log(task);
-        
-    // }
+    }
   },
   computed: {},
   components: {
     taskGroup,
-     Avatar,
-     checkList,
-     datePicker
+    Avatar,
+    checkList,
+    datePicker
   }
 };
 </script>
