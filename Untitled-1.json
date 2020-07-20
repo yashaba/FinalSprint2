@@ -1,0 +1,493 @@
+{
+    "_id": "b1001",
+    "createdBy": {
+        "_id": "u102",
+        "fullName": "Brian Cernd",
+        "imgUrl": "http://some-img"
+    },
+    "activites": [
+        {
+            "id": "a101",
+            "by": {
+                "_id": "u101",
+                "fullName": "Orly Amdadi",
+                "imgUrl": "http://some-img"
+            },
+            "type": "DELETE_TASK",
+            "task": "minimalTask",
+            "taskGroup": "minimalGroup",
+            "at": 112223
+        },
+        {
+            "id": "a102",
+            "by": {
+                "_id": "u101",
+                "fullName": "Orly Amdadi",
+                "imgUrl": "http://some-img"
+            },
+            "type": "DELETE_TASK",
+            "task": "",
+            "taskGroup": "minimalGroup",
+            "at": 112223
+        }
+    ],
+    "members": [
+        {
+            "_id": "u101",
+            "fullName": "Orly Amdadi",
+            "imgUrl": "http://some-img"
+        },
+        {
+            "_id": "u103",
+            "fullName": "Jessica Efron",
+            "imgUrl": "http://some-img"
+        },
+        {
+            "_id": "u102",
+            "fullName": "Brian Cernd",
+            "imgUrl": "http://some-img"
+        }
+    ],
+    "taskGroups": [
+        {
+            "_id": "s1001",
+            "title": "BACKLOG",
+            "style": {
+                "bgColor": "#CCBB39"
+            },
+            "addedBy": {
+                "_id": "u102",
+                "fullName": "Brian Cernd",
+                "imgUrl": "http://some-img"
+            },
+            "tasks": [
+                {
+                    "_id": "CNmkc745WN",
+                    "title": "Testing Web Design",
+                    "bgColor": "#FFAF3F",
+                    "taskGroup": "s1001"
+                },
+                {
+                    "_id": "TqnnBpNl6v",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "s1001",
+                    "at": 112223,
+                    "bgColor": "#7BC86C",
+                    "title": "Testing Layout",
+                    "attachments": [
+                        "https://miro.medium.com/max/700/1*XCZZZmhQN4rHLw2dW14BZQ.png"
+                    ],
+                    "checkList": [],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ],
+                    "checkLists": [
+                        {
+                            "title": "layout",
+                            "list": [
+                                {
+                                    "id": "fsdbAP8ueL",
+                                    "txt": "grid",
+                                    "isDone": false,
+                                    "isBeingEdited": false
+                                },
+                                {
+                                    "id": "O9Qip1D5qw",
+                                    "txt": "flex",
+                                    "isDone": false,
+                                    "isBeingEdited": false
+                                },
+                                {
+                                    "id": "JfE18BoDW0",
+                                    "txt": "footer",
+                                    "isDone": false,
+                                    "isBeingEdited": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "_id": "a102",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "s1001",
+                    "at": 112223,
+                    "bgColor": "#CCBB39",
+                    "title": "Design clear navigation",
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                },
+                {
+                    "_id": "KvRlB7VhCE",
+                    "title": "IN PROGRESS",
+                    "bgColor": "#7BC86C",
+                    "taskGroup": "s1001"
+                }
+            ]
+        },
+        {
+            "_id": "J4pDCApOCY",
+            "title": "TO DO",
+            "style": {
+                "bgColor": "#EF7564"
+            },
+            "addedBy": {
+                "_id": "u102",
+                "fullName": "Brian Cernd",
+                "imgUrl": "http://some-img"
+            },
+            "tasks": [
+                {
+                    "_id": "DoEEgybRhj",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "J4pDCApOCY",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "Home Page Design",
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                },
+                {
+                    "_id": "Uyp89OCeBX",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "J4pDCApOCY",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "Genrate Template",
+                    "attachments": [
+                        "https://luna1.co/36f50a.png"
+                    ],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        },
+                        {
+                            "_id": "u101",
+                            "fullName": "Orly Amdadi",
+                            "imgUrl": "http://some-img"
+                        },
+                        {
+                            "_id": "u103",
+                            "fullName": "Jessica Efron",
+                            "imgUrl": "http://some-img"
+                        }
+                    ],
+                    "checkLists": [
+                        {
+                            "title": "nav bar",
+                            "list": [
+                                {
+                                    "id": "O4RL2t115m",
+                                    "txt": "test",
+                                    "isDone": false,
+                                    "isBeingEdited": false
+                                }
+                            ]
+                        },
+                        {
+                            "title": "nav bar",
+                            "list": []
+                        },
+                        {
+                            "title": "nav bar",
+                            "list": []
+                        },
+                        {
+                            "title": "nav bar",
+                            "list": []
+                        }
+                    ]
+                },
+                {
+                    "_id": "cJUinrRXhg",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "New task todo",
+                    "taskGroup": "J4pDCApOCY",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "Fnctionalities development",
+                    "attachments": [
+                        "https://www.slideteam.net/media/catalog/product/cache/960x720/a/g/agile_development_cycle_with_functionality_integrate_and_test_Slide01.jpg"
+                    ],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                },
+                {
+                    "_id": "a101",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "J4pDCApOCY",
+                    "at": 112223,
+                    "bgColor": "#7BC86C",
+                    "title": "Add web spacific content",
+                    "attachments": [],
+                    "checkList": [],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "_id": "O8dP7wVF9P",
+            "title": "COMPLETE",
+            "style": {
+                "bgColor": "#EF7564"
+            },
+            "addedBy": {
+                "_id": "u102",
+                "fullName": "Brian Cernd",
+                "imgUrl": "http://some-img"
+            },
+            "tasks": [
+                {
+                    "_id": "Dah0aspuR9",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "O8dP7wVF9P",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "Background Image",
+                    "attachments": [
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSRcBFvwWwx5kb2YQ3-hgYq_LuBMzL_mcm6Ww&usqp=CAU"
+                    ],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ],
+                    "checkLists": [
+                        {
+                            "title": "image",
+                            "list": [
+                                {
+                                    "id": "Shb1mYOdgp",
+                                    "txt": "find the best",
+                                    "isDone": false,
+                                    "isBeingEdited": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "_id": "VSgBRf2MAP",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "New task todo",
+                    "taskGroup": "O8dP7wVF9P",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "ddsadasd",
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        },
+                        {
+                            "_id": "u101",
+                            "fullName": "Orly Amdadi",
+                            "imgUrl": "http://some-img"
+                        },
+                        {
+                            "_id": "u103",
+                            "fullName": "Jessica Efron",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                },
+                {
+                    "_id": "OnQxGxhFxD",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "O8dP7wVF9P",
+                    "at": 112223,
+                    "bgColor": "#7BC86C",
+                    "title": "Testing Web Design",
+                    "attachments": [
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSRcBFvwWwx5kb2YQ3-hgYq_LuBMzL_mcm6Ww&usqp=CAU"
+                    ],
+                    "checkList": [],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "_id": "gGu203Tkul",
+            "title": "COMPLETE",
+            "style": {
+                "bgColor": "#EF7564"
+            },
+            "addedBy": {
+                "_id": "u102",
+                "fullName": "Brian Cernd",
+                "imgUrl": "http://some-img"
+            },
+            "tasks": [
+                {
+                    "_id": "sYVPkF173v",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "gGu203Tkul",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "Background Image",
+                    "attachments": [
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSRcBFvwWwx5kb2YQ3-hgYq_LuBMzL_mcm6Ww&usqp=CAU"
+                    ],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ],
+                    "checkLists": [
+                        {
+                            "title": "image",
+                            "list": [
+                                {
+                                    "id": "Shb1mYOdgp",
+                                    "txt": "find the best",
+                                    "isDone": false,
+                                    "isBeingEdited": false
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "_id": "XgaQ9LbBcd",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "New task todo",
+                    "taskGroup": "gGu203Tkul",
+                    "at": 112223,
+                    "bgColor": "#EF7564",
+                    "title": "ddsadasd",
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        },
+                        {
+                            "_id": "u101",
+                            "fullName": "Orly Amdadi",
+                            "imgUrl": "http://some-img"
+                        },
+                        {
+                            "_id": "u103",
+                            "fullName": "Jessica Efron",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                },
+                {
+                    "_id": "eDy8WHqRMT",
+                    "by": {
+                        "_id": "u102",
+                        "fullName": "Brian Cernd",
+                        "imgUrl": "http://some-img"
+                    },
+                    "desc": "",
+                    "taskGroup": "gGu203Tkul",
+                    "at": 112223,
+                    "bgColor": "#7BC86C",
+                    "title": "Testing Web Design",
+                    "attachments": [
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSRcBFvwWwx5kb2YQ3-hgYq_LuBMzL_mcm6Ww&usqp=CAU"
+                    ],
+                    "checkList": [],
+                    "assignedUsers": [
+                        {
+                            "_id": "u102",
+                            "fullName": "Brian Cernd",
+                            "imgUrl": "http://some-img"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

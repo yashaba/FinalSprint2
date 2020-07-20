@@ -52,7 +52,7 @@ export default {
 
     methods: {
         isInSelectedLabels(labelId) {
-            return this.activeLabels.includes(labelId);
+            if (this.task.labels) return this.activeLabels.includes(labelId);
         },
 
         getLabel(labelId) {

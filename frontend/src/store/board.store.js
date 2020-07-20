@@ -94,6 +94,7 @@ export const boardStore = {
         toggleLabelInTask(state, { labelId, task }) {
             let taskGroup = state.currBoard.taskGroups.find(taskGroupElement => taskGroupElement._id === task.taskGroup);
             let taskInTaskGroup = taskGroup.tasks.find(taskElement => taskElement._id === task._id);
+            if (!taskInTaskGroup.labels) taskInTaskGroup.labels = [];
             let labelsInTask = taskInTaskGroup.labels;
 
             if (labelsInTask.includes(labelId)) {
