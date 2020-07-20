@@ -1,6 +1,0 @@
-gUsers = createUser()
-
-
-function createUser() {
-
-}
