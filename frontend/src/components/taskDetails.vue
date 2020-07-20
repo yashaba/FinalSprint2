@@ -112,8 +112,8 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
-      positionX: null,
-      positionY: null,
+      // positionX: null,
+      // positionY: null,
       checklistTitle: ''
     };
   },
@@ -125,15 +125,15 @@ export default {
   },
 
   created() {
-    console.log("tft");
+    
     eventBus.$on("closer-clicked", () => {
-      console.log("event bus working");
+      
       this.task = null;
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
       this.task = task;
-      console.log(task);
+     
     });
   },
   destroyed() {
@@ -142,16 +142,17 @@ export default {
 
   methods: {
     updateCheckLists(updatedCheckList) {
-     console.log( updatedCheckList);
+     
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list
       this.$emit('updateTaskEv', this.task)
+      
     },
     closeDetails() {
       this.task = null;
     },
 
     onRemove() {
-      console.log("remove", this.task);
+     
       this.$emit("removeTaskEv", this.task);
       this.task = null;
     },
@@ -164,10 +165,13 @@ export default {
       this.isChecklistModal = !this.isChecklistModal;
     },
     addChecklist(checklistTitle) {
-      console.log(checklistTitle);
+      
       let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle))
-     
+      this.checklistTitle = '';
       this.$store.dispatch({ type: 'addNewChecklist', checklistToSave: {title: checklistTitleCopy , list: []}, task: this.task})
+
+      this.close();
+      this.isChecklistModal = false
      
     }
   },

@@ -26,11 +26,15 @@
         </button>
         <div class="add-new-task " v-if="isAdding">
             <form @submit.prevent="saveNewTask">
-              <input
-                type="text"
-                v-model="taskToSave.title"
-                placeholder="Enter a title for this card..."
+               <textarea-autosize
+                  class="add-textarea"
+                  placeholder="Enter a title for this card..."
+                  ref="myTextarea"
+                  v-model="taskToSave.title"
+                  :min-height="30"
+                  :max-height="350"
               />
+                  <!-- @focus.native="onFocusTextarea" -->
               <button class="btn-save-task" type="submit">Add Card</button>
             </form>
             <button class="btn-close" @click="close">&times;</button>
@@ -58,18 +62,18 @@ export default {
         _id : taskGroupService.makeId(),
         title: '',
         bgColor: "",
-        taskGroup: this.taskGroup._id
-        
+        taskGroup: this.taskGroup._id,
+        labels: []
       }
     };
   },
   created() {
     eventBus.$on('closer-clicked', () => {
-             console.log('event bus working');
+             
              this.isAdding = false
              this.taskModalShown = false
            })
-    console.log("tasks group", this.taskGroup);
+    
   },
   computed: {
     dragOptions() {
@@ -95,20 +99,19 @@ export default {
         
         }, 0.2)
       
-      console.log("triggerrr");
+      
     },
    log() {
-     console.log('triggerrr');
+    
    },
    updateBoardEv() {
-     console.log("group")
-     console.log('emitted');
+     
      this.$emit ('updateBoardEv')
    },
    removeTaskGroup(){
     this.taskModalShown = false
      this.$emit ('removeTaskGroupEv' , this.taskGroup)
-     console.log('button trigger', this.taskGroup);
+    
    },
    duplicateTaskGroup() {
      this.taskModalShown = false
@@ -147,6 +150,7 @@ components: {
 
 
 .title-modal{
+  z-index: 1;
   width: 120px;
   height: 85px;
   position: absolute;
