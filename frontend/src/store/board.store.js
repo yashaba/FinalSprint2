@@ -113,6 +113,8 @@ export const boardStore = {
         loadBoard({ commit, state }) {
             return boardService.query()
                 .then(currBoard => {
+                    console.log(currBoard);
+                    
                     commit({ type: 'setBoard', currBoard })
                     return currBoard
                 })
