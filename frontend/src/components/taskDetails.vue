@@ -66,10 +66,10 @@
             </div>
             <br />
           </div>
-          <button class="add-attachment-btn" v-if="task.attachments">
+          <button class="add-attachment-btn" @click="$refs.fileBtn.click()" v-if="task.attachments">
             Add an attachment
-            <input type="file" @change="onUploadImg" />
           </button>
+            <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
 
           <br />
         </div>
@@ -100,9 +100,9 @@
         <button class="btn-details-actions" @click="focusOnPicker">
           <i class="far fa-clock"></i>Due Date
         </button>
-        <button class="btn-details-actions">
+        <button class="btn-details-actions" @click="$refs.fileBtn.click()" >
           <i class="fas fa-paperclip"></i>Attachment
-          <input type="file" @change="onUploadImg" />
+          <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
         </button>
         <color-picker v-if="isColorPickerOpen" v-model="task.bgColor" />
         <button class="btn-details-actions" @click="openColorPicker">
