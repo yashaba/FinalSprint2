@@ -1,7 +1,7 @@
 <template>
-  <section class="labels-list flex">
+  <section class="labels-list">
       <task-preview-labels-list-item
-        v-for="labelId in sortedLabels"
+        v-for="labelId in labels"
         :key="labelId"
         :labelId="labelId"
         @labelClicked="labelClicked"
@@ -25,10 +25,10 @@ export default {
       
 
   computed: {
-    sortedLabels() {
-      if (!this.labels) return;
-      return this.labels.sort((a, b) => a > b ? 1 : -1);
-    },
+    // sortedLabels() {
+    //   if (!this.labels) return;
+    //   return this.labels.sort((a, b) => a > b ? 1 : -1);
+    // },
 
     showFullLabel() {
       return this.$store.getters.showFullLabel;
@@ -39,7 +39,7 @@ export default {
     labelClicked() {
       this.$store.dispatch('toggleShowFullLabel');
     }
-  }
+  },
 }
 </script>
 

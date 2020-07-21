@@ -1,6 +1,6 @@
 <template>
-<div>
-  <avatar v-for="user in users" :key="user.id" :size="28" :username="user.fullName"/>
+  <div>
+    <avatar v-for="user in users" :key="user.id" :size="28" :username="user.fullName"/>
   </div>
 </template>
     
