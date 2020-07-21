@@ -40,6 +40,7 @@ async function deleteBoard(req, res) {
 async function updateBoard(req, res) {
     const board = req.body;
     await boardService.update(board)
+    console.log(board)
     res.json(board)
 }
 

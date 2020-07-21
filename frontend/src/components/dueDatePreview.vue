@@ -43,13 +43,16 @@ checkDue: function() {
 .date-wrapper{
     border-radius: 10%;
     padding: 3px;
+    font-size: 14px;
+    font-weight: 400;
 }
  .completed {
-     background: rgba($color: #81f769, $alpha: 1.0);
+     background: rgba($color: #f2d600, $alpha: 1.0);
+     color: #fff;
  }
 
  .due {
-        background: rgba($color: #fd0404, $alpha: 0.7);
-
+        background: rgba($color: #eb5a46, $alpha: 0.7);
+        color: #fff;
  }
 </style>

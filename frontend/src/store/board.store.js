@@ -30,13 +30,12 @@ export const boardStore = {
             state.currBoard = currBoard;
             boardService.save(state.currBoard)
         },
-        updateBoard(state, { board }) {
+        saveBoard(state, { board }) {
+            // debugger
             state.currBoard = board;
-            boardService.save(state.currBoard)
+            // boardService.save(state.currBoard)
+            console.log('save board store', board);
         },
-        // addAttachment(state, { savedAttachment }) {
-        //     state.attachments.unshift(savedAttachment)
-        // },
         setTaskGroups(state, { taskGroups }) {
             state.taskGroups = taskGroups;
         },
@@ -83,7 +82,7 @@ export const boardStore = {
 
         },
         setFilterBy(state, { filterBy }) {
-            state.filterBy = {...filterBy };
+            state.filterBy = { ...filterBy };
         },
         addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
@@ -173,8 +172,16 @@ export const boardStore = {
             commit({ type: 'updateTask', task })
         },
         updateBoard({ commit }, { board }) {
-
-            commit({ type: 'updateBoard', board })
+            // debugger
+            return boardService.save(board)
+                .then((savedBoard) => {
+                    console.log('Board', savedBoard);
+                    // debugger
+                    commit({ type: 'saveBoard', board: savedBoard })
+                    SocketService.emit("boardUpdate", board);
+                    return savedBoard;
+                })
+            // commit({ type: 'updateBoard', board })
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
