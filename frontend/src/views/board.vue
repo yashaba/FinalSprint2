@@ -9,7 +9,7 @@
         <avatar class="members flex" :users="board.members"/>
       </div>
       <button @click="isInviteMemberModal">Add member</button>
-      <project-new-member-modal v-if="isModalMember" @closeNewMemberModal="closeNewMemberModal" @addMemberToProject="addMemberToProject"></project-new-member-modal>
+      <project-new-member-modal v-if="isModalMember" @closeNewMemberModal="closeNewMemberModal" @addMemberToBoard="addMemberToBoard"></project-new-member-modal>
     </div>
     <div>
       <div class="flex closer">
@@ -176,8 +176,8 @@ export default {
     closeNewMemberModal() {
       this.isModalMember = !this.isModalMember;
     },
-    addMemberToProject(member) {
-      this.$store.dispatch({ type: "addMemberToBoard", member });
+    addMemberToBoard(userId) {
+      this.$store.dispatch({ type: "addMemberToBoard", userId });
     }
   },
   computed: {
