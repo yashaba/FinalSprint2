@@ -58,7 +58,7 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>
-          <span>Attachments</span>
+          <span class="title">Attachments</span>
           <div class="attachments" v-for="(attachment, idx) in task.attachments" :key="idx">
             <div :attachment="attachment">
               <img :src="`${attachment}`" />

@@ -64,6 +64,9 @@
         justify-content: space-between;
         img {
             border-radius: 5px;
+            margin-top: 20px;
+            max-width: 251px;
+            max-height: 169px;
         }
     }
 
@@ -113,8 +116,8 @@
         flex-direction: column;
         
         i {
-            margin-right: 10px;
-            margin-bottom: 15px;
+            margin-right: 12px;
+            margin-bottom: 20px;
         }
         textarea {
             outline: 0px;
@@ -145,7 +148,11 @@
         }    
     }
 
-
+    .details-attachments{
+        span.title {
+            margin-left: 12px;
+        }
+    }
 
     span.checkList-title{
         margin-left: 10px;
@@ -230,15 +237,6 @@ div.listItem {
        margin-top: 12px;
     }
 }
-
-
-
-    .attachments {
-            &img{
-            max-width: 251px;
-            max-height: 169px;
-            }       
-    }
 
     button.add-attachment-btn{
         margin-bottom: 40px;
