@@ -3,10 +3,22 @@
       <button class="btn-close" @click="close">&times;</button>
       <h5 class="title">Add To Board</h5>
       <hr>
-      <form @submit.prevent="addNewMember">
-        <input type="text" placeholder="name" v-model="memberName" required/>
+      <form @submit.prevent="addNewMember" v-if="users.length">
+        <input list="users" name="user" id="user" @change="change" required autocomplete="off">
+
+        <datalist id="users">
+          <option
+            v-for="user in users"
+            :key="user._id"
+            :value="user._id"
+          >
+            {{ user.fullName }}
+          </option>
+        </datalist>
+
         <button class="btn-add-member">Add</button>
       </form>
+      <p v-else>All users are members of this board.</p>
   </section>
 </template>
 
@@ -16,16 +28,30 @@ export default {
 
     data() {
         return {
-            memberName: ''
+            userId: ''
         }
     },
 
+    computed: {
+      users() {
+        const users = this.$store.getters.getUsers;
+        const members = this.$store.getters.getCurrBoardMembers;
+
+        return users.filter(user => !members.includes(user._id));
+      }
+    },
+
     methods: {
-        close() {
+      close() {
             this.$emit('closeNewMemberModal');
       },
-        addNewMember() {
-          this.$emit('addMemberToProject' , this.memberName);
+
+      change(event) {
+        this.userId = event.target.value;
+      },
+
+      addNewMember() {
+          this.$emit('addMemberToBoard' , this.userId);
           this.close();
       }
     }
