@@ -45,6 +45,7 @@
           border-radius: 3px;
           cursor: pointer;
           transition: margin-left 0.3s;
+          outline: none;
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.8);
