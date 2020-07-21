@@ -1,8 +1,12 @@
 <template>
-  <section class="labels-list">
-    <div v-for="labelId in sortedLabels" :key="labelId">
-      <task-preview-labels-list-item :labelId="labelId" />
-    </div>
+  <section class="labels-list flex">
+      <task-preview-labels-list-item
+        v-for="labelId in sortedLabels"
+        :key="labelId"
+        :labelId="labelId"
+        @labelClicked="labelClicked"
+        :showFullLabel="showFullLabel"
+      />
   </section>
 </template>
 
@@ -18,26 +22,26 @@ export default {
   
   props: ['labels'],
 
+      
+
   computed: {
     sortedLabels() {
       if (!this.labels) return;
       return this.labels.sort((a, b) => a > b ? 1 : -1);
+    },
+
+    showFullLabel() {
+      return this.$store.getters.showFullLabel;
     }
   },
+
+  methods: {
+    labelClicked() {
+      this.$store.dispatch('toggleShowFullLabel');
+    }
+  }
 }
 </script>
 
 <style>
-  .labels-list {
-    position: relative;
-    top: 10px;
-    margin-left: 10px;
-  }
-
-  .label {
-    border-radius: 10px;
-    padding: 2px 10px;
-    display: inline;
-  }
-
 </style>

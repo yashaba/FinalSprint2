@@ -5,11 +5,11 @@
   cursor: pointer;
   outline: none;
   color: #7f8a9d;
+  padding: 5px 10px;
 
   &:hover {
       background-color: #dadbe2;
       border-radius: 4px;
-      padding: 5px 10px;
       color: #4d5b76;
   }
 }

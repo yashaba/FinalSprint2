@@ -1,28 +1,34 @@
 <template>
   <div class="labels-modal">
-      <div class="labels flex column">
-          <div
-            class="label flex"
-            v-for="label in labels"
-            :key="label._id"
-            :style="{ 'background-color': label.bgColor }"
-            @click="labelClicked(label._id)"
-        >
-            <div class="label-name">
-                <input
-                    type="text"
-                    v-model="editedLabelName"
-                    v-if="editingLabelId == label._id"
-                />
-                <span v-else>{{ label.name }}</span>
-            </div>
-            <div class="label-actions flex">
-                <i class="edit fas fa-pencil-alt" @click="setLabelUnderEditing(label._id)"></i>
-                <i class="fa fa-check" v-if="isInSelectedLabels(label._id)"></i>
+      <!-- <div class="labels-container"> -->
+        <div class="flex align-center space-between">
+            <h5>Labels</h5>
+            <button class="btn-close" @click="close">&times;</button>
+        </div>
+        <hr>
+        <div class="labels flex column">
+            <div
+                class="label flex"
+                v-for="label in labels"
+                :key="label._id"
+                @click="labelClicked(label._id)"
+            >
+                <div class="label-name" :style="{ 'background-color': label.bgColor }">
+                    <input
+                        type="text"
+                        v-model="editedLabelName"
+                        v-if="editingLabelId == label._id"
+                    />
+                    <p v-else>{{ label.name }}</p>
+                    <i class="check fa fa-check" v-if="isInSelectedLabels(label._id)"></i>
+                </div>
+                <div class="label-actions flex">
+                    <i class="edit fas fa-pencil-alt" @click.stop="setLabelUnderEditing(label._id)"></i>
+                </div>
             </div>
         </div>
-      </div>
-      <button class="btn-save" @click.prevent="saveLabelChanges()">Save</button>
+        <button class="btn-save" @click.prevent="saveLabelChanges()">Save</button>
+      <!-- </div> -->
   </div>
 </template>
 
@@ -65,53 +71,27 @@ export default {
         },
 
         saveLabelChanges() {
-            const label = {
-                id: this.editingLabelId,
-                name: this.editedLabelName
-            };
-
-            this.$store.dispatch('updateLabel', {label});
+            if (!this.editedLabelName) {
+                this.close();
+            } else {
+                const label = {
+                    id: this.editingLabelId,
+                    name: this.editedLabelName
+                };  
+                this.$store.dispatch('updateLabel', {label});
+                this.close();
+            }    
         },
 
         labelClicked(labelId) {
             this.$store.dispatch('toggleLabelInTask', {labelId, task: this.task});
+        },
+        close() {
+            this.$emit('closeLabelModal');
         }
-    }
+      }
 }
 </script>
 
 <style>
-    .labels-modal {
-        background-color: #ffffff;
-        padding: 10px;
-        position: absolute;
-    }
-
-    .labels-modal .labels .label {
-        margin-bottom: 7px;
-    }
-
-    .labels-modal .labels .label input {
-        border: 0;
-        background-color: transparent;
-    }
-
-    .labels-modal .labels .label input:focus {
-        outline: none;
-    }
-
-    .label-name {
-        width: 100%;
-    }
-
-    .label .edit {
-        display: none;
-    }
-
-    .label:hover .edit {
-        display: inline-block;
-    }
-
-
-
 </style>

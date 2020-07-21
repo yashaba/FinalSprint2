@@ -29,7 +29,10 @@
               </div>
             </div>
           </div>
-          <div class="details-labels">Labels:</div>
+          <div class="details-labels">
+            Labels:
+            <task-preview-labels-list :labels="task.labels"/>
+          </div>
           <div  v-if="task.dueDate.date" class="details-labels ">Due Date:
 
              <el-date-picker
@@ -83,26 +86,27 @@
       </div>
       <div class="details-actions">
         <h3>ADD TO CARD</h3>
-        <button>
+        <button class="btn-details-actions">
           <i class="far fa-user"></i>Members
         </button>
-        <button>
+        <button class="btn-details-actions" @click="openLabels">
           <i class="fas fa-tag"></i>Labels
         </button>
-        <button @click="openChecklistModal">
+        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal"/>
+        <button class="btn-details-actions" @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
-        <button @click="focusOnPicker">
+        <button class="btn-details-actions" @click="focusOnPicker">
           <i class="far fa-clock"></i>Due Date
         </button>
-        <button>
+        <button class="btn-details-actions">
           <i class="fas fa-paperclip"></i>Attachment
           <input type="file" @change="onUploadImg" />
-        </button>
-        <button>
+        </button >
+        <button class="btn-details-actions">
           <i class="far fa-window-maximize"></i>Cover
         </button>
-        <button @click="onRemove">
+        <button class="btn-details-actions" @click="onRemove">
           <i class="far fa-trash-alt"></i>Remove
         </button>
       </div>
@@ -110,8 +114,10 @@
 
     <div class="checklist-modal" v-if="isChecklistModal">
       <div class="checklist-modal-container">
-        <button class="btn-close" @click="close">&times;</button>
-        <h6>Add CheckList</h6>
+        <div class="flex align-center space-between">
+          <h5>Add CheckList</h5>
+          <button class="btn-close" @click="close">&times;</button>
+        </div>
         <hr />
         <label>Title</label>
         <input type="text" v-model="checklistTitle" placeholder="Checklist" />
@@ -130,6 +136,8 @@ import Avatar from "../components/avatar.vue";
 import checkList from "./checkList.vue";
 import { uploadImg } from "../services/imgUpload.service";
 import datePicker from "./datePicker";
+import labelsModal from "./labelsModal.vue";
+import taskPreviewLabelsList from './taskPreviewLabelsList.vue';
 
 export default {
   name: "task-details",
@@ -139,8 +147,7 @@ export default {
       isChecklistModal: false,
       checklistTitle: "",
       value1: null,
-      // positionX: null,
-      // positionY: null,
+      editLabels: false,
       checklistTitle: "",
       img: "",
     };
@@ -216,14 +223,22 @@ export default {
 
       this.close();
       this.isChecklistModal = false;
-    }
+    },
+    openLabels() {
+      this.editLabels = true;
+    },
+    closeLabelModal() {
+      this.editLabels = false;
+    },
   },
   computed: {},
   components: {
     taskGroup,
     Avatar,
     checkList,
-    datePicker
+    datePicker,
+    labelsModal,
+    taskPreviewLabelsList,
   }
 };
 </script>

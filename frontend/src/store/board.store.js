@@ -8,7 +8,8 @@ export const boardStore = {
         taskGroups: [],
         currBoard: '',
         // filterBy: { name: '' },
-        filterBy: { searchStr: '' }
+        filterBy: { searchStr: '' },
+        showFullLabel: false
     },
     getters: {
         currBoard(state) {
@@ -16,9 +17,15 @@ export const boardStore = {
         },
         getLabels(state) {
             return state.currBoard.labels;
+        },
+        showFullLabel(state) {
+            return state.showFullLabel;
         }
     },
     mutations: {
+        toggleShowFullLabel(state) {
+            state.showFullLabel = !state.showFullLabel;
+        },
         setBoard(state, { currBoard }) {
             state.currBoard = currBoard;
             boardService.save(state.currBoard)
@@ -115,11 +122,14 @@ export const boardStore = {
         }
     },
     actions: {
+        toggleShowFullLabel({ commit }) {
+            commit('toggleShowFullLabel');
+        },
         loadBoard({ commit, state }) {
             return boardService.query()
                 .then(currBoard => {
                     console.log(currBoard);
-                    
+
                     commit({ type: 'setBoard', currBoard })
                     return currBoard
                 })
