@@ -81,7 +81,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch({ type: "loadBoard" }).then(board => {
+    this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
       this.board = board;
       SocketService.setup();
       SocketService.emit("boardJoined", this.board._id);

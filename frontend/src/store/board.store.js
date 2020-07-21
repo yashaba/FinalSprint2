@@ -83,7 +83,7 @@ export const boardStore = {
 
         },
         setFilterBy(state, { filterBy }) {
-            state.filterBy = { ...filterBy };
+            state.filterBy = {...filterBy };
         },
         addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
@@ -122,11 +122,12 @@ export const boardStore = {
         }
     },
     actions: {
+
         toggleShowFullLabel({ commit }) {
             commit('toggleShowFullLabel');
         },
-        loadBoard({ commit, state }) {
-            return boardService.query()
+        loadBoard({ commit }, { id }) {
+            return boardService.query(id)
                 .then(currBoard => {
                     console.log(currBoard);
 

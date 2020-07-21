@@ -7,7 +7,12 @@ export const userService = {
     query,
     getById,
     remove,
-    update
+    update,
+    getUserBoards
+}
+
+function getUserBoards() {
+    return HttpService.get(`u`)
 }
 
 function getById(userId) {

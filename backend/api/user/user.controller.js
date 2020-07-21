@@ -12,6 +12,13 @@ async function getUsers(req, res) {
     res.send(users)
 }
 
+
+async function getUserBoards(req, res) {
+    const boards = await userService.query2(req.query)
+        // logger.debug(users);
+    res.send(boards)
+}
+
 async function deleteUser(req, res) {
     await userService.remove(req.params.id)
     res.end()
@@ -27,5 +34,6 @@ module.exports = {
     getUser,
     getUsers,
     deleteUser,
-    updateUser
+    updateUser,
+    getUserBoards
 }
