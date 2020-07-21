@@ -43,7 +43,8 @@ created() {
      width: 60px;
  }
  .alldone {
-      background: rgba($color: #81f769, $alpha: 1);
+      background: rgba($color: #61bd4f, $alpha: 1);
+      color: #fff;
  }
 </style>
 
