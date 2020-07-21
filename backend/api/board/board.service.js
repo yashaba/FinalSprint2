@@ -37,12 +37,11 @@ async function getById(boardId) {
     try {
         console.log(boardId);
         const board = await collection.findOne({ "_id": ObjectId(boardId) })
-        console.log(board);
-        // board.givenReviews = await reviewService.query({byboardId: ObjectId(board._id) })
-        // board.givenReviews = board.givenReviews.map(review => {
-        //     delete review.byboard
-        //     return review
-        // })
+            // board.givenReviews = await reviewService.query({byboardId: ObjectId(board._id) })
+            // board.givenReviews = board.givenReviews.map(review => {
+            //     delete review.byboard
+            //     return review
+            // })
         return board
     } catch (err) {
         console.log(`ERROR: while finding board ${boardId}`)

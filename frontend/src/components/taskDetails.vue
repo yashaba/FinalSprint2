@@ -31,22 +31,22 @@
           </div>
           <div class="details-labels">
             Labels:
-            <task-preview-labels-list :labels="task.labels"/>
+            <task-preview-labels-list :labels="task.labels" />
           </div>
-          <div  v-if="task.dueDate.date" class="details-labels ">Due Date:
-
-             <el-date-picker
-             @input="updateTask"
-             style="opacity: 0"
-             ref="datepicker"
-               v-model="task.dueDate.date"
-               type="date"
-               placeholder="Pick a day">
-          </el-date-picker>
-          <div class="flex">
-          <date-picker :dueDate='task.dueDate'></date-picker>
-        <el-checkbox class="el-checkbox" @input="updateTask" v-model="task.dueDate.isDone"></el-checkbox>
-          </div>
+          <div v-if="task.dueDate.date" class="details-labels">
+            Due Date:
+            <el-date-picker
+              @input="updateTask"
+              style="opacity: 0"
+              ref="datepicker"
+              v-model="task.dueDate.date"
+              type="date"
+              placeholder="Pick a day"
+            ></el-date-picker>
+            <div class="flex">
+              <date-picker :dueDate="task.dueDate"></date-picker>
+              <el-checkbox class="el-checkbox" @input="updateTask" v-model="task.dueDate.isDone"></el-checkbox>
+            </div>
           </div>
         </div>
         <div class="details-desc">
@@ -58,14 +58,14 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
-          <div class="attachments" v-for="(attachment, idx) in taskToEdit.attachments" :key="idx">
+          <div class="attachments" v-for="(attachment, idx) in task.attachments" :key="idx">
             <div :attachment="attachment">
               <img :src="`${attachment}`" />
-              <button @click="deleteAttachment(attachment, idx)">Delete</button>
+              <button @click="deleteAttachment(idx)">Delete</button>
             </div>
             <br />
           </div>
-          <button v-if="taskToEdit.attachments">
+          <button v-if="task.attachments">
             Add an attachment
             <input type="file" @change="onUploadImg" />
           </button>
@@ -92,7 +92,7 @@
         <button class="btn-details-actions" @click="openLabels">
           <i class="fas fa-tag"></i>Labels
         </button>
-        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal"/>
+        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal" />
         <button class="btn-details-actions" @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
@@ -102,8 +102,9 @@
         <button class="btn-details-actions">
           <i class="fas fa-paperclip"></i>Attachment
           <input type="file" @change="onUploadImg" />
-        </button >
-        <button class="btn-details-actions">
+        </button>
+        <color-picker v-if="isColorPickerOpen" v-model="task.bgColor" />
+        <button class="btn-details-actions" @click="openColorPicker">
           <i class="far fa-window-maximize"></i>Cover
         </button>
         <button class="btn-details-actions" @click="onRemove">
@@ -137,7 +138,8 @@ import checkList from "./checkList.vue";
 import { uploadImg } from "../services/imgUpload.service";
 import datePicker from "./datePicker";
 import labelsModal from "./labelsModal.vue";
-import taskPreviewLabelsList from './taskPreviewLabelsList.vue';
+import colorPicker from "./color-picker.cmp.vue";
+import taskPreviewLabelsList from "./taskPreviewLabelsList.vue";
 
 export default {
   name: "task-details",
@@ -145,12 +147,12 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
+      isColorPickerOpen: false,
       checklistTitle: "",
       value1: null,
       editLabels: false,
       checklistTitle: "",
-      img: "",
-      taskToEdit: "",
+      img: ""
     };
   },
 
@@ -166,8 +168,7 @@ export default {
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
-      this.task = task;
-      this.taskToEdit = task;
+      this.task = JSON.parse(JSON.stringify(task));
     });
   },
   destroyed() {
@@ -177,9 +178,8 @@ export default {
   methods: {
     async onUploadImg(ev) {
       var res = await uploadImg(ev);
-      let img = res.url;
       this.img = res.url;
-      this.taskToEdit.attachments.unshift(this.img);
+      this.task.attachments.unshift(this.img);
       this.updateTask();
     },
     focusOnPicker() {
@@ -188,9 +188,15 @@ export default {
         this.$refs.datepicker.focus();
       }, 0.1);
     },
+    openColorPicker() {
+      this.isColorPickerOpen = !this.isColorPickerOpen;
+      if (!this.isColorPickerOpen) {
+        this.updateTask();
+      }
+    },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
-      this.$emit("updateTaskEv", this.task);
+      this.updateTask();
     },
     updateTask() {
       this.$emit("updateTaskEv", this.task);
@@ -204,7 +210,7 @@ export default {
       this.task = null;
     },
     deleteAttachment(idx) {
-      this.taskToEdit.attachments.splice(idx, 1);
+      this.task.attachments.splice(idx, 1);
       this.updateTask();
     },
     openChecklistModal() {
@@ -232,7 +238,7 @@ export default {
     },
     closeLabelModal() {
       this.editLabels = false;
-    },
+    }
   },
   computed: {},
   components: {
@@ -242,6 +248,7 @@ export default {
     datePicker,
     labelsModal,
     taskPreviewLabelsList,
+    colorPicker
   }
 };
 </script>
