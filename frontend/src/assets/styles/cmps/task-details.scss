@@ -81,8 +81,8 @@
             background-color: rgba(9, 30, 66, .06);
             color: grey;
             transition: all .3s;
-            height: 30px;
-            width: 30px;
+            height: 32px;
+            width: 32px;
             padding-top: 3px;
             padding-left: 8px;
             border-radius: 50%;
@@ -92,7 +92,42 @@
            .add:hover{
             background-color: rgba(9, 30, 66, .09);
            }
+
+           span.members-title {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .04em;
+            line-height: 16px;
+            margin-top: 16px;
+            text-transform: uppercase;
+            display: block;
+            line-height: 20px;
+            margin: 0 8px 4px 0;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: #5e6c84;
         }
+        }
+
+    .details-labels{
+        span.labels-title{
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .04em;
+            line-height: 16px;
+            margin-top: 16px;
+            text-transform: uppercase;
+            display: block;
+            line-height: 20px;
+            margin: 0 8px 4px 0;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: #5e6c84;
+        }
+    }
+
     }
     .details-edit * {
         margin-right: 10px;
@@ -101,13 +136,39 @@
       
         }
         .members *{
-        margin-right: 0px;
+        margin-right: 2px;
+        }
+        
+    }
+
+    .details-members{
+        // span.members-title {
+        //     font-size: 12px;
+        //     font-weight: 500;
+        //     letter-spacing: .04em;
+        //     line-height: 16px;
+        //     margin-top: 16px;
+        //     text-transform: uppercase;
+        //     display: block;
+        //     line-height: 20px;
+        //     margin: 0 8px 4px 0;
+        //     white-space: nowrap;
+        //     text-overflow: ellipsis;
+        //     overflow: hidden;
+        //     color: #5e6c84;
+        // }
+    }
+
+    div.add{
+        i {
+            padding-top: 4px;
+            padding-left: 1px; 
         }
     }
 
     .members {
         display: flex;
-              flex-direction: row;
+        flex-direction: row;
         flex-wrap: wrap;
     }
 
