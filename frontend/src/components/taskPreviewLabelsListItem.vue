@@ -1,10 +1,11 @@
 <template>
     <div
         class="labelItem"
+        :class="{bigger: showFullLabel}"
         :style="{ 'background-color': label.bgColor }"
         @click.stop="labelClicked"
     >
-        <p v-if="showFullLabel">{{ label.name }}</p>
+        <div class="full-label" v-if="showFullLabel">{{ label.name }}</div>
     </div>
 </template>
 
