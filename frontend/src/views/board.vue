@@ -86,6 +86,7 @@ export default {
       SocketService.setup();
       SocketService.emit("boardJoined", this.board._id);
       SocketService.on("taskUpdate", this.onUpdateTask);
+      SocketService.on("boardUpdate", this.onUpdateBoard);
     });
     window.onclick = function(ev) {
       if (ev.target.classList.contains("closer")) {
@@ -109,6 +110,7 @@ export default {
   },
   destroyed() {
     SocketService.off("taskUpdate", this.onUpdateTask);
+    SocketService.off("boardUpdate", this.onUpdateBoard);
     SocketService.terminate();
   },
 
@@ -120,7 +122,7 @@ export default {
   // },
   methods: {
     onUpdateTask(task) {
-      console.log("hii", task);
+      console.log("hii task", task);
     },
     log() {},
     //  updateBoard(){
@@ -138,6 +140,11 @@ export default {
       });
 
       this.$store.dispatch({ type: "updateBoard", board });
+    },
+      onUpdateBoard(board) {
+      // console.log("hii board", board);
+      this.$store.commit({ type: "saveBoard", board });
+      this.board = board;
     },
     updateTask(task) {
       this.$store.dispatch({ type: "updateTask", task: task });

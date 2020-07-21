@@ -12,6 +12,14 @@ function connectSockets(io) {
             io.to(socket.boardId).emit('taskUpdate', task)
         })
 
+        socket.on('boardUpdate', board=>{
+            console.log(board, 'boardUpdate')
+            // io.emit('chat addMsg', msg)
+            // emits only to sockets in the same room
+            io.to(socket.boardId).emit('boardUpdate', board)
+        })
+
+
         socket.on('boardJoined', boardId=>{
             console.log('joined', boardId);
             

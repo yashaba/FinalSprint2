@@ -14,7 +14,7 @@ export const boardService = {
 // }
 
 function _getUrl(id) {
-    console.log('get url', );
+    console.log('get url',);
     return `board/${id}`;
 }
 
@@ -60,8 +60,13 @@ function save(board) {
 }
 
 function _update(board) {
+    // debugger
     return httpService.put(_getUrl(board._id), board)
-        .then(res => res.data)
+        .then(res => {
+            // debugger
+            console.log(res);
+            return res
+        })
 }
 
 function _add(board) {
