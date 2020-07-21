@@ -31,22 +31,22 @@
           </div>
           <div class="details-labels">
             Labels:
-            <task-preview-labels-list :labels="task.labels"/>
+            <task-preview-labels-list :labels="task.labels" />
           </div>
-          <div  v-if="task.dueDate.date" class="details-labels ">Due Date:
-
-             <el-date-picker
-             @input="updateTask"
-             style="opacity: 0"
-             ref="datepicker"
-               v-model="task.dueDate.date"
-               type="date"
-               placeholder="Pick a day">
-          </el-date-picker>
-          <div class="flex">
-          <date-picker :dueDate='task.dueDate'></date-picker>
-        <el-checkbox class="el-checkbox" @input="updateTask" v-model="task.dueDate.isDone"></el-checkbox>
-          </div>
+          <div v-if="task.dueDate.date" class="details-labels">
+            Due Date:
+            <el-date-picker
+              @input="updateTask"
+              style="opacity: 0"
+              ref="datepicker"
+              v-model="task.dueDate.date"
+              type="date"
+              placeholder="Pick a day"
+            ></el-date-picker>
+            <div class="flex">
+              <date-picker :dueDate="task.dueDate"></date-picker>
+              <el-checkbox class="el-checkbox" @input="updateTask" v-model="task.dueDate.isDone"></el-checkbox>
+            </div>
           </div>
         </div>
         <div class="details-desc">
@@ -92,7 +92,7 @@
         <button class="btn-details-actions" @click="openLabels">
           <i class="fas fa-tag"></i>Labels
         </button>
-        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal"/>
+        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal" />
         <button class="btn-details-actions" @click="openChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
@@ -102,8 +102,9 @@
         <button class="btn-details-actions">
           <i class="fas fa-paperclip"></i>Attachment
           <input type="file" @change="onUploadImg" />
-        </button >
-        <button class="btn-details-actions">
+        </button>
+        <color-picker v-if="isColorPickerOpen" v-model="task.bgColor" />
+        <button class="btn-details-actions" @click="openColorPicker">
           <i class="far fa-window-maximize"></i>Cover
         </button>
         <button class="btn-details-actions" @click="onRemove">
@@ -137,7 +138,8 @@ import checkList from "./checkList.vue";
 import { uploadImg } from "../services/imgUpload.service";
 import datePicker from "./datePicker";
 import labelsModal from "./labelsModal.vue";
-import taskPreviewLabelsList from './taskPreviewLabelsList.vue';
+import colorPicker from "./color-picker.cmp.vue";
+import taskPreviewLabelsList from "./taskPreviewLabelsList.vue";
 
 export default {
   name: "task-details",
@@ -145,11 +147,12 @@ export default {
     return {
       task: null,
       isChecklistModal: false,
+      isColorPickerOpen: false,
       checklistTitle: "",
       value1: null,
       editLabels: false,
       checklistTitle: "",
-      img: "",
+      img: ""
     };
   },
 
@@ -184,6 +187,12 @@ export default {
       setTimeout(() => {
         this.$refs.datepicker.focus();
       }, 0.1);
+    },
+    openColorPicker() {
+      this.isColorPickerOpen = !this.isColorPickerOpen;
+      if (!this.isColorPickerOpen) {
+        this.updateTask();
+      }
     },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
@@ -229,7 +238,7 @@ export default {
     },
     closeLabelModal() {
       this.editLabels = false;
-    },
+    }
   },
   computed: {},
   components: {
@@ -239,6 +248,7 @@ export default {
     datePicker,
     labelsModal,
     taskPreviewLabelsList,
+    colorPicker
   }
 };
 </script>
