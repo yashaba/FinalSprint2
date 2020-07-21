@@ -12,7 +12,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/board',
+    path: '/board/:_id?',
     name: 'board',
     component: board
     // route level code-splitting

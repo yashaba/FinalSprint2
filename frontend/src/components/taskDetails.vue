@@ -55,14 +55,14 @@
         </div>
         <div class="details-attachments">
           <i class="fas fa-paperclip"></i>Attachments:
-          <div class="attachments" v-for="(attachment, idx) in taskToEdit.attachments" :key="idx">
+          <div class="attachments" v-for="(attachment, idx) in task.attachments" :key="idx">
             <div :attachment="attachment">
               <img :src="`${attachment}`" />
-              <button @click="deleteAttachment(attachment, idx)">Delete</button>
+              <button @click="deleteAttachment(idx)">Delete</button>
             </div>
             <br />
           </div>
-          <button v-if="taskToEdit.attachments">
+          <button v-if="task.attachments">
             Add an attachment
             <input type="file" @change="onUploadImg" />
           </button>
@@ -143,7 +143,6 @@ export default {
       // positionY: null,
       checklistTitle: "",
       img: "",
-      taskToEdit: "",
     };
   },
 
@@ -159,8 +158,7 @@ export default {
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
-      this.task = task;
-      this.taskToEdit = task;
+      this.task = JSON.parse(JSON.stringify(task));
     });
   },
   destroyed() {
@@ -170,9 +168,8 @@ export default {
   methods: {
     async onUploadImg(ev) {
       var res = await uploadImg(ev);
-      let img = res.url;
       this.img = res.url;
-      this.taskToEdit.attachments.unshift(this.img);
+      this.task.attachments.unshift(this.img);
       this.updateTask();
     },
     focusOnPicker() {
@@ -183,7 +180,7 @@ export default {
     },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
-      this.$emit("updateTaskEv", this.task);
+      this.updateTask();
     },
     updateTask() {
       this.$emit("updateTaskEv", this.task);
@@ -197,7 +194,7 @@ export default {
       this.task = null;
     },
     deleteAttachment(idx) {
-      this.taskToEdit.attachments.splice(idx, 1);
+      this.task.attachments.splice(idx, 1);
       this.updateTask();
     },
     openChecklistModal() {

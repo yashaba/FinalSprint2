@@ -1,5 +1,6 @@
 import { boardService } from '../services/board-service.js';
 import { taskGroupService } from '../services/task-group-service.js'
+import SocketService from "../services/SocketService";
 
 
 export const boardStore = {
@@ -64,6 +65,7 @@ export const boardStore = {
             const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
             state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
             boardService.save(state.currBoard);
+            SocketService.emit("taskUpdate", task);
         },
         addTaskGroup(state, newTaskGroup) {
             state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
