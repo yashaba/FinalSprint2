@@ -2,7 +2,7 @@
 <template>
   <!-- גגםשדןגםןדשחג -->
   <section v-if="task" class="task-details">
-    <div class="header">
+    <div class="header-details">
       <div>
         <i class="fas fa-window-maximize"></i>
         {{task.title}}
@@ -57,15 +57,16 @@
           <textarea placeholder="Add a more details description..." rows="1">{{task.desc}}</textarea>
         </div>
         <div class="details-attachments">
-          <i class="fas fa-paperclip"></i>Attachments:
+          <i class="fas fa-paperclip"></i>
+          <span>Attachments</span>
           <div class="attachments" v-for="(attachment, idx) in task.attachments" :key="idx">
             <div :attachment="attachment">
               <img :src="`${attachment}`" />
-              <button @click="deleteAttachment(idx)">Delete</button>
+              <button class="attacment-btn" @click="deleteAttachment(idx)">Delete</button>
             </div>
             <br />
           </div>
-          <button v-if="task.attachments">
+          <button class="add-attachment-btn" v-if="task.attachments">
             Add an attachment
             <input type="file" @change="onUploadImg" />
           </button>
@@ -73,11 +74,11 @@
           <br />
         </div>
         <div class="details-checkList">
-          <i class="far fa-check-square"></i>
-          CheckList:
-          <br />
           <div v-for="(checkList , idx) in task.checkLists " :key="idx">
-            <h4>{{checkList.title}}</h4>
+            <!-- <h4>{{checkList.title}}</h4> -->
+            <i class="far fa-check-square"></i>
+            <span class="checkList-title">{{checkList.title}}</span>
+            <br />
 
             <check-list @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
           </div>
