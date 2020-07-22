@@ -1,16 +1,17 @@
 .task-details {
     position: absolute;
-    width: 880px;
+    width: 55%;
     min-height: 700px;
     box-shadow: -1px 3px 15px 0px rgba(0, 0, 0, 0.75);
-    left: 50%;
-    margin-left: -325px;
+    left: 43%;
+    margin-left: -20%;
     background-color: #f6f6f6;
     color: rgb(23, 43, 77);
     font-family: Opensans-bold, sans-serif;
     border-radius: 4px;
     padding: 30px;
     z-index: 1;
+    margin-top: 10px;
 
     button{
     font-family: Opensans, sans-serif;
