@@ -22,10 +22,16 @@
           v-model="board.taskGroups"
           group="columns"
           @start="drag=true"
-          @end="drag=false ; updateBoard(board)"
+          @end="drag=false ; updateBoard(board) , cloneDragEnd()"
         >
           <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
-            <task-group class="list-group-item"
+            <task-group 
+            :id="taskGroup._id"
+            @previewClickedEv="previewClicked"
+            @taskGroupClickedEv='taskGroupClicked'
+            class="list-group-item"
+              @dragEndEv= cloneDragEnd
+             
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
               @updateBoardEv="updateBoard(board)"
@@ -79,6 +85,10 @@ import {
 export default {
   data() {
     return {
+      dragTargetEv: null,
+      isDragging: false,
+       elClone: null,
+      elementToClone: null,
       board: null,
       newGroupTitle: "",
       addingTask: false,
@@ -93,10 +103,21 @@ export default {
     isAdding() {
       return (this.addingTask);
       // this.$store.getters.currBoard
-    }
+    },
+    
   },
 
   created() {
+
+     window.addEventListener('click', this.myFunc)
+    window.addEventListener('dragstart', this.cloneStart)
+    window.addEventListener('drag', this.cloneDrag)
+    // window.addEventListener('mousemove', this.cloneDrag)
+    window.addEventListener('dragend', this.cloneDragEnd)
+    window.addEventListener('drop', this.cloneDragEnd)
+    window.addEventListener('mouseup', this.cloneDragEnd)
+
+
     this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
       this.board = board;
       SocketService.setup();
@@ -139,10 +160,112 @@ export default {
   //     })
   // },
   methods: {
+    setDrag(){
+    this.isDragging === true
+    console.log('set DRAG ',  this.isDragging);
+    this.cloneDrag()
+    },
+      previewClicked(res){
+      this.elementToClone = res.id
+      console.log('tete',this.elementToClone)
+      console.log('tete',res)
+      this.clone(res.ev)
+      
+      
+    },
+      taskGroupClicked(res){
+      this.elementToClone = res.id
+      console.log('tete',this.elementToClone)
+      console.log('tete',res)
+      this.clone(res.ev)
+      
+      
+    },
+     cloneStart(ev){
+      // let cloneDragStart = document.getElementById(`${clone.id}`)
+        //  var elContainer = document.querySelector('.list-group')
+        
+        document.body.append(this.elClone)
+        console.log("clone start fired",ev );
+        this.isDragging = true
+      //  clone.style.display = 'block'
+         
+        
+    },
+    cloneDrag(ev){
+      this.elClone.style.display = 'block'
+      
+        var left = ev.pageX - this.dragTargetEv.offsetX +"px";
+        var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
+         this.elClone.style.left = left;
+         this.elClone.style.top = top;
+        
+     
+      // if (!this.isDragging) return
+      // console.log(ev);
+      // console.log(this.elClone);
+        // let clone = document.querySelector('#'+this.elClone.id)
+        
+        //  var left = ev.pageX - ev.offsetX +"px";
+        //  var top = ev.pageY -ev.offsetY+"px";
+    },
+    cloneDragEnd(){
+      this.elClone.style.display= "none"
+      this.elClone = null
+      console.log('TRIGER END');
+
+    },
+        clone(ev){
+      let clone = null
+      // console.log('is dragging' , this.isDragging);
+      // console.log('clone start',this.elementToClone);
+      let elem = document.querySelector(`#${this.elementToClone}`);
+      // console.log(elem);
+      clone = elem.cloneNode(true);
+      clone.id = taskGroupService.makeId()
+       clone.style.position = 'absolute';
+       clone.style.width = '252px'
+       clone.classList.add('pointer-events')
+       clone.style.display = 'none'
+       clone.classList.add('rotate')
+      //  clone.style.transform = 'rotate(10deg)'
+       clone.classList.add('elem2')
+       var elContainer = document.querySelector('.list-group')
+       this.elClone = clone
+       this.dragTargetEv = ev
+
+
+      // window.addEventListener('dragstart',function(e){
+  
+      //   }
+
+// );
+          //  window.addEventListener('dragend', function(e){
+          //    let cloneEl = document.getElementById(`${clone.id}`)
+          //    console.log('drag end' , cloneEl );
+          //   // elContainer.removeChild(cloneEl)
+          //   // console.log('body', body);
+          //   //  clone.parentNode.removeChild(clone);
+          //    clone.style.display = 'none'
+          //    clone = null
+
+            //  window.removeEventListener('drag',true)
+            //  }
+    //  );
+        //  window.addEventListener('drag', function(e){
+       
+        //  var left = e.pageX - ev.offsetX +"px";
+        //  var top = e.pageY-ev.offsetY+"px";
+        //  clone.style.left = left;
+        //  clone.style.top = top;
+        //           }
+        //   );
+
+    },
     onUpdateTask(task) {
       console.log("hii task", task);
     },
-    log() {},
+    
     //  updateBoard(){
     //    console.log('update trigger');
     //  },
@@ -232,12 +355,21 @@ export default {
     }
 }
 .tghost {
+  opacity: 0;
 }
 .tchosen-class {
-  .tdrag-class {
-    rotate: 10deg;
-    background: rgba($color: #e71818, $alpha: 1);
-  }
+  opacity: 0;
+  // .tdrag-class {
+  //   rotate: 10deg;
+  //   background: rgba($color: #e71818, $alpha: 1);
+  // }
+}
+.rotate {
+  transition: rotate 0.3;
+ transform: rotate(10deg)
+}
+.pointer-events {
+  pointer-events: none;
 }
 
 .btn-save-group {

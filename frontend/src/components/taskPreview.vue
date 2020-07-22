@@ -1,5 +1,5 @@
 <template>
-  <div  @mousedown="logEv" :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
+  <div  @mousedown.stop="previewClickedEv" :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
     <div class="edit" @click.stop="editTask"></div>
     <div class="preview-header">
       <div class="preview-content">
@@ -42,9 +42,9 @@ import dueDatePreview from './dueDatePreview.vue'
 export default {
   props: ["task"],
   methods: {
-    logEv(event){
+    previewClickedEv(event){
       console.log('emited');
-    this.$emit('testLog', {ev: event, id: this.task._id} )
+    this.$emit('previewClickedEv', {ev: event, id: this.task._id} )
     },
     logClickEv(ev){
       console.log('emited');
