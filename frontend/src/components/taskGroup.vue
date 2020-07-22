@@ -202,16 +202,14 @@ export default {
     },
     close() {
       this.isAdding = !this.isAdding;
-       this.taskToSave.title = ''
+      this.taskToSave.title = ''
      
     },
     saveNewTask() {
       let taskToSaveCopy = JSON.parse(JSON.stringify(this.taskToSave))
-      // if (!this.taskToSave) return;
       this.$store.dispatch({ type: 'saveTask', task: taskToSaveCopy, taskGroup: this.taskGroup });
       this.isAdding = !this.isAdding;
-      this.taskToSave.title = ''
-      
+      this.taskToSave.title = ''    
     }
   },
 

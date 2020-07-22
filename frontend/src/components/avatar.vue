@@ -11,13 +11,13 @@ import Avatar from "vue-avatar";
 export default {
   components: {
     Avatar
-  },
+ },
 
   props: ['users'],
 
   methods: {
     getUsername(userId) {
-      if (typeof userId === 'object') return userId.fullName; // Legacy support
+      if (typeof userId === 'object') return userId.fullName;
       
       const user = this.$store.getters.getUserById(userId);
       return user.fullName;
@@ -27,4 +27,4 @@ export default {
 </script>
 
 <style>
-</style>
+</style> 

@@ -18,7 +18,7 @@
 
         <button class="btn-add-member">Add</button>
       </form>
-      <p v-else>All users are members of this board.</p>
+      <p v-else>All users are members of this board</p>
   </section>
 </template>
 
@@ -43,7 +43,7 @@ export default {
 
     methods: {
       close() {
-            this.$emit('closeNewMemberModal');
+            this.$emit('closeAddMemberModal');
       },
 
       change(event) {
