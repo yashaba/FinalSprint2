@@ -126,7 +126,7 @@ export default {
       this.elementToClone = res.id
       console.log('tete',this.elementToClone)
       console.log('tete',res)
-      setTimeout(()=> {this.clone(res.ev)},0.2)
+      // setTimeout(()=> {this.clone(res.ev)},0.2)
       
       
     },

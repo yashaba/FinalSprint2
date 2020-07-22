@@ -84,13 +84,13 @@ export const boardStore = {
             state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
             boardService.save(state.currBoard);
         },
-        updateTaskGroups(state, { taskGroup }) {
-            const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
+        // updateTaskGroups(state, { taskGroup }) {
+        //     const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
 
-        },
-        setFilterBy(state, { filterBy }) {
-            state.filterBy = {...filterBy };
-        },
+        // },
+        // setFilterBy(state, { filterBy }) {
+        //     state.filterBy = {...filterBy };
+        // },
         addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
             const taskidx = state.currBoard.taskGroups[taskGroupidx].tasks.findIndex(taskItem => taskItem._id === task._id);
