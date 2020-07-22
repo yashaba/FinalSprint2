@@ -13,7 +13,7 @@
       <button class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
     </div>
-    <div>
+    <div class="board-page">
       <div class="flex closer">
         <draggable
           class="list-group closer flex flex-start"
@@ -22,10 +22,10 @@
           v-model="board.taskGroups"
           group="columns"
           @start="drag=true"
-          @end="drag=false , updateBoard(board)"
+          @end="drag=false ; updateBoard(board)"
         >
           <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
-            <task-group
+            <task-group class="list-group-item"
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
               @updateBoardEv="updateBoard(board)"
@@ -57,6 +57,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import interact from 'interactjs'
 import taskGroup from "../components/taskGroup.vue";
 import taskDetails from "../components/taskDetails.vue";
 import taskEdit from "../components/taskEdit.vue";
@@ -74,6 +75,7 @@ import {
   STOP_SCREEN_MODE
 } from "../services/event-bus.service";
 
+
 export default {
   data() {
     return {
@@ -88,8 +90,8 @@ export default {
     };
   },
   computed: {
-    closeAddMenu() {
-      return (this.addingTask = false);
+    isAdding() {
+      return (this.addingTask);
       // this.$store.getters.currBoard
     }
   },
@@ -101,6 +103,7 @@ export default {
       SocketService.emit("boardJoined", this.board._id);
       SocketService.on("taskUpdate", this.onUpdateTask);
       SocketService.on("boardUpdate", this.onUpdateBoard);
+     
     });
     window.onclick = function(ev) {
       if (ev.target.classList.contains("closer")) {
@@ -126,6 +129,7 @@ export default {
     SocketService.off("taskUpdate", this.onUpdateTask);
     SocketService.off("boardUpdate", this.onUpdateBoard);
     SocketService.terminate();
+    window.onclick = null;
   },
 
   // $watch() {
@@ -144,7 +148,7 @@ export default {
     //  },
     removeTask(task) {
       this.$store.dispatch({ type: "removeTask", task });
-      this.task = null;
+      // this.task = null;
     },
     updateBoard(board) {
       this.board.taskGroups.forEach(taskGroupItem => {
@@ -190,7 +194,7 @@ export default {
   computed: {
     dragOptions() {
       return {
-        animation: 200,
+        animation: 400,
         group: "description",
         disabled: false,
         ghostClass: "tghost",

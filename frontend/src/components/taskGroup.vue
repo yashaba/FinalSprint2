@@ -1,6 +1,6 @@
 <template>
   <!-- <div> -->
-    <div class="task-group flex column closer">
+    <div ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
       <div class="closer relative flex space-between align-center">
         <p class="group-title">{{taskGroup.title}}</p> 
         <button class="btn-edit closer" @click="openTaskGroupModal">...</button>
@@ -15,9 +15,9 @@
         <div class="tasks-container">
           <draggable   class="list-group closer"
           tag="div"   
-          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
+          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true, isDragging= true" @end="drag=false;updateBoardEv();isDragging=false">
           <div v-for="task in taskGroup.tasks" :key="task.id">
-            <task-preview :task="task"></task-preview>
+            <task-preview @logClickEv='logClick' @testLog="log" :id="task._id" :task="task"></task-preview>
           </div>
           </draggable>
         </div>
@@ -51,6 +51,8 @@ import draggable from "vuedraggable";
 import taskPreview from "./taskPreview.vue";
 import {taskGroupService} from '../services/task-group-service.js'
 import {eventBus} from '../services/event-bus.service'
+import interact from 'interactjs'
+
 
 // import card from './card.vue'
 export default {
@@ -58,7 +60,9 @@ export default {
   data() {
     return {
       // taskGroup : this.taskGroup,
+      elementToClone: null,
       isAdding: false,
+      isDragging: false,
       taskModalShown: false ,
       taskToSave: {
         _id : taskGroupService.makeId(),
@@ -81,50 +85,103 @@ export default {
           date: "",
           isDone: false
         },
-      }
+      },
+          interactPosition: {
+         x: 0,
+         y: 0
+       },
     };
   },
   created() {
+   
+    console.log(this.$refs);
     eventBus.$on('closer-clicked', () => {
              
              this.isAdding = false
              this.taskModalShown = false
            })
-    
-  },
+  }
+  ,
   computed: {
     dragOptions() {
       return {
-        animation: 200,
+        animation: 400,
         group: "description",
         disabled: false,
         ghostClass: "ghost",
         chosenClass: "chosen-class",
-        dragClass: "drag-class"
+        dragClass: "drag-class",
+      
 
       };
-    }
+    },
+    transformString() {
+     const { x, y } = this.interactPosition
+     return `translate3D(${x}px, ${y}px, 0)`
+   }
   },
 
   methods: {
-    setDragImg() {
+    log(res){
+      this.elementToClone = res.id
+      console.log('tete',this.elementToClone)
+      console.log('tete',res)
+      // setTimeout(()=> {this.clone(res.ev)},0.2)
+      
       
     },
+    logClick(ev){
+      // this.elementToClone = id
+      console.log('tete',ev)
+    },
+    clone(ev){
+      let clone = null
+      console.log('is dragging' , this.isDragging);
+      console.log('clone start',this.elementToClone);
+      let elem = document.querySelector(`#${this.elementToClone}`);
+      console.log(elem);
+      clone = elem.cloneNode(true);
+      clone.id = taskGroupService.makeId()
+       clone.style.position = 'absolute';
+       clone.style.width = '252px'
+       clone.classList.add('rotate')
+      //  clone.style.transform = 'rotate(10deg)'
+       clone.classList.add('elem2')
+      window.addEventListener('dragstart', function(e){
+        document.body.append(clone)
+        
+        }
 
+);
+         window.addEventListener('drag', function(e){
+         var left = e.pageX - ev.offsetX +"px";
+         var top = e.pageY-ev.offsetY+"px";
+         clone.style.left = left;
+         clone.style.top = top;
+                  }
+          );
+      window.addEventListener('dragend', function(e){
+        let cloneEl = document.getElementById(`${clone.id}`)
+        console.log('drag end' , cloneEl );
+        clone.parentNode.removeChild(clone);
+        clone.style.display = 'none'
+        
+        // console.log('is dragging end' , this.isDragging);
+         
+
+        }
+
+);
+
+    },
     openTaskGroupModal() {
       setTimeout(()=> {
         
           this.taskModalShown = true
-        
-        
-        
-        }, 0.2)
-      
-      
+
+        }, 0.2) 
     },
-   log() {
-    
-   },
+ 
    updateBoardEv() {
      
      this.$emit ('updateBoardEv')
@@ -156,17 +213,49 @@ export default {
     }
   },
 
- 
 components: {
   draggable,
   taskPreview
-  // card
+  
 }
 }
 </script>
 
 <style lang="scss" scoped>
 
+
+
+.ghost{
+  
+  rotate: 10deg;
+}
+.chosen-class{ 
+  // opacity: 1;
+  opacity: 0.3;
+   
+}
+ .drag-class{
+   opacity: 0;
+  
+ }
+.elem2 {
+  // position: absolute;
+  // z-index: 999;
+  
+    pointer-events: none;
+
+}
+
+.rotate {
+  transition: rotate 0.3;
+ transform: rotate(10deg)
+}
+.task-preview {
+ 
+  
+    // pointer-events: none;
+
+}
 
 .title-modal{
   z-index: 1;

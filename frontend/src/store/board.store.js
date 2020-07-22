@@ -5,7 +5,7 @@ import SocketService from "../services/SocketService";
 
 export const boardStore = {
     state: {
-        taskGroups: [],
+        // taskGroups: [],
         currBoard: '',
         // filterBy: { name: '' },
         filterBy: { searchStr: '' },
@@ -122,13 +122,13 @@ export const boardStore = {
             state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
             boardService.save(state.currBoard);
         },
-        updateTaskGroups(state, { taskGroup }) {
-            const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
+        // updateTaskGroups(state, { taskGroup }) {
+        //     const idx = state.currBoard.taskGroups.findIndex(t => t._id === taskGroup._id)
 
-        },
-        setFilterBy(state, { filterBy }) {
-            state.filterBy = { ...filterBy };
-        },
+        // },
+        // setFilterBy(state, { filterBy }) {
+        //     state.filterBy = {...filterBy };
+        // },
         addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
             const taskidx = state.currBoard.taskGroups[taskGroupidx].tasks.findIndex(taskItem => taskItem._id === task._id);
@@ -239,7 +239,7 @@ export const boardStore = {
                     SocketService.emit("boardUpdate", board);
                     return savedBoard;
                 })
-            // commit({ type: 'updateBoard', board })
+                // commit({ type: 'updateBoard', board })
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'

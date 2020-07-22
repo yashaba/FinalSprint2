@@ -1,6 +1,6 @@
 .task-details {
     position: absolute;
-    width: 650px;
+    width: 880px;
     min-height: 700px;
     box-shadow: -1px 3px 15px 0px rgba(0, 0, 0, 0.75);
     left: 50%;
@@ -141,23 +141,6 @@
         
     }
 
-    .details-members{
-        // span.members-title {
-        //     font-size: 12px;
-        //     font-weight: 500;
-        //     letter-spacing: .04em;
-        //     line-height: 16px;
-        //     margin-top: 16px;
-        //     text-transform: uppercase;
-        //     display: block;
-        //     line-height: 20px;
-        //     margin: 0 8px 4px 0;
-        //     white-space: nowrap;
-        //     text-overflow: ellipsis;
-        //     overflow: hidden;
-        //     color: #5e6c84;
-        // }
-    }
 
     div.add{
         i {
@@ -324,6 +307,8 @@ div.listItem {
                 margin-right: 7px;
             }
     }
+
+
 
     .checklist-modal {
         background-color: #ffffff;
