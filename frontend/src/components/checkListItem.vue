@@ -1,6 +1,6 @@
 <template>
   <div @mouseenter="isControlsShown = true" @mouseleave="isControlsShown = false">
-  <div class="flex align-center space-between list-item-container" v-if="!checkListItem.isBeingEdited" @click=" log(checkListItem)">
+  <div class="flex align-center space-between list-item-container" v-if="!checkListItem.isBeingEdited">
             <div class="flex align-center">
               <el-checkbox class="el-checkbox" v-model="checkListItem.isDone"></el-checkbox>
              <div class="listItem" @click="updateTaskEv(),checkListItem.isDone = !checkListItem.isDone " :class="{done: checkListItem.isDone}">{{checkListItem.txt}} </div>

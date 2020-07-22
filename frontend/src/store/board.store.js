@@ -5,7 +5,7 @@ import SocketService from "../services/SocketService";
 
 export const boardStore = {
     state: {
-        taskGroups: [],
+        // taskGroups: [],
         currBoard: '',
         // filterBy: { name: '' },
         filterBy: { searchStr: '' },
@@ -89,7 +89,7 @@ export const boardStore = {
 
         },
         setFilterBy(state, { filterBy }) {
-            state.filterBy = { ...filterBy };
+            state.filterBy = {...filterBy };
         },
         addNewChecklist(state, { checklistToSave, task }) {
             const taskGroupidx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
@@ -192,7 +192,7 @@ export const boardStore = {
                     SocketService.emit("boardUpdate", board);
                     return savedBoard;
                 })
-            // commit({ type: 'updateBoard', board })
+                // commit({ type: 'updateBoard', board })
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'

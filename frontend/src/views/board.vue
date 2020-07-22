@@ -20,7 +20,7 @@
           v-model="board.taskGroups"
           group="columns"
           @start="drag=true"
-          @end="drag=false , updateBoard(board)"
+          @end="drag=false ; updateBoard(board)"
         >
           <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
             <task-group class="list-group-item"
@@ -86,8 +86,8 @@ export default {
     };
   },
   computed: {
-    closeAddMenu() {
-      return (this.addingTask = false);
+    isAdding() {
+      return (this.addingTask);
       // this.$store.getters.currBoard
     }
   },
@@ -125,6 +125,7 @@ export default {
     SocketService.off("taskUpdate", this.onUpdateTask);
     SocketService.off("boardUpdate", this.onUpdateBoard);
     SocketService.terminate();
+    window.onclick = null;
   },
 
   // $watch() {
@@ -143,7 +144,7 @@ export default {
     //  },
     removeTask(task) {
       this.$store.dispatch({ type: "removeTask", task });
-      this.task = null;
+      // this.task = null;
     },
     updateBoard(board) {
       this.board.taskGroups.forEach(taskGroupItem => {

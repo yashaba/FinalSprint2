@@ -14,7 +14,7 @@ export const boardService = {
 // }
 
 function _getUrl(id) {
-    console.log('get url',);
+    console.log('get url', );
     return `board/${id}`;
 }
 
@@ -46,9 +46,9 @@ function getEmptyBoard() {
     }
 }
 
-function getById(id) {
-    return httpService.get(_getUrl(id))
-        .then(res => res.data)
+async function getById(id) {
+    const res = await httpService.get(_getUrl(id))
+    return res.data
 }
 
 function remove(id) {

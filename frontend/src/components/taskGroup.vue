@@ -15,7 +15,7 @@
         <div class="tasks-container">
           <draggable   class="list-group closer"
           tag="div"   
-          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true" @end="drag=false,updateBoardEv()">
+          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true, isDragging= true" @end="drag=false;updateBoardEv();isDragging=false">
           <div v-for="task in taskGroup.tasks" :key="task.id">
             <task-preview @logClickEv='logClick' @testLog="log" :id="task._id" :task="task"></task-preview>
           </div>
@@ -62,6 +62,7 @@ export default {
       // taskGroup : this.taskGroup,
       elementToClone: null,
       isAdding: false,
+      isDragging: false,
       taskModalShown: false ,
       taskToSave: {
         _id : taskGroupService.makeId(),
@@ -99,22 +100,6 @@ export default {
              this.isAdding = false
              this.taskModalShown = false
            })
-            const position = { x: 0, y: 0 };
-  //     interact(".task-group")
-  // .draggable({
-  //   // By setting manualStart to true - we control the manualStart.
-  //   // We need to do this so that we can clone the object before we begin dragging it.
-  //   manualStart: true,
-  //   listeners: {
-  //     move(event) {
-  //       position.x += event.dx;
-  //       position.y += event.dy;
-  //       event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
-  //     }
-  //   }
-  // })
-  
-    
   }
   ,
   computed: {
@@ -150,52 +135,51 @@ export default {
       console.log('tete',ev)
     },
     clone(ev){
+      let clone = null
+      console.log('is dragging' , this.isDragging);
       console.log('clone start',this.elementToClone);
-      var elem = document.querySelector(`#${this.elementToClone}`);
-      // var elem = document.querySelector(`#elem1`);
+      let elem = document.querySelector(`#${this.elementToClone}`);
       console.log(elem);
-      var clone = elem.cloneNode(true);
-      clone.id = 'elem2'
+      clone = elem.cloneNode(true);
+      clone.id = taskGroupService.makeId()
        clone.style.position = 'absolute';
        clone.style.width = '252px'
-       clone.style.transform = 'rotate(10deg)'
-      window.addEventListener('mousemove', function(e){
-      document.body.append(clone)
-        console.log(e);
-        console.log(ev);
-      var left = e.pageX - ev.offsetX +"px";
-      var top = e.pageY-ev.offsetY+"px";
-       clone.style.left = left;
-       clone.style.top = top;
-      //  this.drag=true
+       clone.classList.add('rotate')
+      //  clone.style.transform = 'rotate(10deg)'
+       clone.classList.add('elem2')
+      window.addEventListener('dragstart', function(e){
+        document.body.append(clone)
+        
         }
 
 );
-//       window.addEventListener('mouseup', function(e){
-//         
-//         }
+         window.addEventListener('drag', function(e){
+         var left = e.pageX - ev.offsetX +"px";
+         var top = e.pageY-ev.offsetY+"px";
+         clone.style.left = left;
+         clone.style.top = top;
+                  }
+          );
+      window.addEventListener('dragend', function(e){
+        let cloneEl = document.getElementById(`${clone.id}`)
+        console.log('drag end' , cloneEl );
+        clone.parentNode.removeChild(clone);
+        clone.style.display = 'none'
+        
+        // console.log('is dragging end' , this.isDragging);
+         
 
-// );
+        }
+
+);
 
     },
-
-    interactSetPosition(coordinates) {
-      const { x = 0, y = 0 } = coordinates
-      this.interactPosition = {x, y }
-   },   resetCardPosition() {
-     this.interactSetPosition({ x: 0, y: 0 })
-   },
-
     openTaskGroupModal() {
       setTimeout(()=> {
         
           this.taskModalShown = true
-        
-        
-        
-        }, 0.2)
-      
-      
+
+        }, 0.2) 
     },
  
    updateBoardEv() {
@@ -230,25 +214,11 @@ export default {
       
     }
   },
-//   mounted() {
-//    const element = this.$refs.taskgroup
-//    interact(element).draggable({
-//      onmove: event => {
-//        const x = this.interactPosition.x + event.dx
-//        const y = this.interactPosition.y + event.dy
-//        this.interactSetPosition({ x, y })
-//      },
-//      onend: () => {
-//        this.resetCardPosition()
-//      }
-//    })
-// }, 
 
- 
 components: {
   draggable,
   taskPreview
-  // card
+  
 }
 }
 </script>
@@ -267,15 +237,20 @@ components: {
    
 }
  .drag-class{
-   opacity: 1;
+   opacity: 0;
   
  }
-#elem2 {
-  position: absolute;
-  z-index: 999;
+.elem2 {
+  // position: absolute;
+  // z-index: 999;
   
-    // pointer-events: none;
+    pointer-events: none;
 
+}
+
+.rotate {
+  transition: rotate 0.3;
+ transform: rotate(10deg)
 }
 .task-preview {
  
