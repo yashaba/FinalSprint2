@@ -90,11 +90,11 @@
         <button class="btn-details-actions">
           <i class="far fa-user"></i>Members
         </button>
-        <button class="btn-details-actions" @click="openLabels">
+        <button class="btn-details-actions" @click="toggleLabelsModal">
           <i class="fas fa-tag"></i>Labels
         </button>
-        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal" />
-        <button class="btn-details-actions" @click="openChecklistModal">
+        <labels-modal v-if="isLabelsModal" :task="task" @closeLabelsModal="toggleLabelsModal" />
+        <button class="btn-details-actions" @click="toggleChecklistModal">
           <i class="far fa-check-square"></i>CheckList
         </button>
         <button class="btn-details-actions" @click="focusOnPicker">
@@ -118,7 +118,7 @@
       <div class="checklist-modal-container">
         <div class="flex align-center space-between">
           <h5>Add CheckList</h5>
-          <button class="btn-close" @click="close">&times;</button>
+          <button class="btn-close" @click="toggleChecklistModal">&times;</button>
         </div>
         <hr />
         <label>Title</label>
@@ -151,7 +151,7 @@ export default {
       isColorPickerOpen: false,
       checklistTitle: "",
       value1: null,
-      editLabels: false,
+      isLabelsModal: false,
       checklistTitle: "",
       img: ""
     };
@@ -214,12 +214,7 @@ export default {
       this.task.attachments.splice(idx, 1);
       this.updateTask();
     },
-    openChecklistModal() {
-      this.isChecklistModal = true;
-      // this.positionX = `${event.clientX}px`;
-      // this.positionY = `${event.clientY}px`;
-    },
-    close() {
+    toggleChecklistModal() {
       this.isChecklistModal = !this.isChecklistModal;
     },
     addChecklist(checklistTitle) {
@@ -231,14 +226,10 @@ export default {
         task: this.task
       });
 
-      this.close();
       this.isChecklistModal = false;
     },
-    openLabels() {
-      this.editLabels = true;
-    },
-    closeLabelModal() {
-      this.editLabels = false;
+    toggleLabelsModal() {
+      this.isLabelsModal = !this.isLabelsModal;
     }
   },
   computed: {},

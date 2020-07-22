@@ -87,7 +87,7 @@ export default {
             this.$store.dispatch('toggleLabelInTask', {labelId, task: this.task});
         },
         close() {
-            this.$emit('closeLabelModal');
+            this.$emit('closeLabelsModal');
         }
       }
 }

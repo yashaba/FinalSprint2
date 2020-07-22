@@ -1,15 +1,15 @@
 <template>
   <section class="column" v-if="board" :class="{screen: screen.isScreen}">
-    <!-- :class="{screen: screen.isScreen}" -->
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
-      <div class="user-avatar">
+      <div class="user-avatar" @click="openMemberModal">
         <avatar class="members flex" :users="board.members"/>
       </div>
-      <button @click="isInviteMemberModal">Add member</button>
-      <project-new-member-modal v-if="isModalMember" @closeNewMemberModal="closeNewMemberModal" @addMemberToBoard="addMemberToBoard"></project-new-member-modal>
+      <member-profile-modal v-if="isMemberModal" :members="board.members"></member-profile-modal>
+      <button @click="addMemberModal">Add member</button>
+      <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
     </div>
     <div>
       <div class="flex closer">
@@ -63,7 +63,8 @@ import { taskGroupService } from "../services/task-group-service.js";
 var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
-import projectNewMemberModal from '../components/projectNewMemberModal.vue';
+import boardNewMemberModal from '../components/boardNewMemberModal.vue';
+import memberProfileModal from '../components/memberProfileModal.vue';
 
 import {
   eventBus,
@@ -80,7 +81,8 @@ export default {
       screen: {
         isScreen: false
       },
-      isModalMember: false
+      isAddMemberModal: false,
+      isMemberModal: false
     };
   },
   computed: {
@@ -170,14 +172,17 @@ export default {
     removeTaskGroup(taskGroup) {
       this.$store.dispatch({ type: "removeTaskGroup", taskGroup });
     },
-    isInviteMemberModal() {
-      this.isModalMember = true;
+    addMemberModal() {
+      this.isAddMemberModal = true;
     },
-    closeNewMemberModal() {
-      this.isModalMember = !this.isModalMember;
+    closeAddMemberModal() {
+      this.isAddMemberModal = !this.isAddMemberModal;
     },
     addMemberToBoard(userId) {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
+    },
+    openMemberModal() {
+      this.isMemberModal = true;
     }
   },
   computed: {
@@ -198,12 +203,19 @@ export default {
     taskDetails,
     taskEdit,
     Avatar,
-    projectNewMemberModal
+    boardNewMemberModal,
+    memberProfileModal
   }
 };
 </script>
 
 <style lang="scss" >
+.member-modal {
+  background-color: #ffffff;
+  height: 100px;
+  width: 100px;
+  z-index: 1;
+}
 .tghost {
 }
 .tchosen-class {
