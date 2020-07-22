@@ -13,7 +13,7 @@
       <button class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
     </div>
-    <div>
+    <div class="board-page">
       <div class="flex closer">
         <draggable
           class="list-group closer flex flex-start"
