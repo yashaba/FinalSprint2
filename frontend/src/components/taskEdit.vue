@@ -14,11 +14,11 @@
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
       <div class="btns-edit-container">
-        <button class="btn-edit-modal" @click="openLabels">
+        <button class="btn-edit-modal" @click="toggleLabelsModal">
           <i class="fas fa-tag"></i>
           Edit Labels
         </button>
-        <labels-modal v-if="editLabels" :task="task" @closeLabelModal="closeLabelModal"/>
+        <labels-modal v-if="isLabelsModal" :task="task" @closeLabelsModal="toggleLabelsModal"/>
         <button class="btn-edit-modal">
           <i class="far fa-user"></i>
           Change Members
@@ -59,7 +59,7 @@ export default {
         task: null,
         positionX: null,
         positionY: null,
-        editLabels: false
+        isLabelsModal: false
       }
     },
 
@@ -68,25 +68,22 @@ export default {
         if (ev.key == 'Escape' || click) {
           eventBus.$emit(STOP_SCREEN_MODE, {});
           this.task = null;
-          this.editLabels = false;
+          this.isLabelsModal = false;
         }
       },
       saveTask() {
         this.$store.dispatch({ type: 'updateTask', task: this.task });
         eventBus.$emit(STOP_SCREEN_MODE, {});
         this.task = null;
-        this.editLabels = false;
+        this.isLabelsModal = false;
         },
       onRemove() {
         this.$emit("removeTaskEv", this.task);
         this.task = null;
       },
-      openLabels() {
-        this.editLabels = true;
-      },
-      closeLabelModal() {
-        this.editLabels = false;
-      },
+      toggleLabelsModal() {
+        this.isLabelsModal = !this.isLabelsModal;
+      }
       // onFocusTextarea() {
       //   this.$nextTick(() => {
       //   this.$refs.myTextarea.focus()
@@ -100,7 +97,7 @@ export default {
       eventBus.$on("closer-clicked", () => {
       eventBus.$emit(STOP_SCREEN_MODE, {});
       this.task = null;
-      this.editLabels = false;
+      this.isLabelsModal = false;
       })
 
       eventBus.$on(SHOW_EDIT_TASK, task=>{
