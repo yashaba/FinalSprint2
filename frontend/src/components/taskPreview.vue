@@ -21,7 +21,7 @@
      </div>
      <div v-if="!task.checkLists"></div>
     <div class="members">
-      <avatar class="flex justify-end" :users="task.assignedUsers" />
+      <avatar class="flex justify-end" :users="task.assignedUsers" :entity="task" context="task" />
     </div>
     </div>
   </div>

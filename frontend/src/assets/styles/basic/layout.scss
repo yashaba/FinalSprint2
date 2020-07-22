@@ -1,15 +1,7 @@
-.main-layout {
+.details-layout {
 
     display: flex;
-    
 
-    > * {
-        
-
-        &.full {
-            
-        }
-    }
     @include for-narrow-layout {
        
     }

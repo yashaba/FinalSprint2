@@ -45,6 +45,10 @@ export const userStore = {
 
         getUserById: (state) => (id) => {
             return state.users.find(user => user._id === id);
+        },
+
+        getUserFullnameById: (state, getters) => (id) => {
+            return getters.getUserById(id).fullName;
         }
     },
     mutations: {
