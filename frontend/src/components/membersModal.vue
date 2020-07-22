@@ -7,7 +7,7 @@
       <div class="members-list flex column" v-if="boardMembers.length">
           <input type="text" v-model="memberNameSearch" placeholder="Search members" />
           <hr>
-          <div class="member" v-for="memberId in boardMembers" :key="memberId" @click="toggleMemberOnTask(memberId)">
+          <div class="member" v-for="memberId in boardMembers" :key="getUsername(memberId)" @click="toggleMemberOnTask(memberId)">
               <span>{{ getUsername(memberId) }}</span>
               <span v-if="isUserAssignedToTask(memberId)">V</span>
           </div>
@@ -38,11 +38,18 @@ export default {
 
     methods: {
         getUsername(userId) {
+            if (typeof userId === 'object') {
+                return userId.fullName;
+            }
+
             return this.$store.getters.getUserFullnameById(userId);
         },
 
         isUserAssignedToTask(memberId) {
             const assignedUsers = this.task.assignedUsers;
+
+            if (!Array.isArray(this.task.assignedUsers)) return false;
+
             return assignedUsers.includes(memberId);
         },
 

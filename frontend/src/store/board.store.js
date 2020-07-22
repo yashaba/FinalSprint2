@@ -45,7 +45,17 @@ export const boardStore = {
             const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
             const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
 
-            state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.push(userId);
+            if (!Array.isArray(state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers)) {
+                state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers = [];
+            }
+
+            let newUserIndex = state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.length;
+            state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.splice(
+                newUserIndex,
+                1,
+                userId
+            );
+
             boardService.save(state.currBoard);
         },
         removeMemberFromBoard(state, { userId }) {
