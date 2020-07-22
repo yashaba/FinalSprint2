@@ -1,9 +1,27 @@
 .labelItem {
     width: 40px;
-    height: 10px;
+    height: 8px;
     border-radius: 50px;
-
-    // p {
-    //     line-height: 10px;
-    // }
+    display: inline-block;
+    margin-left: 4px;
+    cursor: pointer;
+    transition: width 0.3s;
+    transition: height 0.3s;
+    
+    .full-label {
+        font-size: 0.7rem;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 5px;
+    }
 }
+
+.bigger {
+    width: auto;
+    height: 23px;
+    border-radius: 3px;
+    margin: 2px;
+    transition: width 0.3s;
+    transition: height 0.3s;
+}
+

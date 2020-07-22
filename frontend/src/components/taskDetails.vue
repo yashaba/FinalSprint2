@@ -2,7 +2,7 @@
 <template>
   <!-- גגםשדןגםןדשחג -->
   <section v-if="task" class="task-details">
-    <div class="header">
+    <div class="header-details">
       <div>
         <i class="fas fa-window-maximize"></i>
         {{task.title}}
@@ -15,10 +15,7 @@
       <div class="details-info">
         <div class="details-edit">
           <div class="details-members">
-            Members:
-            <br />
-            <!-- <div class="members" v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
-            <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
+            <span class="members-title">MEMBERS</span>
             <div class="members flex">
               <div class="avatars flex">
                 <avatar class="flex" :users="task.assignedUsers" />
@@ -30,7 +27,7 @@
             </div>
           </div>
           <div class="details-labels">
-            Labels:
+            <span class="labels-title">Labels</span>
             <task-preview-labels-list :labels="task.labels" />
           </div>
           <div v-if="task.dueDate.date" class="details-labels">
@@ -57,27 +54,30 @@
           <textarea placeholder="Add a more details description..." rows="1">{{task.desc}}</textarea>
         </div>
         <div class="details-attachments">
-          <i class="fas fa-paperclip"></i>Attachments:
+          <i class="fas fa-paperclip"></i>
+          <span class="title">Attachments</span>
           <div class="attachments" v-for="(attachment, idx) in task.attachments" :key="idx">
             <div :attachment="attachment">
               <img :src="`${attachment}`" />
-              <button @click="deleteAttachment(idx)">Delete</button>
+              <button class="attacment-btn" @click="deleteAttachment(idx)">Delete</button>
             </div>
             <br />
           </div>
-          <button v-if="task.attachments">
-            Add an attachment
-            <input type="file" @change="onUploadImg" />
-          </button>
+          <button
+            class="add-attachment-btn"
+            @click="$refs.fileBtn.click()"
+            v-if="task.attachments"
+          >Add an attachment</button>
+          <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
 
           <br />
         </div>
         <div class="details-checkList">
-          <i class="far fa-check-square"></i>
-          CheckList:
-          <br />
           <div v-for="(checkList , idx) in task.checkLists " :key="idx">
-            <h4>{{checkList.title}}</h4>
+            <!-- <h4>{{checkList.title}}</h4> -->
+            <i class="far fa-check-square"></i>
+            <span class="checkList-title">{{checkList.title}}</span>
+            <br />
 
             <check-list @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
           </div>
@@ -99,9 +99,9 @@
         <button class="btn-details-actions" @click="focusOnPicker">
           <i class="far fa-clock"></i>Due Date
         </button>
-        <button class="btn-details-actions">
+        <button class="btn-details-actions" @click="$refs.fileBtn.click()">
           <i class="fas fa-paperclip"></i>Attachment
-          <input type="file" @change="onUploadImg" />
+          <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
         </button>
         <color-picker v-if="isColorPickerOpen" v-model="task.bgColor" />
         <button class="btn-details-actions" @click="openColorPicker">

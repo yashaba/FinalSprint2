@@ -4,6 +4,13 @@
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
+    <div class="info flex align-center">
+      <div class="user-avatar">
+        <avatar class="members flex" :users="board.members"/>
+      </div>
+      <button @click="isInviteMemberModal">Add member</button>
+      <project-new-member-modal v-if="isModalMember" @closeNewMemberModal="closeNewMemberModal" @addMemberToBoard="addMemberToBoard"></project-new-member-modal>
+    </div>
     <div>
       <div class="flex closer">
         <draggable
@@ -56,6 +63,8 @@ import { taskGroupService } from "../services/task-group-service.js";
 // import {boardService} from '../services/board-service.js'
 var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
+import Avatar from "../components/avatar.vue";
+import projectNewMemberModal from '../components/projectNewMemberModal.vue';
 
 import {
   eventBus,
@@ -72,7 +81,8 @@ export default {
       addingTask: false,
       screen: {
         isScreen: false
-      }
+      },
+      isModalMember: false
     };
   },
   computed: {
@@ -162,6 +172,15 @@ export default {
 
     removeTaskGroup(taskGroup) {
       this.$store.dispatch({ type: "removeTaskGroup", taskGroup });
+    },
+    isInviteMemberModal() {
+      this.isModalMember = true;
+    },
+    closeNewMemberModal() {
+      this.isModalMember = !this.isModalMember;
+    },
+    addMemberToBoard(userId) {
+      this.$store.dispatch({ type: "addMemberToBoard", userId });
     }
   },
   computed: {
@@ -180,7 +199,9 @@ export default {
     taskGroup,
     draggable,
     taskDetails,
-    taskEdit
+    taskEdit,
+    Avatar,
+    projectNewMemberModal
   }
 };
 </script>

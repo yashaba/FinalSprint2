@@ -15,6 +15,9 @@ export const boardStore = {
         currBoard(state) {
             return state.currBoard;
         },
+        getCurrBoardMembers(state) {
+            return state.currBoard.members;
+        },
         getLabels(state) {
             return state.currBoard.labels;
         },
@@ -23,6 +26,10 @@ export const boardStore = {
         }
     },
     mutations: {
+        addMemberToBoard(state, { userId }) {
+            state.currBoard.members.push(userId);
+            boardService.save(state.currBoard)
+        },
         toggleShowFullLabel(state) {
             state.showFullLabel = !state.showFullLabel;
         },
@@ -121,7 +128,9 @@ export const boardStore = {
         }
     },
     actions: {
-
+        addMemberToBoard({ commit }, { userId }) {
+            commit('addMemberToBoard', { userId });
+        },
         toggleShowFullLabel({ commit }) {
             commit('toggleShowFullLabel');
         },
@@ -129,6 +138,8 @@ export const boardStore = {
             return boardService.query(id)
                 .then(currBoard => {
                     console.log(currBoard);
+
+                    // currBoard.members = ['u101', 'u102', 'u103']; // Do no uncomment!! - TODO - Remove
 
                     commit({ type: 'setBoard', currBoard })
                     return currBoard
