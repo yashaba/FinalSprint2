@@ -60,16 +60,9 @@ function save(board) {
 }
 
 function _update(board) {
-    // debugger
-    return httpService.put(_getUrl(board._id), board)
-        .then(res => {
-            // debugger
-            console.log(res);
-            return res
-        })
+    return httpService.put(_getUrl(board._id), board);
 }
 
 function _add(board) {
     return httpService.post(_getUrl(), board)
-        .then(res => res.data)
 }

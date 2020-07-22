@@ -1,6 +1,6 @@
 <template>
   <div @mouseenter="isControlsShown = true" @mouseleave="isControlsShown = false">
-  <div class="flex align-center space-between list-item-container" v-if="!checkListItem.isBeingEdited">
+  <div class="flex align-center space-between list-item-container" style="width: 493px; margin-bottom: 15px" v-if="!checkListItem.isBeingEdited" >
             <div class="flex align-center">
               <el-checkbox class="el-checkbox" v-model="checkListItem.isDone"></el-checkbox>
              <div class="listItem" @click="updateTaskEv(),checkListItem.isDone = !checkListItem.isDone " :class="{done: checkListItem.isDone}">{{checkListItem.txt}} </div>
@@ -10,7 +10,7 @@
                <button @click="removeItemEv(checkListItem.id)"><i class="far fa-trash-alt"></i></button></div>
                </div>
         <form v-if="checkListItem.isBeingEdited" action="">
-                <el-input  style="width: 300px" placeholder="New task name" v-model="checkListItem.txt"></el-input>
+                <el-input  style="width: 493px" placeholder="New task name" v-model="checkListItem.txt"></el-input>
 
            <el-button @click.prevent="checkListItem.isBeingEdited = false,updateTaskEv()"  type="success" icon="el-icon-check" circle></el-button>
 
