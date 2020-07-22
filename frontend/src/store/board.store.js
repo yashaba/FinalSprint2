@@ -26,9 +26,37 @@ export const boardStore = {
         }
     },
     mutations: {
+        removeMemberFromTask(state, { userId, task }) {
+            const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
+            const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
+            const memberIndex = state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.findIndex(member => {
+                // Legacy Support for member as object
+                if (typeof member === 'object') {
+                    return member._id === userId;
+                }
+
+                return member === userId;
+            });
+
+            state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.splice(memberIndex, 1);
+            boardService.save(state.currBoard);
+        },
+        addMemberToTask(state, { userId, task }) {
+            const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
+            const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
+
+            state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.push(userId);
+            boardService.save(state.currBoard);
+        },
+        removeMemberFromBoard(state, { userId }) {
+            const index = state.currBoard.members.findIndex(user => user._id === userId);
+
+            state.currBoard.members.splice(index, 1);
+            boardService.save(state.currBoard);
+        },
         addMemberToBoard(state, { userId }) {
             state.currBoard.members.push(userId);
-            boardService.save(state.currBoard)
+            boardService.save(state.currBoard);
         },
         toggleShowFullLabel(state) {
             state.showFullLabel = !state.showFullLabel;
@@ -128,6 +156,15 @@ export const boardStore = {
         }
     },
     actions: {
+        removeMemberFromTask({ commit }, { userId, task }) {
+            commit('removeMemberFromTask', { userId, task });
+        },
+        addMemberToTask({ commit }, { userId, task }) {
+            commit('addMemberToTask', { userId, task });
+        },
+        removeMemberFromBoard({ commit }, { userId }) {
+            commit('removeMemberFromBoard', { userId });
+        },
         addMemberToBoard({ commit }, { userId }) {
             commit('addMemberToBoard', { userId });
         },

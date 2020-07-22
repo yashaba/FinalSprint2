@@ -18,7 +18,7 @@
             <span class="members-title">MEMBERS</span>
             <div class="members flex">
               <div class="avatars flex">
-                <avatar class="flex" :users="task.assignedUsers" />
+                <avatar class="flex" :users="task.assignedUsers" :entity="task" context="task" />
 
                 <div class="add">
                   <i class="fas fa-plus"></i>
