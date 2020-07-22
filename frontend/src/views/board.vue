@@ -16,7 +16,7 @@
           @end="drag=false , updateBoard(board)"
         >
           <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
-            <task-group
+            <task-group class="list-group-item"
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
               @updateBoardEv="updateBoard(board)"
@@ -48,6 +48,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import interact from 'interactjs'
 import taskGroup from "../components/taskGroup.vue";
 import taskDetails from "../components/taskDetails.vue";
 import taskEdit from "../components/taskEdit.vue";
@@ -61,6 +62,7 @@ import {
   SCREEN_MODE,
   STOP_SCREEN_MODE
 } from "../services/event-bus.service";
+
 
 export default {
   data() {
@@ -87,6 +89,7 @@ export default {
       SocketService.emit("boardJoined", this.board._id);
       SocketService.on("taskUpdate", this.onUpdateTask);
       SocketService.on("boardUpdate", this.onUpdateBoard);
+     
     });
     window.onclick = function(ev) {
       if (ev.target.classList.contains("closer")) {
@@ -164,7 +167,7 @@ export default {
   computed: {
     dragOptions() {
       return {
-        animation: 200,
+        animation: 400,
         group: "description",
         disabled: false,
         ghostClass: "tghost",
