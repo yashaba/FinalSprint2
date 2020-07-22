@@ -7,8 +7,10 @@
       <div class="user-avatar" @click="openMemberModal">
         <avatar class="members flex" :users="board.members"/>
       </div>
-      <member-profile-modal v-if="isMemberModal" :members="board.members"></member-profile-modal>
-      <button @click="addMemberModal">Add member</button>
+      <div v-for="member in board.members" :key="member._id">
+        <member-profile-modal v-if="isMemberModal" :member="member"></member-profile-modal>
+      </div>
+      <button class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
     </div>
     <div>
@@ -182,7 +184,7 @@ export default {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
     },
     openMemberModal() {
-      this.isMemberModal = true;
+      this.isMemberModal = !this.isMemberModal;
     }
   },
   computed: {
@@ -210,11 +212,20 @@ export default {
 </script>
 
 <style lang="scss" >
-.member-modal {
-  background-color: #ffffff;
-  height: 100px;
-  width: 100px;
-  z-index: 1;
+.btn-add-member {
+    background-color: rgba($color: #e6dcdc, $alpha: 0.5);
+    margin-left: 15px;
+    border-radius: 4px;
+    border: 0;
+    outline: 0;
+    width: 115px;
+    height: 33px;
+    // float: right;
+    cursor: pointer;
+    // transition: ease-in 0.9;
+    &:hover {
+        background-color: rgba($color: #c5bebe, $alpha: 0.5);
+    }
 }
 .tghost {
 }

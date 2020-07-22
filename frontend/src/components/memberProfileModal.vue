@@ -1,12 +1,20 @@
 <template>
-  <section class="member-profile-modal"></section>
+  <section class="member-profile-modal">
+    {{member.fullName}}
+  </section>
 </template>
 
 <script>
 export default {
     name: 'member-profile-modal',
 
-    props: ['members'],
+    props: ['member'],
+
+    // computed: {
+    //   member() {
+    //     return this.members.map(member => member.fullName);
+    //   }
+    // },
 }
 </script>
 
