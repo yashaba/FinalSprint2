@@ -1,9 +1,7 @@
 <template>
 <div>
-  <avatar v-for="userId in users" :key="getUsername(userId)" :size="32" :username="getUsername(userId)" backgroundColor="#dfe1e6" color="#172b4d"/>
-  <div>
     <!-- TODO - Change :key to userId only --> 
-     <avatar
+    <avatar
       v-for="userId in users"
       :key="getUsername(userId)"
       :size="28"
