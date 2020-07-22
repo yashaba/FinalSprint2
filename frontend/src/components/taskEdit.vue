@@ -19,10 +19,11 @@
           Edit Labels
         </button>
         <labels-modal v-if="isLabelsModal" :task="task" @closeLabelsModal="toggleLabelsModal"/>
-        <button class="btn-edit-modal">
+        <button class="btn-edit-modal" @click="toggleMembersModal">
           <i class="far fa-user"></i>
           Change Members
         </button>
+        <members-modal v-if="isMembersModal" :task="task" />
         <button class="btn-edit-modal">
           <i class="fas fa-arrow-right"></i>
           Move
@@ -45,13 +46,15 @@
 
 <script>
 import { eventBus, SHOW_EDIT_TASK, STOP_SCREEN_MODE } from '../services/event-bus.service.js';
-import labelsModal from "./labelsModal.vue";
+import labelsModal from './labelsModal.vue';
+import membersModal from './membersModal.vue'
 
 export default {
     name: 'task-edit',
 
     components: {
-      labelsModal
+      labelsModal,
+      membersModal
     },
 
     data() {
@@ -59,7 +62,8 @@ export default {
         task: null,
         positionX: null,
         positionY: null,
-        isLabelsModal: false
+        isLabelsModal: false,
+        isMembersModal: false
       }
     },
 
@@ -83,6 +87,9 @@ export default {
       },
       toggleLabelsModal() {
         this.isLabelsModal = !this.isLabelsModal;
+      },
+      toggleMembersModal() {
+        this.isMembersModal = !this.isMembersModal;
       }
       // onFocusTextarea() {
       //   this.$nextTick(() => {

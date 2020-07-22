@@ -4,12 +4,12 @@
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
-      <div class="user-avatar" @click="openMemberModal">
-        <avatar class="members flex" :users="board.members"/>
-      </div>
-      <div v-for="member in board.members" :key="member._id">
-        <member-profile-modal v-if="isMemberModal" :member="member"></member-profile-modal>
-      </div>
+      <!-- <div class="user-avatar" @click="openMemberModal"> -->
+        <avatar class="members flex" :users="board.members" context="board" />
+      <!-- </div> -->
+      <!-- <div v-for="member in board.members" :key="member._id"> -->
+        <!-- <member-profile-modal v-if="isMemberModal" :member="member"></member-profile-modal> -->
+      <!-- </div> -->
       <button class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
     </div>
@@ -67,7 +67,7 @@ var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from '../components/boardNewMemberModal.vue';
-import memberProfileModal from '../components/memberProfileModal.vue';
+// import memberProfileModal from '../components/memberProfileModal.vue';
 
 import {
   eventBus,
@@ -86,7 +86,7 @@ export default {
         isScreen: false
       },
       isAddMemberModal: false,
-      isMemberModal: false
+      // isMemberModal: false
     };
   },
   computed: {
@@ -187,9 +187,9 @@ export default {
     addMemberToBoard(userId) {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
     },
-    openMemberModal() {
-      this.isMemberModal = !this.isMemberModal;
-    }
+    // openMemberModal() {
+    //   this.isMemberModal = !this.isMemberModal;
+    // }
   },
   computed: {
     dragOptions() {
@@ -210,7 +210,7 @@ export default {
     taskEdit,
     Avatar,
     boardNewMemberModal,
-    memberProfileModal
+    // memberProfileModal
   }
 };
 </script>
