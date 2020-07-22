@@ -1,13 +1,13 @@
 <template>
   <section>
-      <el-progress v-show="checkListItems.length" :percentage="calcPrecentDone" :status=calcSucsess></el-progress>
+      <el-progress v-show="checkListItems.length" :percentage="calcPrecentDone" style="margin-bottom: 10px" :status=calcSucsess></el-progress>
    
     <div  v-for="(checkListItem , idx) in checkListItems" :key="idx">
         <check-list-item @removeItemEv='removeItem' @updateTaskEv='updateTask' :checkListItem='checkListItem'> </check-list-item>
     </div>
     <form action="">
         
-        <el-input  style="width: 300px" v-if="addingItem" placeholder="New task name" v-model="itemToAdd"></el-input>
+        <el-input  style="width: 490px; margin-right: 5px; margin-top: 15px" v-if="addingItem" placeholder="New task name" v-model="itemToAdd"></el-input>
         <el-button v-if="addingItem" @click.prevent="addItem"  type="success" icon="el-icon-check" circle></el-button>
     <!-- <button v-if="addingItem" @click.prevent="addItem" type="submit"> <i class="fas fa-check"></i></button> -->
     
