@@ -15,10 +15,7 @@
       <div class="details-info">
         <div class="details-edit">
           <div class="details-members">
-            Members:
-            <br />
-            <!-- <div class="members" v-for="assignedUser in task.assignedUsers" :key="assignedUser.id">
-            <div :assignedUser="assignedUser"><avatar :users="task.assignedUsers"/></div>-->
+            <span class="members-title">MEMBERS</span>
             <div class="members flex">
               <div class="avatars flex">
                 <avatar class="flex" :users="task.assignedUsers" />
@@ -30,7 +27,7 @@
             </div>
           </div>
           <div class="details-labels">
-            Labels:
+            <span class="labels-title">Labels</span>
             <task-preview-labels-list :labels="task.labels" />
           </div>
           <div v-if="task.dueDate.date" class="details-labels">
@@ -66,10 +63,12 @@
             </div>
             <br />
           </div>
-          <button class="add-attachment-btn" @click="$refs.fileBtn.click()" v-if="task.attachments">
-            Add an attachment
-          </button>
-            <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
+          <button
+            class="add-attachment-btn"
+            @click="$refs.fileBtn.click()"
+            v-if="task.attachments"
+          >Add an attachment</button>
+          <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
 
           <br />
         </div>
@@ -100,7 +99,7 @@
         <button class="btn-details-actions" @click="focusOnPicker">
           <i class="far fa-clock"></i>Due Date
         </button>
-        <button class="btn-details-actions" @click="$refs.fileBtn.click()" >
+        <button class="btn-details-actions" @click="$refs.fileBtn.click()">
           <i class="fas fa-paperclip"></i>Attachment
           <input type="file" ref="fileBtn" style="display:none" @change="onUploadImg" />
         </button>
