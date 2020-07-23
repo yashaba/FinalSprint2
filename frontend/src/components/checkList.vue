@@ -7,12 +7,12 @@
     </div>
     <form action="">
         
-        <el-input  style="width: 490px; margin-right: 5px; margin-top: 15px" v-if="addingItem" placeholder="New task name" v-model="itemToAdd"></el-input>
+        <el-input  style="width: 88%; margin-right: 5px; margin-top: 15px" v-if="addingItem" placeholder="New task name" v-model="itemToAdd"></el-input>
         <el-button v-if="addingItem" @click.prevent="addItem"  type="success" icon="el-icon-check" circle></el-button>
     <!-- <button v-if="addingItem" @click.prevent="addItem" type="submit"> <i class="fas fa-check"></i></button> -->
     
     </form>
-    <el-button @click.prevent="addingItem = true" v-if="!addingItem" type="primary"> Add an item</el-button>
+    <el-button @click.prevent="addingItem = true" v-if="!addingItem" type="primary">Add an item</el-button>
 
   
 

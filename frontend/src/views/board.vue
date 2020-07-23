@@ -1,17 +1,22 @@
 <template>
+  <div class="board-vue">
   <section class="column" v-if="board" :class="{screen: screen.isScreen}">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
       <!-- <div class="user-avatar" @click="openMemberModal"> -->
-        <avatar class="members flex" :users="board.members" context="board" />
+      <avatar class="members flex" :users="board.members" context="board" />
       <!-- </div> -->
       <!-- <div v-for="member in board.members" :key="member._id"> -->
-        <!-- <member-profile-modal v-if="isMemberModal" :member="member"></member-profile-modal> -->
+      <!-- <member-profile-modal v-if="isMemberModal" :member="member"></member-profile-modal> -->
       <!-- </div> -->
       <button class="btn-add-member" @click="addMemberModal">Add member</button>
-      <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
+      <board-new-member-modal
+        v-if="isAddMemberModal"
+        @closeAddMemberModal="closeAddMemberModal"
+        @addMemberToBoard="addMemberToBoard"
+      ></board-new-member-modal>
     </div>
     <div class="board-page">
       <div class="flex closer">
@@ -57,13 +62,14 @@
       </div>
     </div>
   </section>
+  </div>
 </template>
 
 
 
 <script>
 import draggable from "vuedraggable";
-import interact from 'interactjs'
+import interact from "interactjs";
 import taskGroup from "../components/taskGroup.vue";
 import taskDetails from "../components/taskDetails.vue";
 import taskEdit from "../components/taskEdit.vue";
@@ -72,7 +78,7 @@ import { taskGroupService } from "../services/task-group-service.js";
 var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
-import boardNewMemberModal from '../components/boardNewMemberModal.vue';
+import boardNewMemberModal from "../components/boardNewMemberModal.vue";
 // import memberProfileModal from '../components/memberProfileModal.vue';
 
 import {
@@ -80,7 +86,6 @@ import {
   SCREEN_MODE,
   STOP_SCREEN_MODE
 } from "../services/event-bus.service";
-
 
 export default {
   data() {
@@ -95,13 +100,13 @@ export default {
       screen: {
         isScreen: false
       },
-      isAddMemberModal: false,
+      isAddMemberModal: false
       // isMemberModal: false
     };
   },
   computed: {
     isAdding() {
-      return (this.addingTask);
+      return this.addingTask;
       // this.$store.getters.currBoard
     },
     
@@ -204,7 +209,7 @@ export default {
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
-      onUpdateBoard(board) {
+    onUpdateBoard(board) {
       // console.log("hii board", board);
       this.$store.commit({ type: "saveBoard", board });
       this.board = board;
@@ -231,7 +236,7 @@ export default {
     },
     addMemberToBoard(userId) {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
-    },
+    }
     // openMemberModal() {
     //   this.isMemberModal = !this.isMemberModal;
     // }
@@ -254,7 +259,7 @@ export default {
     taskDetails,
     taskEdit,
     Avatar,
-    boardNewMemberModal,
+    boardNewMemberModal
     // memberProfileModal
   }
 };
@@ -262,19 +267,19 @@ export default {
 
 <style lang="scss" >
 .btn-add-member {
-    background-color: rgba($color: #e6dcdc, $alpha: 0.5);
-    margin-left: 15px;
-    border-radius: 4px;
-    border: 0;
-    outline: 0;
-    width: 115px;
-    height: 33px;
-    // float: right;
-    cursor: pointer;
-    // transition: ease-in 0.9;
-    &:hover {
-        background-color: rgba($color: #c5bebe, $alpha: 0.5);
-    }
+  background-color: rgba($color: #e6dcdc, $alpha: 0.5);
+  margin-left: 15px;
+  border-radius: 4px;
+  border: 0;
+  outline: 0;
+  width: 115px;
+  height: 33px;
+  // float: right;
+  cursor: pointer;
+  // transition: ease-in 0.9;
+  &:hover {
+    background-color: rgba($color: #c5bebe, $alpha: 0.5);
+  }
 }
 .tghost {
   opacity: 0;
