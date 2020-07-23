@@ -12,7 +12,14 @@
         backgroundColor="#dfe1e6"
         color="#172b4d"
       />
-      <div class="remove-member" @click.stop="removeMember(userId)"><i class="fa fa-times"></i></div>
+      <div
+        class="remove-member"
+        @click.stop="removeMember(userId)"
+        v-if="userId !== currentUserId"
+      >
+        <!-- The v-if Prevent delete of loggedin user. -->
+        <i class="fa fa-times"></i>
+      </div>
     </div>
   </div> 
 </template>
@@ -29,6 +36,12 @@ export default {
     'context',
     'entity'
   ],
+
+  computed: {
+    currentUserId() {
+      return this.$store.getters.getCurrUserId;
+    }
+  },
 
   methods: {
     getUsername(userId) {
@@ -54,6 +67,7 @@ export default {
 <style>
 .avatar-container {
   position: relative;
+  margin-right: 4px;
 }
 
 .avatar-container .remove-member {
@@ -64,7 +78,7 @@ export default {
   background-color: #ffffff;
   border-radius: 100%;
   font-size: 10px;
-  width: 10px;
+  width: 12px;
   height: 10px;
   line-height: 10px;
   text-align: center;

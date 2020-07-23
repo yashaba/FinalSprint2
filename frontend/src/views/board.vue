@@ -1,15 +1,10 @@
 <template>
-  <section class="column" v-if="board" :class="{screen: screen.isScreen}">
+  <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
-      <!-- <div class="user-avatar" @click="openMemberModal"> -->
         <avatar class="members flex" :users="board.members" context="board" />
-      <!-- </div> -->
-      <!-- <div v-for="member in board.members" :key="member._id"> -->
-        <!-- <member-profile-modal v-if="isMemberModal" :member="member"></member-profile-modal> -->
-      <!-- </div> -->
       <button class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal v-if="isAddMemberModal" @closeAddMemberModal="closeAddMemberModal" @addMemberToBoard="addMemberToBoard"></board-new-member-modal>
     </div>
@@ -339,6 +334,29 @@ export default {
 </script>
 
 <style lang="scss" >
+.board-page {
+  width: 100%;
+  overflow-x: auto;
+  flex: 1;
+  overflow-x: auto;
+  margin-bottom: 5px;
+  // padding-bottom: 28px;
+        // max-height: 60vh;
+        &::-webkit-scrollbar-track {
+            // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            background-color: #212623d9
+        }
+        &::-webkit-scrollbar {
+            width: 8px;
+            background-color: #212623d9;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+            background-color: #808b914d;
+        }
+    }
 .btn-add-member {
     background-color: rgba($color: #e6dcdc, $alpha: 0.5);
     margin-left: 15px;

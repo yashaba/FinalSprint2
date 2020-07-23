@@ -21,25 +21,26 @@
           </div>
           </draggable>
         </div>
-
-        <button v-if="!isAdding" class="btn-add-task closer" @click="addTask">
-          <i class="fas fa-plus fa-xs"></i> 
-          Add another card
-        </button>
-        <div class="add-new-task " v-if="isAdding">
-            <form @submit.prevent="saveNewTask">
-               <textarea-autosize
-                  class="add-textarea"
-                  placeholder="Enter a title for this card..."
-                  ref="myTextarea"
-                  v-model="taskToSave.title"
-                  :min-height="30"
-                  :max-height="350"
-              />
-                  <!-- @focus.native="onFocusTextarea" -->
-              <button class="btn-save-task" type="submit">Add Card</button>
-            </form>
-            <button class="btn-close" @click="close">&times;</button>
+        <div>
+          <button v-if="!isAdding" class="btn-add-task closer" @click="addTask">
+            <i class="fas fa-plus fa-xs"></i> 
+            Add task
+          </button>
+          <div class="add-new-task " v-if="isAdding">
+              <form @submit.prevent="saveNewTask">
+                <textarea-autosize
+                    class="add-textarea"
+                    placeholder="Enter a title for this task..."
+                    ref="myTextarea"
+                    v-model="taskToSave.title"
+                    :min-height="30"
+                    :max-height="350"
+                />
+                    <!-- @focus.native="onFocusTextarea" -->
+                <button class="btn-save-task" type="submit">Add</button>
+              </form>
+              <button class="btn-close" @click="close">&times;</button>
+          </div>
         </div>
       </div>
     </div>

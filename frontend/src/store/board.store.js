@@ -26,6 +26,29 @@ export const boardStore = {
         }
     },
     mutations: {
+        removeMemberFromAllTasks(state, { userId }) {
+            state.currBoard.taskGroups.forEach(taskGroup => {
+                taskGroup.tasks.forEach(task => {
+                    if (Array.isArray(task.assignedUsers)) {
+                        task.assignedUsers.forEach(assignedUser => {
+                            if (typeof assignedUser === 'object') {
+                                if (assignedUser._id === userId) {
+                                    let userIndex = task.assignedUsers.findIndex(user => user._id === userId);
+                                    task.assignedUsers.splice(userIndex, 1);
+                                }
+                            } else {
+                                if (assignedUser === userId) {
+                                    let userIndex = task.assignedUsers.findIndex(user => user === userId);
+                                    task.assignedUsers.splice(userIndex, 1);
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+
+            boardService.save(state.currBoard);
+        },
         removeMemberFromTask(state, { userId, task }) {
             const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
             const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
@@ -59,7 +82,8 @@ export const boardStore = {
             boardService.save(state.currBoard);
         },
         removeMemberFromBoard(state, { userId }) {
-            const index = state.currBoard.members.findIndex(user => user._id === userId);
+            const index = state.currBoard.members.findIndex(user => user === userId);
+            const taskGroups = state.currBoard.taskGroups;
 
             state.currBoard.members.splice(index, 1);
             boardService.save(state.currBoard);
@@ -174,6 +198,7 @@ export const boardStore = {
         },
         removeMemberFromBoard({ commit }, { userId }) {
             commit('removeMemberFromBoard', { userId });
+            commit('removeMemberFromAllTasks', { userId });
         },
         addMemberToBoard({ commit }, { userId }) {
             commit('addMemberToBoard', { userId });
@@ -239,7 +264,7 @@ export const boardStore = {
                     SocketService.emit("boardUpdate", board);
                     return savedBoard;
                 })
-                // commit({ type: 'updateBoard', board })
+            // commit({ type: 'updateBoard', board })
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
