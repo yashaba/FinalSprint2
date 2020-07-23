@@ -27,8 +27,8 @@
           <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
             <task-group 
             :id="taskGroup._id"
-            @previewClickedEv="previewClicked"
-            @taskGroupClickedEv='taskGroupClicked'
+            @previewClickedEv="elDragableClicked"
+            @taskGroupClickedEv='elDragableClicked'
             class="list-group-item"
               @dragEndEv= cloneDragEnd
              
@@ -110,7 +110,7 @@ export default {
   created() {
 
      window.addEventListener('click', this.myFunc)
-    window.addEventListener('dragstart', this.cloneStart)
+    window.addEventListener('dragstart', this.cloneDragStart)
     window.addEventListener('drag', this.cloneDrag)
     // window.addEventListener('mousemove', this.cloneDrag)
     window.addEventListener('dragend', this.cloneDragEnd)
@@ -153,122 +153,44 @@ export default {
     window.onclick = null;
   },
 
-  // $watch() {
-  //      eventBus.$on(SCREEN_MODE, () => {
-  //        console.log('hello');
-  //         this.screen.isScreen = true;
-  //     })
-  // },
+
   methods: {
-    setDrag(){
-    this.isDragging === true
-    console.log('set DRAG ',  this.isDragging);
-    this.cloneDrag()
+
+      elDragableClicked(elDraggable){
+      this.elementToClone = elDraggable.id
+      this.clone(elDraggable.ev)
     },
-      previewClicked(res){
-      this.elementToClone = res.id
-      console.log('tete',this.elementToClone)
-      console.log('tete',res)
-      this.clone(res.ev)
-      
-      
-    },
-      taskGroupClicked(res){
-      this.elementToClone = res.id
-      console.log('tete',this.elementToClone)
-      console.log('tete',res)
-      this.clone(res.ev)
-      
-      
-    },
-     cloneStart(ev){
-      // let cloneDragStart = document.getElementById(`${clone.id}`)
-        //  var elContainer = document.querySelector('.list-group')
-        
+
+     cloneDragStart(ev){
         document.body.append(this.elClone)
-        console.log("clone start fired",ev );
         this.isDragging = true
-      //  clone.style.display = 'block'
-         
-        
+        this.elClone.style.display = 'block'
     },
+
     cloneDrag(ev){
-      this.elClone.style.display = 'block'
-      
-        var left = ev.pageX - this.dragTargetEv.offsetX +"px";
+        var left = ev.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
         var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
          this.elClone.style.left = left;
          this.elClone.style.top = top;
-        
-     
-      // if (!this.isDragging) return
-      // console.log(ev);
-      // console.log(this.elClone);
-        // let clone = document.querySelector('#'+this.elClone.id)
-        
-        //  var left = ev.pageX - ev.offsetX +"px";
-        //  var top = ev.pageY -ev.offsetY+"px";
     },
+
     cloneDragEnd(){
+      if (!this.elClone) return
       this.elClone.style.display= "none"
       this.elClone = null
-      console.log('TRIGER END');
-
     },
         clone(ev){
       let clone = null
-      // console.log('is dragging' , this.isDragging);
-      // console.log('clone start',this.elementToClone);
       let elem = document.querySelector(`#${this.elementToClone}`);
-      // console.log(elem);
       clone = elem.cloneNode(true);
-      clone.id = taskGroupService.makeId()
-       clone.style.position = 'absolute';
-       clone.style.width = '252px'
-       clone.classList.add('pointer-events')
+      clone.id = taskGroupService.makeId() //////   זה הכנה לאם נרצה למחוק אותו מהדום לגמריי אז שיהיה לו אידי שונה ממי שעשיתי לו קלון
+       clone.style.position = 'absolute'; //  זה לא עובד משום מה אם אני מעביר את זה כקלאס
        clone.style.display = 'none'
-       clone.classList.add('rotate')
-      //  clone.style.transform = 'rotate(10deg)'
-       clone.classList.add('elem2')
-       var elContainer = document.querySelector('.list-group')
+       clone.classList.add('clone')
        this.elClone = clone
        this.dragTargetEv = ev
-
-
-      // window.addEventListener('dragstart',function(e){
-  
-      //   }
-
-// );
-          //  window.addEventListener('dragend', function(e){
-          //    let cloneEl = document.getElementById(`${clone.id}`)
-          //    console.log('drag end' , cloneEl );
-          //   // elContainer.removeChild(cloneEl)
-          //   // console.log('body', body);
-          //   //  clone.parentNode.removeChild(clone);
-          //    clone.style.display = 'none'
-          //    clone = null
-
-            //  window.removeEventListener('drag',true)
-            //  }
-    //  );
-        //  window.addEventListener('drag', function(e){
-       
-        //  var left = e.pageX - ev.offsetX +"px";
-        //  var top = e.pageY-ev.offsetY+"px";
-        //  clone.style.left = left;
-        //  clone.style.top = top;
-        //           }
-        //   );
-
     },
-    onUpdateTask(task) {
-      console.log("hii task", task);
-    },
-    
-    //  updateBoard(){
-    //    console.log('update trigger');
-    //  },
+
     removeTask(task) {
       this.$store.dispatch({ type: "removeTask", task });
       // this.task = null;
@@ -364,9 +286,14 @@ export default {
   //   background: rgba($color: #e71818, $alpha: 1);
   // }
 }
-.rotate {
-  transition: rotate 0.3;
- transform: rotate(10deg)
+.clone {
+  // position: absolute;
+  // transition: rotate 0.3;
+ transform: rotate(10deg);
+ 
+ width: 252px;
+   pointer-events: none;
+  //  display : none;
 }
 .pointer-events {
   pointer-events: none;
