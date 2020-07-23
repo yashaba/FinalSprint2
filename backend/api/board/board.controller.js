@@ -24,6 +24,7 @@ async function getBoard(req, res) {
 
 async function getBoards(req, res) {
     try {
+        console.log('req.query::::',req.query);
         const boards = await boardService.query(req.query)
         res.send(boards)
     } catch (err) {

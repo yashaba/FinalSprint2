@@ -5,7 +5,8 @@ export const boardService = {
     remove,
     save,
     getById,
-    getEmptyBoard
+    getEmptyBoard,
+    getUserBoards
 }
 
 // function _getUrl(id = '') {
@@ -24,6 +25,9 @@ function _getUrl(id) {
 // }
 
 
+function getUserBoards(userId) {
+    return httpService.get(`board/?id=${userId}`)
+}
 
 // function query(filterBy) {
 //     const { name, inStock, type, sort } = filterBy;

@@ -6,14 +6,14 @@
       <!-- <div v-if="loggedinUser">
           <h3>Currently logged as: {{loggedinUser.username}}</h3>
           <button @click="logout">Logout</button>
-      </div> -->
+      </div>-->
       <!-- v-else -->
-      <form @submit.prevent="login">
-        <input type="text" placeholder="Username" required/>
-        <input type="password" placeholder="Password" required/>
+      <form @submit.prevent="doLogin">
+        <input type="text" placeholder="Email" required v-model="loginCred.userName" />
+        <input type="password" placeholder="Password" required v-model="loginCred.password"/>
         <button class="btn-login">Login</button>
       </form>
-      <hr>
+      <hr />
       <div class="bottom-text">
         <p>Not registered yet ?</p>
         <p class="new-account-text" @click="openSignupModal">Create new account</p>
@@ -24,20 +24,33 @@
 
 <script>
 export default {
-    name: 'user-login',
+  name: "user-login",
+  data() {
+    return {
+      loginCred: {
+        userName: "dani@tt.com",
+        password: "12345",
+      },
+    };
+  },
 
-    methods: {
-       close() {
-            this.$emit('closeUserLogin');
-        },
-        openSignupModal() {
-          this.$emit('openUserSignup');
-          this.close();
-        }
-    }
-}
+  methods: {
+    close() {
+      this.$emit("closeUserLogin");
+    },
+    openSignupModal() {
+      this.$emit("openUserSignup");
+      this.close();
+    },
+    async doLogin() {
+      const cred = this.loginCred
+      if(!cred.userName || !cred.password) return this.msg = 'Please enter user/password'
+      await this.$store.dispatch({type :'login', userCred:cred})
+      this.loginCred = {};
+    },   
+  }
+};
 </script>
 
 <style>
-
 </style>

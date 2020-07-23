@@ -1,6 +1,7 @@
 import { boardService } from '../services/board-service.js';
 import { taskGroupService } from '../services/task-group-service.js'
 import SocketService from "../services/SocketService";
+import { userStore } from './UserStore.js'
 
 
 export const boardStore = {
@@ -8,7 +9,7 @@ export const boardStore = {
         // taskGroups: [],
         currBoard: '',
         // filterBy: { name: '' },
-        filterBy: { searchStr: '' },
+        boards: [],
         showFullLabel: false
     },
     getters: {
@@ -16,6 +17,7 @@ export const boardStore = {
             return state.currBoard;
         },
         getCurrBoardMembers(state) {
+            // debugger
             return state.currBoard.members;
         },
         getLabels(state) {
@@ -34,12 +36,10 @@ export const boardStore = {
                 if (typeof member === 'object') {
                     return member._id === userId;
                 }
-
                 return member === userId;
             });
 
             state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex].assignedUsers.splice(memberIndex, 1);
-            boardService.save(state.currBoard);
         },
         addMemberToTask(state, { userId, task }) {
             const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
@@ -56,17 +56,17 @@ export const boardStore = {
                 userId
             );
 
-            boardService.save(state.currBoard);
+            // boardService.save(state.currBoard);
         },
         removeMemberFromBoard(state, { userId }) {
             const index = state.currBoard.members.findIndex(user => user._id === userId);
 
             state.currBoard.members.splice(index, 1);
-            boardService.save(state.currBoard);
+            // boardService.save(state.currBoard);
         },
         addMemberToBoard(state, { userId }) {
             state.currBoard.members.push(userId);
-            boardService.save(state.currBoard);
+            // boardService.save(state.currBoard);
         },
         toggleShowFullLabel(state) {
             state.showFullLabel = !state.showFullLabel;
@@ -74,6 +74,9 @@ export const boardStore = {
         setBoard(state, { currBoard }) {
             state.currBoard = currBoard;
             boardService.save(state.currBoard)
+        },
+        saveBoards(state, { boards }) {
+            state.boards = boards;
         },
         saveBoard(state, { board }) {
             // debugger
@@ -166,17 +169,21 @@ export const boardStore = {
         }
     },
     actions: {
-        removeMemberFromTask({ commit }, { userId, task }) {
-            commit('removeMemberFromTask', { userId, task });
+        removeMemberFromTask(context, { userId, task }) {
+            context.commit('removeMemberFromTask', { userId, task });
+            boardService.save(context.getters.currBoard);
         },
-        addMemberToTask({ commit }, { userId, task }) {
-            commit('addMemberToTask', { userId, task });
+        addMemberToTask(context, { userId, task }) {
+            context.commit('addMemberToTask', { userId, task });
+            boardService.save(context.getters.currBoard);
         },
-        removeMemberFromBoard({ commit }, { userId }) {
-            commit('removeMemberFromBoard', { userId });
+        removeMemberFromBoard( context, { userId }) {
+            context.commit('removeMemberFromBoard', { userId });
+            boardService.save(context.getters.currBoard);
         },
-        addMemberToBoard({ commit }, { userId }) {
-            commit('addMemberToBoard', { userId });
+        addMemberToBoard( context, { userId }) {
+            context.commit('addMemberToBoard', { userId });
+            boardService.save(context.getters.currBoard);
         },
         toggleShowFullLabel({ commit }) {
             commit('toggleShowFullLabel');
@@ -261,7 +268,16 @@ export const boardStore = {
 
         toggleLabelInTask({ commit }, { labelId, task }) {
             commit('toggleLabelInTask', { labelId, task });
+        },
+        getUserBoards({ commit }, { userId }) {
+            return boardService.getUserBoards(userId)
+                .then(boards => {
+                    console.log(boards);
+                    commit({ type: 'saveBoards',  boards })
+                    return boards
+                })
         }
     },
+    
 
 }

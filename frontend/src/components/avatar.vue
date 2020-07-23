@@ -31,12 +31,13 @@ export default {
   ],
 
   methods: {
-    getUsername(userId) {
-      if (typeof userId === 'object') return userId.fullName;
+    // getUsername(userId) {
+    //   debugger
+    //   if (typeof userId === 'object') return userId.fullName;
       
-      const user = this.$store.getters.getUserById(userId);
-      return user.fullName;
-    },
+    //   const user = this.$store.getters.getUserById(userId);
+    //   return user.fullName;
+    // },
 
     removeMember(userId) {
       if (this.context === 'board') {

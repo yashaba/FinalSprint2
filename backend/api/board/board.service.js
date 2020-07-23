@@ -9,28 +9,33 @@ module.exports = {
     add
 }
 
-async function query() {
-    try {
-        const collection = await dbService.getCollection('board')
-        console.log(' collectionnnnnn', collection);
-        return collection
-    } catch (err) {
-        console.log('ERROR: cannot find boards')
-        throw err;
-    }
-}
-
-// async function query(filterBy) {
-//     const criteria = _buildCriteria(filterBy)
-//     const collection = await dbService.getCollection('board')
+// async function query() {
 //     try {
-//         const boards = await collection.find(criteria).toArray();
-//         return boards
+//         const collection = await dbService.getCollection('board')
+//         console.log(' collectionnnnnn', collection);
+//         return collection
 //     } catch (err) {
 //         console.log('ERROR: cannot find boards')
 //         throw err;
 //     }
 // }
+
+async function query(filterBy) {
+    console.log(filterBy);
+    
+    // const criteria = _buildCriteria(filterBy)
+    // console.log('criteria:',criteria);
+    
+    const collection = await dbService.getCollection('board')
+    try {
+        const boards = await collection.find({'members._id': `${filterBy.id}`}).toArray();
+        console.log(boards);
+        return boards
+    } catch (err) {
+        console.log('ERROR: cannot find boards')
+        throw err;
+    }
+}
 
 async function getById(boardId) {
     const collection = await dbService.getCollection('board')
@@ -88,17 +93,21 @@ async function add(board) {
 
 function _buildCriteria(filterBy) {
     const criteria = {};
-    // if (filterBy.name) {
-    //     criteria.name = { '$regex': `.*${filterBy.name}.*/i` }
-    // }
+
+    if (filterBy.id) {
+        criteria.id = {}
+    }
     // if (filterBy.inStock) {
     //     criteria.inStock = filterBy.inStock
     // }
 
     // console.log('server criteria:',criteria)
-    if (filterBy.name) criteria.name = { $regex: new RegExp(filterBy.name, 'i') };
-    if (filterBy.type !== '') criteria.type = filterBy.type;
-    if (filterBy.inStock !== '') criteria.inStock = (filterBy.inStock + '' === 'true') ? true : false;
-    console.log('board.service criteria:', criteria)
+
+    // if (filterBy.name) criteria.name = { $regex: new RegExp(filterBy.name, 'i') };
+    // if (filterBy.type !== '') criteria.type = filterBy.type;
+    // if (filterBy.inStock !== '') criteria.inStock = (filterBy.inStock + '' === 'true') ? true : false;
+    // console.log('board.service criteria:', criteria)
+
+
     return criteria;
 }

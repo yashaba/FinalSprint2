@@ -5,34 +5,40 @@ const ObjectId = require('mongodb').ObjectId
 module.exports = {
     query,
     getById,
-    getByEmail,
+    getByUserName,
     remove,
     update,
     add,
-    query2
+    // query2
 }
 
 async function query() {
     try {
-        const collection = await dbService.getCollection('user')
-        return collection
+        console.log('service query');
+        
+        const collection = await dbService.getCollection('users')
+        const users = await collection.find().toArray();
+        console.log('users', collection);
+
+        return users
     } catch (err) {
         console.log('ERROR: cannot find users')
         throw err;
     }
 }
-async function query2() {
-    try {
-        const collection = await dbService.getCollection('board')
-        // const board = await collection.find({ "members._id": "u101" }).toArray()
-        const board = await collection.find({ "members": "u101" }).toArray()
-        console.log('BOOOARDD', board);
-        return board
-    } catch (err) {
-        console.log('ERROR: cannot find users')
-        throw err;
-    }
-}
+
+// async function query2() {
+//     try {
+//         const collection = await dbService.getCollection('board')
+//         // const board = await collection.find({ "members._id": "u101" }).toArray()
+//         const board = await collection.find({ "members": "u101" }).toArray()
+//         console.log('BOOOARDD', board);
+//         return board
+//     } catch (err) {
+//         console.log('ERROR: cannot find users')
+//         throw err;
+//     }
+// }
 
 // async function query(filterBy = {}) {
 //     const criteria = _buildCriteria(filterBy)
@@ -49,16 +55,17 @@ async function query2() {
 // }
 
 async function getById(userId) {
-    const collection = await dbService.getCollection('user')
+    console.log('getById', userId)
+    const collection = await dbService.getCollection('users')
     try {
         const user = await collection.findOne({ "_id": ObjectId(userId) })
         delete user.password
 
-        user.givenReviews = await reviewService.query({ byUserId: ObjectId(user._id) })
-        user.givenReviews = user.givenReviews.map(review => {
-            delete review.byUser
-            return review
-        })
+        // user.givenReviews = await reviewService.query({ byUserId: ObjectId(user._id) })
+        // user.givenReviews = user.givenReviews.map(review => {
+        //     delete review.byUser
+        //     return review
+        // })
 
 
         return user
@@ -67,19 +74,22 @@ async function getById(userId) {
         throw err;
     }
 }
-async function getByEmail(email) {
-    const collection = await dbService.getCollection('user')
+async function getByUserName(userName) {
+    const collection = await dbService.getCollection('users')
+    console.log('collection:::', collection);
     try {
-        const user = await collection.findOne({ email })
+        const user = await collection.findOne({ userName: userName })
+        console.log('user::', user);
+
         return user
     } catch (err) {
-        console.log(`ERROR: while finding user ${email}`)
+        console.log(`ERROR: while finding user ${userName}`)
         throw err;
     }
 }
 
 async function remove(userId) {
-    const collection = await dbService.getCollection('user')
+    const collection = await dbService.getCollection('users')
     try {
         await collection.deleteOne({ "_id": ObjectId(userId) })
     } catch (err) {
@@ -89,7 +99,7 @@ async function remove(userId) {
 }
 
 async function update(user) {
-    const collection = await dbService.getCollection('user')
+    const collection = await dbService.getCollection('users')
     user._id = ObjectId(user._id);
 
     try {
@@ -102,7 +112,7 @@ async function update(user) {
 }
 
 async function add(user) {
-    const collection = await dbService.getCollection('user')
+    const collection = await dbService.getCollection('users')
     try {
         await collection.insertOne(user);
         return user;

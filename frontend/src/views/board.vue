@@ -125,6 +125,7 @@ export default {
 
     this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
       this.board = board;
+    this.$store.dispatch({ type: "loadUsers" })
       SocketService.setup();
       SocketService.emit("boardJoined", this.board._id);
       SocketService.on("taskUpdate", this.onUpdateTask);
