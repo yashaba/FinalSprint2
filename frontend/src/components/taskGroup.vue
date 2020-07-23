@@ -1,6 +1,6 @@
 <template>
   <!-- <div> -->
-    <div ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
+    <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
       <div class="closer relative flex space-between align-center">
         <p class="group-title">{{taskGroup.title}}</p> 
         <button class="btn-edit closer" @click="openTaskGroupModal">...</button>
@@ -15,9 +15,9 @@
         <div class="tasks-container">
           <draggable   class="list-group closer"
           tag="div"   
-          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true, isDragging= true" @end="drag=false;updateBoardEv();isDragging=false">
+          v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true, isDragging= true" @end="drag=false;updateBoardEv();isDragging=false;dragEndEv()">
           <div v-for="task in taskGroup.tasks" :key="task.id">
-            <task-preview @logClickEv='logClick' @testLog="log" :id="task._id" :task="task"></task-preview>
+            <task-preview @logClickEv='logClick' @previewClickedEv="previewClickedEv" :id="task._id" :task="task"></task-preview>
           </div>
           </draggable>
         </div>
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       // taskGroup : this.taskGroup,
-      elementToClone: null,
+     
       isAdding: false,
       isDragging: false,
       taskModalShown: false ,
@@ -122,11 +122,16 @@ export default {
   },
 
   methods: {
-    log(res){
-      this.elementToClone = res.id
-      console.log('tete',this.elementToClone)
-      console.log('tete',res)
-      // setTimeout(()=> {this.clone(res.ev)},0.2)
+      taskGroupClickedEv(event){
+      console.log('emited');
+    this.$emit('taskGroupClickedEv', {ev: event, id: this.taskGroup._id} )
+    },
+    myFunc() {
+      console.log('clicked');
+    },
+   
+    previewClickedEv(res){
+      this.$emit('previewClickedEv', res)
       
       
     },
@@ -144,34 +149,39 @@ export default {
       clone.id = taskGroupService.makeId()
        clone.style.position = 'absolute';
        clone.style.width = '252px'
+       clone.style.display = 'none'
        clone.classList.add('rotate')
       //  clone.style.transform = 'rotate(10deg)'
        clone.classList.add('elem2')
-      window.addEventListener('dragstart', function(e){
-        document.body.append(clone)
-        
-        }
+       var elContainer = document.querySelector('.list-group')
+       this.elClone = clone
 
-);
-         window.addEventListener('drag', function(e){
-         var left = e.pageX - ev.offsetX +"px";
-         var top = e.pageY-ev.offsetY+"px";
-         clone.style.left = left;
-         clone.style.top = top;
-                  }
-          );
-      window.addEventListener('dragend', function(e){
-        let cloneEl = document.getElementById(`${clone.id}`)
-        console.log('drag end' , cloneEl );
-        clone.parentNode.removeChild(clone);
-        clone.style.display = 'none'
-        
-        // console.log('is dragging end' , this.isDragging);
-         
 
-        }
+      // window.addEventListener('dragstart',function(e){
+  
+      //   }
 
-);
+// );
+          //  window.addEventListener('dragend', function(e){
+          //    let cloneEl = document.getElementById(`${clone.id}`)
+          //    console.log('drag end' , cloneEl );
+          //   // elContainer.removeChild(cloneEl)
+          //   // console.log('body', body);
+          //   //  clone.parentNode.removeChild(clone);
+          //    clone.style.display = 'none'
+          //    clone = null
+
+            //  window.removeEventListener('drag',true)
+            //  }
+    //  );
+        //  window.addEventListener('drag', function(e){
+       
+        //  var left = e.pageX - ev.offsetX +"px";
+        //  var top = e.pageY-ev.offsetY+"px";
+        //  clone.style.left = left;
+        //  clone.style.top = top;
+        //           }
+        //   );
 
     },
     openTaskGroupModal() {
@@ -180,6 +190,9 @@ export default {
           this.taskModalShown = true
 
         }, 0.2) 
+    },
+    dragEndEv(){
+    this.$emit('dragEndEv')
     },
  
    updateBoardEv() {
