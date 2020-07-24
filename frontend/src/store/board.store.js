@@ -15,6 +15,10 @@ export const boardStore = {
     getters: {
         currBoard(state) {
             return state.currBoard;
+        }, 
+        getCurrBoardTaskGroups(state) {
+            // debugger
+            return state.currBoard.taskGroups;
         },
         getCurrBoardMembers(state) {
             // debugger
