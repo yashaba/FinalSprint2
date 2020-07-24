@@ -57,11 +57,13 @@ export default {
             console.log('toggle member',memberName );
             if (this.isUserAssignedToTask(memberId)) {
                 this.$store.dispatch('removeMemberFromTask', {userId: memberId._id, task: this.task});
-                this.updateActivityLog( "added" + " " + memberName ,"ADD" )
+                              this.updateActivityLog( " " + memberName + " " + "from" ,"REMOVE" )
+
+            
 
             } else {
                 this.$store.dispatch('addMemberToTask', {userId: memberId._id, task: this.task});
-                this.updateActivityLog( " " + memberName + " " + "from" ,"REMOVE" )
+                    this.updateActivityLog( "added" + " " + memberName ,"ADD" )
             }
         },
             updateActivityLog(txt, type) {

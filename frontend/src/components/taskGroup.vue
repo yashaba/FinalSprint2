@@ -223,7 +223,12 @@ export default {
       let taskToSaveCopy = JSON.parse(JSON.stringify(this.taskToSave))
       this.$store.dispatch({ type: 'saveTask', task: taskToSaveCopy, taskGroup: this.taskGroup });
       this.isAdding = !this.isAdding;
-      this.taskToSave.title = ''    
+      this.taskToSave.title = ''  
+      this.updateActivityLog("" ,taskToSaveCopy, "CREATE")  
+    },
+     updateActivityLog(txt , task,type) {
+         let activity = { txt: txt ,task: task, type: type  }
+        this.$emit('updateActivityLogEv' , activity )
     }
   },
 

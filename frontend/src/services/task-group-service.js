@@ -13,7 +13,13 @@ function makeNewTaskGroup(title) {
 
 }
 
+// function getTaskGroupTitle(id) {
+//     console.log('task GROP', this.$store.getters.currBoard);
+//     // let taskGroup = this.$store.getters.currBoard.taskGroups.find(taskGroupItem => taskGroupItem._id === id)
+//     // return taskGroup.title
+//     return id
 
+// }
 
 function makeId(length = 10) {
     var txt = '';
@@ -37,5 +43,6 @@ function duplicateTaskGroup(taskGroup) {
 export const taskGroupService = {
     makeNewTaskGroup,
     duplicateTaskGroup,
-    makeId
+    makeId,
+    // getTaskGroupTitle
 }

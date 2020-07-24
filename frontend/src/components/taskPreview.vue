@@ -46,12 +46,12 @@ export default {
   taskGroup: this.task.taskGroup
   }
   },
-   watch: {
-    // whenever question changes, this function will run
-    task: function (newTaskGroup, oldTaskGroup) {
-      console.log('task changed',newTaskGroup.taskGroup, oldTaskGroup.taskGroup );
-    }
-   },
+  //  watch: {
+  //   // whenever question changes, this function will run
+  //   task: function (newTaskGroup, oldTaskGroup) {
+  //     console.log('task changed',newTaskGroup.taskGroup, oldTaskGroup.taskGroup );
+  //   }
+  //  },
   methods: {
     previewClickedEv(event){
       console.log('emited');

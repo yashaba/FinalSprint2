@@ -1,42 +1,22 @@
 <template>
   <div > 
-     <div v-if="activity.type === 'ADD'">
+     <div class="flex ">
         
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} {{activity.content}} to this card <br> {{activity.at}} 
+            <avatar
+            class="activity-avatar"
+        :size="32"
+        :username="activity.by.fullName"
+        backgroundColor="#dfe1e6"
+        color="#172b4d"
+      /> <p> <span class="span-name"> {{activity.by.fullName}}</span> &nbsp;  {{middleMessage(activity.type)}} <br> <span>{{ activity.at | moment("from") }}</span> </p>
       </div> 
-     <div v-if="activity.type === 'REMOVE'">
-        
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} {{activity.content}} this card <br> {{activity.at}} 
-      </div> 
-
-     <div v-if="activity.type === 'ADD_CHECKLIST_ITEM'">
-         
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} {{activity.content}} <br> {{activity.at}} 
-       
-      </div>  
-     <div v-if="activity.type === 'COMPLETED'">
-         
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} "place holder" on this card <br> {{activity.at}} 
-        
-     </div>
-     <div v-if="activity.type === 'MOVED'">
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} this card to target group <br> {{activity.at}}    
-     </div>
-     <div v-if="activity.type === 'DELETE_TYPE'">
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} removed an attachment from this card<br> {{activity.at}}    
-     </div>
-     <div v-if="activity.type === 'SET'">
-      {{activity.by.fullName}} {{middleMessage(activity.type)}} set this card to be due at:<br> {{activity.at}}    
-     </div>
- 
-  
-
-
 </div>
 
 </template>
 
 <script>
+import Avatar from "vue-avatar";
+
 
 export default {
 props: ['activity'],
@@ -55,23 +35,35 @@ created(){
 },
 methods: {
     middleMessage(type){
-    if (type === "DELETE_TASK") return 'deleted'
+        if (type === "DELETE_TASK") return 'deleted'
     if (type === "DELETE_TYPE") return 'deleted'
-    if (type === "REMOVE") return 'removed'
-    if (type === 'MOVED') return 'moved'
-    if (type === 'ADDED' || type === "ADD_CHECKLIST_ITEM") return 'added'
-    if (type === 'COMPLETED') return 'completed'
-    if (type === 'SET') return 'set'
-                }
+    if (type === "REMOVE") return `removed  ${this.activity.content}  this card` 
+    if (type === 'MOVE') return this.activity.content
+    if (type === 'ADD' ) return ` added ${this.activity.content} to this card`
+    if (type === "ADD_CHECKLIST_ITEM") return `added ${this.activity.content}`
+    if (type === 'COMPLETED') return 'completed "place holder" on this card'
+    if (type === 'SET') return 'set this card to be due at:'
+    if (type === 'CREATE') return 'created this card'
+                },
+
 
 },
 components: {
-
+Avatar
 }
 
 }
 </script>
 
 <style>
-
+.span-bold{
+    
+}
+.activity-avatar {
+    margin: 13px 5px 0 0;
+}
+.span-name{
+    text-transform: capitalize;
+    font-weight: bold
+}
 </style>

@@ -9,7 +9,7 @@
     <div class="info flex align-center">
     <button :board="board" @click="dashbordsToShow">Dashboards</button>
         <avatar class="members flex" :users="board.members" context="board" />
-      <button class="btn-add-member" @click="addMemberModal">Add member</button>
+      <button id="draggable" class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal
         v-if="isAddMemberModal"
         @closeAddMemberModal="closeAddMemberModal"
@@ -19,6 +19,7 @@
     <div class="board-page">
       <div class="flex closer">
         <draggable
+        
         handle=".handle , .tasks-container"
           class="list-group closer flex flex-start"
           tag="div"
@@ -35,7 +36,7 @@
             @taskGroupClickedEv='elDragableClicked'
             class="list-group-item"
               @dragEndEv= cloneDragEnd
-             
+             @updateActivityLogEv='updateActivityLog'
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
               @updateBoardEv="updateBoard(board)"
@@ -81,6 +82,8 @@ import boardNewMemberModal from "../components/boardNewMemberModal.vue";
 // import memberProfileModal from '../components/memberProfileModal.vue';
 import Chart from '@/components/Chart.vue';
 import chartBoardLabels from '@/components/ChartBoardLabels.vue';
+import $ from "jquery";
+import 'jquery-sortablejs';
 
 
 import {
@@ -88,6 +91,7 @@ import {
   SCREEN_MODE,
   STOP_SCREEN_MODE
 } from "../services/event-bus.service";
+
 
 export default {
   data() {
@@ -116,7 +120,7 @@ export default {
   },
 
   created() {
-
+    // $('#draggable').sortable();
      window.addEventListener('click', this.myFunc)
     window.addEventListener('dragstart', this.cloneDragStart)
     window.addEventListener('drag', this.cloneDrag)
@@ -175,11 +179,13 @@ this.$store.dispatch({ type: "loadUsers" })
     },
 
      cloneDragStart(ev){
+       ev.dataTransfer.setData("text", ev.target.id);
         document.body.append(this.elClone)
         this.isDragging = true
     },
 
     cloneDrag(ev){
+        ev.dataTransfer.setData("text", ev.target.id);
         this.elClone.style.display = 'block'
         var left = ev.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
         var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
@@ -211,12 +217,32 @@ this.$store.dispatch({ type: "loadUsers" })
     updateBoard(board) {
       this.board.taskGroups.forEach(taskGroupItem => {
         taskGroupItem.tasks.forEach(
-          task => (task.taskGroup = taskGroupItem._id)
+          task => {
+           if(task.taskGroup !== taskGroupItem._id){
+               let activity = {
+              type: "MOVE", txt: ` moved this card from ${this.getTaskGroupTitle(task.taskGroup)}
+               to  ${this.getTaskGroupTitle(taskGroupItem._id)} `, task: task}
+                console.log('taslll', activity);
+               this.updateActivityLog(activity)
+                 task.taskGroup = taskGroupItem._id
+
+             }
+            
+            
+            }
         );
       });
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
+    getTaskGroupTitle(id) {
+    // console.log('task GROP', this.$store.getters.currBoard);
+    let taskGroup = this.board.taskGroups.find(taskGroupItem => taskGroupItem._id === id)
+    return taskGroup.title
+    
+
+},
+
     onUpdateBoard(board) {
       // console.log("hii board", board);
       this.$store.commit({ type: "saveBoard", board });
