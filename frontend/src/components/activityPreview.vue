@@ -4,6 +4,10 @@
         
       {{activity.by.fullName}} {{middleMessage(activity.type)}} {{activity.content}} to this card <br> {{activity.at}} 
       </div> 
+     <div v-if="activity.type === 'REMOVE'">
+        
+      {{activity.by.fullName}} {{middleMessage(activity.type)}} {{activity.content}} this card <br> {{activity.at}} 
+      </div> 
 
      <div v-if="activity.type === 'ADD_CHECKLIST_ITEM'">
          
@@ -53,6 +57,7 @@ methods: {
     middleMessage(type){
     if (type === "DELETE_TASK") return 'deleted'
     if (type === "DELETE_TYPE") return 'deleted'
+    if (type === "REMOVE") return 'removed'
     if (type === 'MOVED') return 'moved'
     if (type === 'ADDED' || type === "ADD_CHECKLIST_ITEM") return 'added'
     if (type === 'COMPLETED') return 'completed'

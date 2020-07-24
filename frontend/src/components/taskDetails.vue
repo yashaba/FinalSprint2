@@ -187,6 +187,7 @@ export default {
       var res = await uploadImg(ev);
       this.img = res.url;
       this.task.attachments.unshift(this.img);
+      this.updateActivityLog(this.img, "ADD")
       this.updateTask();
     },
     focusOnPicker() {
