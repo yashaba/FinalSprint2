@@ -4,18 +4,33 @@ import { Bar } from 'vue-chartjs'
  
 export default {
   extends: Bar,
+  props: ['board'],
+  data() {
+    return {
+      boardLabels: [],
+      data: []
+    };
+  },
   mounted () {
-    // Overwriting base render method with actual data.
+    // Overwriting base render method with actual data
     this.renderChart({
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      labels: this.boardLabels,
       datasets: [
         {
-          label: 'GitHub Commits',
+          label: 'Tasks Groups',
           backgroundColor: '#f87979',
-          data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+          data: this.data
         }
       ]
-    })
+    }, {responsive: true})
+  },
+  created() {
+    console.log(this.board);
+    let taskGroups = this.$store.getters.getCurrBoardTaskGroups;
+    taskGroups.forEach(group => {
+    this.boardLabels.push(group.title);
+    this.data.push(group.tasks.length);
+    });
   }
 }
 </script>

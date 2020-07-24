@@ -1,5 +1,6 @@
 <template>
-    <chart class="chart" style="width: 800px; margin: auto; margin-top: 5%"/>
+  <chart board="test" class="chart" style="width: 400px; margin: auto; margin-top: 5%"/>
+
 </template>
 
 <script>

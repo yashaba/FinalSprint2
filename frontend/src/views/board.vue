@@ -1,10 +1,13 @@
 <template>
   <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}">
+  <chart class="chart" v-if="isDashboards" style="width: 400px; margin: auto; margin-top: 5%"/>
+  <chartBoardLabels class="chart" v-if="isDashboards" style="width: 400px; margin: auto; margin-top: 5%"/>
   <div class="board-vue">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateActivityLogEv='updateActivityLog' @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
+    <button :board="board" @click="dashbordsToShow">Dashboards</button>
         <avatar class="members flex" :users="board.members" context="board" />
       <button class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal
@@ -76,6 +79,9 @@ import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from "../components/boardNewMemberModal.vue";
 // import memberProfileModal from '../components/memberProfileModal.vue';
+import Chart from '@/components/Chart.vue';
+import chartBoardLabels from '@/components/ChartBoardLabels.vue';
+
 
 import {
   eventBus,
@@ -96,7 +102,8 @@ export default {
       screen: {
         isScreen: false
       },
-      isAddMemberModal: false
+      isAddMemberModal: false,
+      isDashboards: false
       // isMemberModal: false
     };
   },
@@ -157,6 +164,10 @@ this.$store.dispatch({ type: "loadUsers" })
 
 
   methods: {
+
+    dashbordsToShow(){
+      this.isDashboards = !this.isDashboards
+    },
 
       elDragableClicked(elDraggable){
       this.elementToClone = elDraggable.id
@@ -263,7 +274,9 @@ this.$store.dispatch({ type: "loadUsers" })
     taskDetails,
     taskEdit,
     Avatar,
-    boardNewMemberModal
+    boardNewMemberModal,
+    Chart,
+    chartBoardLabels
     // memberProfileModal
   }
 };
