@@ -1,20 +1,20 @@
 <template>
-  <div id="app">
-   
-    <div class="header flex space-between align-center">
-        <h1>Logo</h1>
-        <div class="nav flex">
-          <router-link class="link" to="/">Home</router-link> 
-          <router-link class="link" to="/board">Board</router-link> 
-        <router-link to="/u">Dashboard</router-link> |
-          <a href="#" class="link" @click="loginModal">Login</a>
-          <a href="#" class="link" @click="signupModal">Signup</a>
-        </div>
+    <div id="app">
+    
+      <div class="header flex space-between align-center">
+          <h1>Logo</h1>
+          <div class="nav flex">
+            <router-link class="link" to="/">Home</router-link> 
+            <router-link class="link" to="/board">Board</router-link> 
+          <router-link to="/u">Dashboard</router-link> |
+            <a href="#" class="link" @click="loginModal">Login</a>
+            <a href="#" class="link" @click="signupModal">Signup</a>
+          </div>
+      </div>
+      <user-login v-if="isLoginModal" @closeUserLogin="isLoginModal=!isLoginModal" @openUserSignup="signupModal"></user-login>
+      <user-signup v-if="isSignupModal" @closeUserSignup="isSignupModal=!isSignupModal" @openUserLogin="loginModal"></user-signup>
+      <router-view/>
     </div>
-    <user-login v-if="isLoginModal" @closeUserLogin="isLoginModal=!isLoginModal" @openUserSignup="signupModal"></user-login>
-    <user-signup v-if="isSignupModal" @closeUserSignup="isSignupModal=!isSignupModal" @openUserLogin="loginModal"></user-signup>
-    <router-view/>
-  </div>
 </template>
 
 <script>

@@ -1,29 +1,30 @@
 <template>
   <div  @mousedown.stop="previewClickedEv" :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
-    <div class="edit" @click.stop="editTask"></div>
-    <div class="preview-header">
-      <div class="preview-content">
-        <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
-            <img :src="`${attachment}`" />
+
+      <div class="edit" @click.stop="editTask"></div>
+      <div class="preview-header">
+        <div class="preview-content">
+          <div class="attachments" v-for="attachment in task.attachments" :key="attachment.id">
+              <img :src="`${attachment}`" />
+          </div>
         </div>
       </div>
-    </div>
-    <task-preview-labels-list :labels="task.labels"/>
-      <div class="task-title">{{task.title}}</div>
-      <div class="flex align-end space-between">
-        <div class="flex align-center">
-        <div v-if="task.checkLists">
-     <check-list-preview :task='task'></check-list-preview>
-     </div> 
-     <div class="duedate">
-     <due-date-preview  v-if="task.dueDate.date" :dueDate="task.dueDate"></due-date-preview>
-     </div>
-     </div>
-     <div v-if="!task.checkLists"></div>
-    <div class="members">
-      <avatar class="flex justify-end" :users="task.assignedUsers" :entity="task" context="task" />
-    </div>
-    </div>
+      <task-preview-labels-list :labels="task.labels"/>
+        <div class="task-title">{{task.title}}</div>
+        <div class="flex align-end space-between align-center">
+          <div class="flex align-center">
+          <div v-if="task.checkLists">
+      <check-list-preview :task='task'></check-list-preview>
+      </div> 
+      <div class="duedate">
+      <due-date-preview  v-if="task.dueDate.date" :dueDate="task.dueDate"></due-date-preview>
+      </div>
+      </div>
+      <div v-if="!task.checkLists"></div>
+      <div class="members">
+        <avatar class="flex justify-end" :users="task.assignedUsers" :entity="task" context="task" />
+      </div>
+      </div>
   </div>
 </template>
 

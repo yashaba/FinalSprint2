@@ -39,6 +39,10 @@ export const userStore = {
             return state.currUser;
         },
 
+        getCurrUserId(state, getters) {
+            return getters.currUser._id;
+        },
+
         getUsers(state) {
             return state.users;
         },

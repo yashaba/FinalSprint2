@@ -12,7 +12,6 @@
               <span v-if="isUserAssignedToTask(memberId)">V</span>
           </div>
       </div>
-      <p>All board members are assigned to this task</p>
   </section>
 </template>
 
