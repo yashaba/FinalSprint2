@@ -11,8 +11,8 @@
       </div>
       <task-preview-labels-list :labels="task.labels"/>
         <div class="task-title">{{task.title}}</div>
-        <div class="flex align-end space-between align-center">
-          <div class="flex align-center">
+        <div class="task-more-content flex space-between align-center">
+          <div class="flex align-end">
           <div v-if="task.checkLists">
       <check-list-preview :task='task'></check-list-preview>
       </div> 
@@ -22,7 +22,7 @@
       </div>
       <div v-if="!task.checkLists"></div>
       <div class="members">
-        <avatar class="flex justify-end" :users="task.assignedUsers" :entity="task" context="task" />
+        <avatar class="flex" :users="task.assignedUsers" :entity="task" context="task" />
       </div>
       </div>
   </div>
@@ -33,7 +33,7 @@ import {
   eventBus,
   SHOW_DETAILS,
   SHOW_EDIT_TASK,
-  SCREEN_MODE
+  OVERLAY_EFFECT
 } from "../services/event-bus.service.js";
 import Avatar from "../components/avatar.vue";
 import checkListPreview from './checkListPreview.vue';
@@ -52,12 +52,13 @@ export default {
     this.$emit('testLog', ev)
     },
     onDetails() {
+      eventBus.$emit(OVERLAY_EFFECT, {});
       eventBus.$emit(SHOW_DETAILS, this.task);
     },
     editTask() {
    
       // eventBus.$emit(SHOW_EDIT_TASK, this.task);
-      eventBus.$emit(SCREEN_MODE, {});
+      eventBus.$emit(OVERLAY_EFFECT, {});
       eventBus.$emit(SHOW_EDIT_TASK, {
       task: this.task,
       position: { positionX: event.clientX, positionY: event.clientY }

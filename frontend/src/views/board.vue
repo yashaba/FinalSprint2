@@ -1,5 +1,6 @@
 <template>
-  <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}">
+  <section class="flex column" style="height: 100vh" v-if="board">
+    <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
   <div class="board-vue">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
@@ -43,7 +44,7 @@
           <div @click="addingTask = true" class="closer" v-if="!addingTask">Add task group</div>
           <div class="add-group-inputs flex column" v-if="addingTask">
             <input placeholder="Enter a title" type="text" v-model="newGroupTitle" />
-            <div>
+            <div class="flex align-center space-around">
               <button
                 class="btn-save-group"
                 @click.stop="createTaskGroup(newGroupTitle),newGroupTitle = '' "
@@ -74,12 +75,11 @@ var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from "../components/boardNewMemberModal.vue";
-// import memberProfileModal from '../components/memberProfileModal.vue';
 
 import {
   eventBus,
-  SCREEN_MODE,
-  STOP_SCREEN_MODE
+  OVERLAY_EFFECT,
+  STOP_OVERLEY_EFFECT
 } from "../services/event-bus.service";
 
 export default {
@@ -87,16 +87,13 @@ export default {
     return {
       dragTargetEv: null,
       isDragging: false,
-       elClone: null,
+      elClone: null,
       elementToClone: null,
       board: null,
       newGroupTitle: "",
       addingTask: false,
-      screen: {
-        isScreen: false
-      },
-      isAddMemberModal: false
-      // isMemberModal: false
+      isAddMemberModal: false,
+      isOverlayEffect: false,
     };
   },
   computed: {
@@ -109,7 +106,7 @@ export default {
 
   created() {
 
-     window.addEventListener('click', this.myFunc)
+    window.addEventListener('click', this.myFunc)
     window.addEventListener('dragstart', this.cloneDragStart)
     window.addEventListener('drag', this.cloneDrag)
     // window.addEventListener('mousemove', this.cloneDrag)
@@ -130,7 +127,7 @@ this.$store.dispatch({ type: "loadUsers" })
     window.onclick = function(ev) {
       if (ev.target.classList.contains("closer")) {
         this.addingTask = false;
-        eventBus.$emit("closer-clicked");
+        // eventBus.$emit("closer-clicked");
       }
       // console.log('window clickied', ev.target.classList[0]);
     };
@@ -139,12 +136,12 @@ this.$store.dispatch({ type: "loadUsers" })
       this.addingTask = false;
     });
 
-    eventBus.$on(SCREEN_MODE, () => {
-      this.screen.isScreen = true;
+    eventBus.$on(OVERLAY_EFFECT, () => {
+      this.isOverlayEffect = true;
     });
 
-    eventBus.$on(STOP_SCREEN_MODE, () => {
-      this.screen.isScreen = false;
+    eventBus.$on(STOP_OVERLEY_EFFECT, () => {
+      this.isOverlayEffect = false;
     });
   },
   destroyed() {
@@ -156,6 +153,10 @@ this.$store.dispatch({ type: "loadUsers" })
 
 
   methods: {
+      closeOverlayEffect() {
+        this.isOverlayEffect = false;
+        eventBus.$emit("closer-clicked");
+      },
 
       elDragableClicked(elDraggable){
       this.elementToClone = elDraggable.id
@@ -233,9 +234,6 @@ this.$store.dispatch({ type: "loadUsers" })
     addMemberToBoard(userId) {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
     }
-    // openMemberModal() {
-    //   this.isMemberModal = !this.isMemberModal;
-    // }
   },
   computed: {
     dragOptions() {
@@ -262,7 +260,20 @@ this.$store.dispatch({ type: "loadUsers" })
 </script>
 
 <style lang="scss" >
-.board-page {
+.effect {
+  position: fixed; /* Sit on top of the page content */
+  // display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+.board-vue {
   width: 100%;
   overflow-x: auto;
   flex: 1;
@@ -345,18 +356,21 @@ this.$store.dispatch({ type: "loadUsers" })
   justify-content: center;
   align-items: center;
   .btn-close {
-    float: left;
+    // float: left;
     margin-left: 10px;
-    margin-top: 10px;
-    font-size: 16px;
+    // margin-top: 10px;
+    font-size: 1.2rem;
+    // font-size: 16px;
     border: 0;
     cursor: pointer;
     outline: none;
-    width: 30px;
-    background: rgba($color: #cfcdcd, $alpha: 0.1);
+    // width: 30px;
+    background-color: rgba(230, 220, 220, 0.0);
+    color: #172b4d;
+    // background: rgba($color: #cfcdcd, $alpha: 0.1);
 
     &:hover {
-      color: #172b4d;
+      color: black;
       // background-color: #ebecf0;
     }
   }

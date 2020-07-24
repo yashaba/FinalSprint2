@@ -3,12 +3,22 @@
     <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
       <div class="closer relative flex space-between align-center">
         <p class="group-title">{{taskGroup.title}}</p> 
-        <button class="btn-edit closer" @click="openTaskGroupModal">...</button>
+        <button v-if="!taskModalShown" class="btn-edit closer" @click="openTaskGroupModal">...</button>
+        <button v-else class="btn-close-title-modal" @click="closeTaskModal">&times;</button>
         <div v-if="taskModalShown" class="title-modal column ">
-           <div @click="isAdding = true , taskModalShown = false"> <i class="fas fa-plus"></i> Add new task </div>
-           <div @click="duplicateTaskGroup"><i class="fas fa-copy"></i> Duplicate List</div>
-           <div  @click="removeTaskGroup"> <i class="far fa-trash-alt"></i> Remove list</div>
+           <div @click="isAdding = true , taskModalShown = false"> 
+             <i class="fas fa-plus"></i> 
+             Add new task
             </div>
+           <div @click="duplicateTaskGroup">
+             <i class="fas fa-copy"></i> 
+             Duplicate List
+            </div>
+           <div @click="removeTaskGroup">
+            <i class="far fa-trash-alt"></i> 
+            Remove list
+          </div>
+        </div>
       </div>
       <div class="tasks1 closer">
     <!-- <h1> {{this.columns.columnTitle}}</h1> -->
@@ -39,7 +49,7 @@
                     <!-- @focus.native="onFocusTextarea" -->
                 <button class="btn-save-task" type="submit">Add</button>
               </form>
-              <button class="btn-close" @click="close">&times;</button>
+              <button class="btn-close" @click="closeAdd">&times;</button>
           </div>
         </div>
       </div>
@@ -188,9 +198,12 @@ export default {
     openTaskGroupModal() {
       setTimeout(()=> {
         
-          this.taskModalShown = true
+          this.taskModalShown = true;
 
         }, 0.2) 
+    },
+    closeTaskModal() {
+      this.taskModalShown = false;
     },
     dragEndEv(){
     this.$emit('dragEndEv')
@@ -214,7 +227,7 @@ export default {
      setTimeout(()=> {this.isAdding = true;}, 0.3)
       
     },
-    close() {
+    closeAdd() {
       this.isAdding = !this.isAdding;
       this.taskToSave.title = ''
      
@@ -273,25 +286,36 @@ components: {
 
 .title-modal{
   z-index: 1;
-  width: 120px;
-  height: 85px;
+  width: 125px;
+  height: 87px;
   position: absolute;
-  background-color: rgb(252, 250, 247);
+  background-color: #ffffff;
+  border-radius: 4px;
+  // background-color: rgb(252, 250, 247);
   justify-content: center;
   right: 1%;
   top: 95%;
+  box-shadow: 1px 1px 1px 1px #c3cbdc;
+  color: #172b4d;
+  font-size: 0.9rem;
+  font-weight: lighter;
   div {
-    // margin-top: 7px;
-    height: 30px;
+    // height: 30px;
     cursor: pointer;
+    width: 100%;
+    padding: 5px;
   }
       div:hover {
-        background-color: rgb(187, 185, 183)
+        background-color: #dadbe2;
+        // background-color: rgb(187, 185, 183)
       }
+  i {
+    margin-right: 2px;
+  }
     
 }
-.fa-trash-alt {
-  margin-left: 2px;
-  float: left;
-}
+// .fa-trash-alt {
+//   margin-left: 2px;
+//   float: left;
+// }
 </style>

@@ -10,4 +10,13 @@
     &:hover {
         background-color: rgba($color: #c5bebe, $alpha: 0.5);
     }
+
+    input {
+        background-color: #fafbfce8;
+        padding: 10px;
+        outline: none;
+        border-radius: 3px;
+        width: 100%;
+        margin-bottom: 3px;
+    }
 }

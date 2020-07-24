@@ -23,7 +23,7 @@
           <i class="far fa-user"></i>
           Change Members
         </button>
-        <members-modal v-if="isMembersModal" :task="task" />
+        <members-modal v-if="isMembersModal" :task="task" @closeMemberModal="toggleMembersModal"/>
         <button class="btn-edit-modal">
           <i class="fas fa-arrow-right"></i>
           Move
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { eventBus, SHOW_EDIT_TASK, STOP_SCREEN_MODE } from '../services/event-bus.service.js';
+import { eventBus, SHOW_EDIT_TASK, STOP_OVERLEY_EFFECT } from '../services/event-bus.service.js';
 import labelsModal from './labelsModal.vue';
 import membersModal from './membersModal.vue'
 
@@ -70,19 +70,20 @@ export default {
     methods: {
       close(ev = {}, click = false) {
         if (ev.key == 'Escape' || click) {
-          eventBus.$emit(STOP_SCREEN_MODE, {});
+          eventBus.$emit(STOP_OVERLEY_EFFECT, {});
           this.task = null;
           this.isLabelsModal = false;
         }
       },
       saveTask() {
         this.$store.dispatch({ type: 'updateTask', task: this.task });
-        eventBus.$emit(STOP_SCREEN_MODE, {});
+        eventBus.$emit(STOP_OVERLEY_EFFECT, {});
         this.task = null;
         this.isLabelsModal = false;
         },
       onRemove() {
         this.$emit("removeTaskEv", this.task);
+        eventBus.$emit(STOP_OVERLEY_EFFECT, {});
         this.task = null;
       },
       toggleLabelsModal() {
@@ -102,9 +103,10 @@ export default {
 
     created() {
       eventBus.$on("closer-clicked", () => {
-      eventBus.$emit(STOP_SCREEN_MODE, {});
+      eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.task = null;
       this.isLabelsModal = false;
+      this.isMembersModal = false;
       })
 
       eventBus.$on(SHOW_EDIT_TASK, task=>{
@@ -126,6 +128,7 @@ export default {
 <style scoped>
   .task-edit {
     position: absolute;
+    z-index: 2;
   }
 
 </style>
