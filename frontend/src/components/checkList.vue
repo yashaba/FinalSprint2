@@ -22,6 +22,7 @@
 <script>
 import {utilsService} from '../services/utils-service.js'
 import checkListItem from './checkListItem.vue'
+import {activityLogService} from '../services/activity-log-service.js'
 export default {
 props: ['checkList', 'idx'],
 data() {return {
@@ -60,6 +61,10 @@ methods: {
         
         this.$emit('updateChecklistEv' , {list: this.checkListItems, idx: this.idx})
     },
+    updateActivityLog(txt , type) {
+        
+        this.$emit('updateActivityLogEv' , txt , type )
+    },
     addItem() {
         let newItem = {
             id: utilsService.makeId(),
@@ -71,6 +76,8 @@ methods: {
         this.addingItem = false
 
         this.updateTask()
+        newItem.txt += " " + "to"+" " +this.checkList.title
+        this.updateActivityLog(newItem.txt, "ADD_CHECKLIST_ITEM")
 
     }
 },

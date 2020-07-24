@@ -5,7 +5,7 @@
   <div class="board-vue">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
-    <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
+    <task-details @updateActivityLogEv='updateActivityLog' @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
     <button :board="board" @click="dashbordsToShow">Dashboards</button>
         <avatar class="members flex" :users="board.members" context="board" />
@@ -19,6 +19,7 @@
     <div class="board-page">
       <div class="flex closer">
         <draggable
+        handle=".handle , .tasks-container"
           class="list-group closer flex flex-start"
           tag="div"
           v-bind="dragOptions"
@@ -176,10 +177,10 @@ this.$store.dispatch({ type: "loadUsers" })
      cloneDragStart(ev){
         document.body.append(this.elClone)
         this.isDragging = true
-        this.elClone.style.display = 'block'
     },
 
     cloneDrag(ev){
+        this.elClone.style.display = 'block'
         var left = ev.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
         var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
          this.elClone.style.left = left;
@@ -243,6 +244,12 @@ this.$store.dispatch({ type: "loadUsers" })
     },
     addMemberToBoard(userId) {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
+    },
+    updateActivityLog(activity){
+      let user = this.$store.getters.loggedinUser
+      console.log('activityyyy', activity);
+      activity.user = user
+     this.$store.dispatch({ type: "updateActivityLog", activity});
     }
     // openMemberModal() {
     //   this.isMemberModal = !this.isMemberModal;
@@ -251,6 +258,7 @@ this.$store.dispatch({ type: "loadUsers" })
   computed: {
     dragOptions() {
       return {
+        fallbackTolerance: 10000,
         animation: 400,
         group: "description",
         disabled: false,

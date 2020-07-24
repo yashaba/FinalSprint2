@@ -79,9 +79,15 @@
             <span class="checkList-title">{{checkList.title}}</span>
             <br />
 
-            <check-list @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
+            <check-list @updateActivityLogEv='updateActivityLog' @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
           </div>
           <!-- {{task.checkList}} -->
+        </div>
+                <div> 
+          Activity log: <br />
+          <activity-log :task="task"></activity-log>
+
+
         </div>
       </div>
       <div class="details-actions">
@@ -140,6 +146,7 @@ import datePicker from "./datePicker";
 import labelsModal from "./labelsModal.vue";
 import colorPicker from "./color-picker.cmp.vue";
 import taskPreviewLabelsList from "./taskPreviewLabelsList.vue";
+import activityLog from "./activityLog.vue"
 
 export default {
   name: "task-details",
@@ -180,6 +187,7 @@ export default {
       var res = await uploadImg(ev);
       this.img = res.url;
       this.task.attachments.unshift(this.img);
+      this.updateActivityLog(this.img, "ADD")
       this.updateTask();
     },
     focusOnPicker() {
@@ -196,6 +204,7 @@ export default {
     },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
+      console.log('updated checklist' , this.task.checkLists[updatedCheckList.idx] );
       this.updateTask();
     },
     updateTask() {
@@ -210,6 +219,7 @@ export default {
       this.task = null;
     },
     deleteAttachment(idx) {
+      this.updateActivityLog(this.task.attachments[idx], "DELETE_TYPE")
       this.task.attachments.splice(idx, 1);
       this.updateTask();
     },
@@ -217,6 +227,7 @@ export default {
       this.isChecklistModal = !this.isChecklistModal;
     },
     addChecklist(checklistTitle) {
+      this.updateActivityLog(checklistTitle, "ADD")
       let checklistTitleCopy = JSON.parse(JSON.stringify(checklistTitle));
       this.checklistTitle = "";
       this.$store.dispatch({
@@ -229,7 +240,14 @@ export default {
     },
     toggleLabelsModal() {
       this.isLabelsModal = !this.isLabelsModal;
-    }
+    },
+        updateActivityLog(txt, type) {
+          console.log("activity log in details",  type);
+
+        let activity = {txt: txt, task: this.task}
+        activity.type = type
+        this.$emit('updateActivityLogEv' , activity )
+    },
   },
   computed: {},
   components: {
@@ -239,7 +257,8 @@ export default {
     datePicker,
     labelsModal,
     taskPreviewLabelsList,
-    colorPicker
+    colorPicker,
+     activityLog
   }
 };
 </script>
