@@ -1,7 +1,7 @@
 <template>
   <!-- <div> -->
     <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
-      <div class="closer relative flex space-between align-center">
+      <div class="closer relative flex space-between align-center handle">
         <p class="group-title">{{taskGroup.title}}</p> 
         <button class="btn-edit closer" @click="openTaskGroupModal">...</button>
         <div v-if="taskModalShown" class="title-modal column ">
