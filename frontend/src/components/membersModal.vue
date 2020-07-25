@@ -57,16 +57,34 @@ export default {
 
             if (!Array.isArray(this.task.assignedUsers)) return false;
 
-            return assignedUsers.includes(memberId);
+            return assignedUsers.includes(memberId._id);
         },
 
         toggleMemberOnTask(memberId) {
+            let memberName = this.$store.getters.getUserFullnameById(memberId._id);
+            console.log('toggle member',memberName );
             if (this.isUserAssignedToTask(memberId)) {
-                this.$store.dispatch('removeMemberFromTask', {userId: memberId, task: this.task});
+                this.$store.dispatch('removeMemberFromTask', {userId: memberId._id, task: this.task});
+                              this.updateActivityLog( " " + memberName + " " + "from" ,"REMOVE" )
+
+            
+
             } else {
-                this.$store.dispatch('addMemberToTask', {userId: memberId, task: this.task});
+                this.$store.dispatch('addMemberToTask', {userId: memberId._id, task: this.task});
+                    this.updateActivityLog( "added" + " " + memberName ,"ADD" )
             }
-        }
+        },
+            updateActivityLog(txt, type) {
+          console.log("activity log in details",  type);
+
+        let activity = {txt: txt, task: this.task}
+        activity.type = type
+      let user = this.$store.getters.loggedinUser
+      activity.user = user
+     this.$store.dispatch({ type: "updateActivityLog", activity});
+      
+    },
+
     }
 }
 </script>

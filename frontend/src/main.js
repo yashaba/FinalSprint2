@@ -8,8 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 import TextareaAutosize from 'vue-textarea-autosize'
- 
+
 Vue.use(TextareaAutosize)
+Vue.use(require('vue-moment'))
 
 Vue.config.productionTip = false
 

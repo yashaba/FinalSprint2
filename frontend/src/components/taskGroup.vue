@@ -1,7 +1,7 @@
 <template>
   <!-- <div> -->
     <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
-      <div class="closer relative flex space-between align-center">
+      <div class="closer relative flex space-between align-center handle">
         <p class="group-title">{{taskGroup.title}}</p> 
         <button v-if="!taskModalShown" class="btn-edit closer" @click="openTaskGroupModal">...</button>
         <button v-else class="btn-close-title-modal" @click="closeTaskModal">&times;</button>
@@ -236,7 +236,12 @@ export default {
       let taskToSaveCopy = JSON.parse(JSON.stringify(this.taskToSave))
       this.$store.dispatch({ type: 'saveTask', task: taskToSaveCopy, taskGroup: this.taskGroup });
       this.isAdding = !this.isAdding;
-      this.taskToSave.title = ''    
+      this.taskToSave.title = ''  
+      this.updateActivityLog("" ,taskToSaveCopy, "CREATE")  
+    },
+     updateActivityLog(txt , task,type) {
+         let activity = { txt: txt ,task: task, type: type  }
+        this.$emit('updateActivityLogEv' , activity )
     }
   },
 

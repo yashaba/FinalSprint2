@@ -49,6 +49,10 @@ export default {
       if (typeof userId === 'object') return userId.fullName;
       
       const user = this.$store.getters.getUserById(userId);
+      if (!user) {
+        console.error(`cant find user id ${userId}`);
+        return ''
+      } 
       return user.fullName;
     },
 

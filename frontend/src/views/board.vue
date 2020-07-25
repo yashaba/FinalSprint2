@@ -1,13 +1,17 @@
 <template>
   <section class="flex column" style="height: 100vh" v-if="board">
     <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
+  <!-- <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}"> -->
+  <chart class="chart" v-if="isDashboards" style="width: 400px; margin: auto; margin-top: 5%"/>
+  <chartBoardLabels class="chart" v-if="isDashboards" style="width: 400px; margin: auto; margin-top: 5%"/>
   <div class="board-vue">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
-    <task-details @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
+    <task-details @updateActivityLogEv='updateActivityLog' @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
+    <button :board="board" @click="dashbordsToShow">Dashboards</button>
         <avatar class="members flex" :users="board.members" context="board" />
-      <button class="btn-add-member" @click="addMemberModal">Add member</button>
+      <button id="draggable" class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal
         v-if="isAddMemberModal"
         @closeAddMemberModal="closeAddMemberModal"
@@ -17,6 +21,8 @@
     <div class="board-page">
       <div class="flex closer">
         <draggable
+        
+        handle=".handle , .tasks-container"
           class="list-group closer flex flex-start"
           tag="div"
           v-bind="dragOptions"
@@ -32,7 +38,7 @@
             @taskGroupClickedEv='elDragableClicked'
             class="list-group-item"
               @dragEndEv= cloneDragEnd
-             
+             @updateActivityLogEv='updateActivityLog'
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
               @updateBoardEv="updateBoard(board)"
@@ -75,12 +81,19 @@ var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from "../components/boardNewMemberModal.vue";
+// import memberProfileModal from '../components/memberProfileModal.vue';
+import Chart from '@/components/Chart.vue';
+import chartBoardLabels from '@/components/ChartBoardLabels.vue';
+import $ from "jquery";
+import 'jquery-sortablejs';
+
 
 import {
   eventBus,
   OVERLAY_EFFECT,
   STOP_OVERLEY_EFFECT
 } from "../services/event-bus.service";
+
 
 export default {
   data() {
@@ -94,6 +107,7 @@ export default {
       addingTask: false,
       isAddMemberModal: false,
       isOverlayEffect: false,
+      isDashboards: false
     };
   },
   computed: {
@@ -105,8 +119,8 @@ export default {
   },
 
   created() {
-
-    window.addEventListener('click', this.myFunc)
+    // $('#draggable').sortable();
+     window.addEventListener('click', this.myFunc)
     window.addEventListener('dragstart', this.cloneDragStart)
     window.addEventListener('drag', this.cloneDrag)
     // window.addEventListener('mousemove', this.cloneDrag)
@@ -158,18 +172,24 @@ this.$store.dispatch({ type: "loadUsers" })
         eventBus.$emit("closer-clicked");
       },
 
+    dashbordsToShow(){
+      this.isDashboards = !this.isDashboards
+    },
+
       elDragableClicked(elDraggable){
       this.elementToClone = elDraggable.id
       this.clone(elDraggable.ev)
     },
 
      cloneDragStart(ev){
+       ev.dataTransfer.setData("text", ev.target.id);
         document.body.append(this.elClone)
         this.isDragging = true
-        this.elClone.style.display = 'block'
     },
 
     cloneDrag(ev){
+        ev.dataTransfer.setData("text", ev.target.id);
+        this.elClone.style.display = 'block'
         var left = ev.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
         var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
          this.elClone.style.left = left;
@@ -200,12 +220,32 @@ this.$store.dispatch({ type: "loadUsers" })
     updateBoard(board) {
       this.board.taskGroups.forEach(taskGroupItem => {
         taskGroupItem.tasks.forEach(
-          task => (task.taskGroup = taskGroupItem._id)
+          task => {
+           if(task.taskGroup !== taskGroupItem._id){
+               let activity = {
+              type: "MOVE", txt: ` moved this card from ${this.getTaskGroupTitle(task.taskGroup)}
+               to  ${this.getTaskGroupTitle(taskGroupItem._id)} `, task: task}
+                console.log('taslll', activity);
+               this.updateActivityLog(activity)
+                 task.taskGroup = taskGroupItem._id
+
+             }
+            
+            
+            }
         );
       });
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
+    getTaskGroupTitle(id) {
+    // console.log('task GROP', this.$store.getters.currBoard);
+    let taskGroup = this.board.taskGroups.find(taskGroupItem => taskGroupItem._id === id)
+    return taskGroup.title
+    
+
+},
+
     onUpdateBoard(board) {
       // console.log("hii board", board);
       this.$store.commit({ type: "saveBoard", board });
@@ -233,11 +273,18 @@ this.$store.dispatch({ type: "loadUsers" })
     },
     addMemberToBoard(userId) {
       this.$store.dispatch({ type: "addMemberToBoard", userId });
+    },
+    updateActivityLog(activity){
+      let user = this.$store.getters.loggedinUser
+      console.log('activityyyy', activity);
+      activity.user = user
+     this.$store.dispatch({ type: "updateActivityLog", activity});
     }
   },
   computed: {
     dragOptions() {
       return {
+        fallbackTolerance: 10000,
         animation: 400,
         group: "description",
         disabled: false,
@@ -253,8 +300,9 @@ this.$store.dispatch({ type: "loadUsers" })
     taskDetails,
     taskEdit,
     Avatar,
-    boardNewMemberModal
-    // memberProfileModal
+    boardNewMemberModal,
+    Chart,
+    chartBoardLabels
   }
 };
 </script>
