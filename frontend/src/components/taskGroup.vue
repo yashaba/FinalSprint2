@@ -116,6 +116,7 @@ export default {
   computed: {
     dragOptions() {
       return {
+        // forceFallback: true,
         animation: 400,
         group: "description",
         disabled: false,

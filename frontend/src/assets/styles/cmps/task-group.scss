@@ -98,11 +98,14 @@
 //     opacity: 1;
 //     background: #c8ebfb;
 // }
-// .list-group {
-//     min-height: 20px;
-// }
+.list-group {
+    min-height: 20px;
+    -moz-user-select: none
+}
+
 .list-group-item {
     cursor: move;
+    -moz-user-select: none
 }
 
 // .list-group-item i {

@@ -8,7 +8,7 @@
         :username="activity.by.fullName"
         backgroundColor="#dfe1e6"
         color="#172b4d"
-      /> <p> <span class="span-name"> {{activity.by.fullName}}</span> &nbsp;  {{middleMessage(activity.type)}} <br> <span>{{ activity.at | moment("from") }}</span> </p>
+      /> <p> <span v-if="activity.by.fullName" class="span-name"> {{activity.by.fullName}}</span> &nbsp;  {{middleMessage(activity.type)}} <br> <span>{{ activity.at | moment("from") }}</span> </p>
       </div> 
 </div>
 

@@ -5,13 +5,13 @@
           <i class="fas fa-home"></i>
           <!-- Home -->
         </router-link> 
-        <h1>Logo</h1>
+        <h1>PROJIFY</h1>
       <div class="nav flex">
-        <router-link class="link" to="/board">
+        <!-- <router-link class="link" to="/board">
           <i class="fas fa-border-all"></i>
           Board
-        </router-link> 
-        <router-link class="link" to="/u">Dashboard</router-link> 
+        </router-link>  -->
+        <router-link class="link" to="/u"><i class="fas fa-border-all"></i> Boards</router-link> 
         <a href="#" class="link" @click="loginModal">Login</a>
         <a href="#" class="link" @click="signupModal">Signup</a>
       </div>

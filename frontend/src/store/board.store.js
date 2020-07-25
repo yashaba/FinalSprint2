@@ -3,6 +3,7 @@ import { taskGroupService } from '../services/task-group-service.js'
 import SocketService from "../services/SocketService";
 import { userStore } from './UserStore.js'
 import { activityLogService } from '../services/activity-log-service.js'
+import { eventBus } from '../services/event-bus.service.js'
 
 
 export const boardStore = {
@@ -16,7 +17,7 @@ export const boardStore = {
     getters: {
         currBoard(state) {
             return state.currBoard;
-        }, 
+        },
         getCurrBoardTaskGroups(state) {
             // debugger
             return state.currBoard.taskGroups;
@@ -168,7 +169,7 @@ export const boardStore = {
 
             state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checkLists.push(checklistToSave);
 
-
+            eventBus.$emit("force-update", state.currBoard.taskGroups[taskGroupidx].tasks[taskidx])
             boardService.save(state.currBoard);
         },
 
@@ -183,6 +184,7 @@ export const boardStore = {
             state.currBoard.activites.unshift(activityToAdd)
 
             boardService.save(state.currBoard);
+            eventBus.$emit("force-update")
 
         },
 
@@ -302,6 +304,7 @@ export const boardStore = {
                 // }
                 // )
                 // commit({ type: 'updateBoard', board })
+
         },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
