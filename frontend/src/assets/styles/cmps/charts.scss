@@ -42,6 +42,7 @@
         background-color: rgba(9, 30, 66, .08);
     }
 
+
     .chart-data {
         display: flex;
         flex-wrap: wrap;
@@ -71,6 +72,19 @@
         // font-size: 2rem;
         text-align: center;
     }
+    .chart-members {
+        width: 322px;
+        height: 322px;
+    }
+    .chart-tasks-group {
+        width: 322px;
+        height: 322px;
+    }
+    .chart-labels {
+        width: 322px;
+        height: 322px;
+    }
+
     @include for-narrow-layout {
         max-width: 95%;
          min-width: 95%;
@@ -81,6 +95,18 @@
         }
         h3 {
             font-size: 2rem;
+        }
+        .chart-members {
+            width: 328px;
+            height: 340px;
+        }
+        .chart-tasks-group {
+            width: 328px;
+            height: 340px;
+        }
+        .chart-labels {
+            width: 328px;
+            height: 280px;
         }
     }
     @include for-middle-layout {
