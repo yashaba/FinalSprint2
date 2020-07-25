@@ -1,7 +1,16 @@
 <template>
   <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}">
-  <chart class="chart" v-if="isDashboards" style="width: 400px; margin: auto; margin-top: 5%"/>
-  <chartBoardLabels class="chart" v-if="isDashboards" style="width: 400px; margin: auto; margin-top: 5%"/>
+    <div class="chart" v-if="isDashboards">
+        <button @click="dashbordsToShow">
+        <i class="fas fa-times"></i>
+      </button>
+  <chartData class="chart-data" />
+  <div class="charts-container">
+  <chartBoardMembers class="chart-members"/>
+  <chart  class="chart-tasks-group"/>
+  <chartBoardLabels class="chart-labels"/>
+  </div>
+  </div>
   <div class="board-vue">
     <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
@@ -81,6 +90,9 @@ import boardNewMemberModal from "../components/boardNewMemberModal.vue";
 // import memberProfileModal from '../components/memberProfileModal.vue';
 import Chart from '@/components/Chart.vue';
 import chartBoardLabels from '@/components/ChartBoardLabels.vue';
+import chartBoardMembers from '@/components/ChartBoardMembers.vue';
+import chartData from '@/components/ChartData.vue';
+
 
 
 import {
@@ -276,7 +288,9 @@ this.$store.dispatch({ type: "loadUsers" })
     Avatar,
     boardNewMemberModal,
     Chart,
-    chartBoardLabels
+    chartBoardLabels,
+    chartBoardMembers,
+    chartData,
     // memberProfileModal
   }
 };
