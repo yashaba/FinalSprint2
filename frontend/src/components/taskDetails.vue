@@ -184,6 +184,8 @@ export default {
   created() {
     eventBus.$on("closer-clicked", () => {
       this.task = null;
+      this.isLabelsModal = false; 
+      this.isChecklistModal = false;
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
@@ -233,6 +235,7 @@ export default {
     closeDetails() {
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.task = null;
+      this.isLabelsModal = false; 
     },
 
     onRemove() {

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="!navbarMobile" class="header flex space-between align-center">
+    <div class="navbar header space-between align-center">
         <router-link class="link" to="/">
           <i class="fas fa-home"></i>
           <!-- Home -->
@@ -19,19 +19,21 @@
       </div>
     </div>
 
-    <div v-else>
-      <div @click="toggleNavbarMobile" class="mobile-navbar menu-button">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
+    <div class="mobile-navbar">
+      <div @click="toggleMobileNavbar" class="menu-button">
+        <i class="fa fa-bars"></i>
+      </div>
+      <div class="mobile-menu flex column" :class="{open: mobileNavbarStatus}">
+        <router-link to="/" class="mobile-menu-item" @click.native="toggleMobileNavbar">Home</router-link>
+        <router-link to="/u" class="mobile-menu-item" @click.native="toggleMobileNavbar">Boards</router-link>
+        <a href="#" class="mobile-menu-item" @click="loginModal(); toggleMobileNavbar()">Login</a>
+        <a href="#" class="mobile-menu-item" @click="signupModal(); toggleMobileNavbar()">Signup</a>
       </div>
     </div>
 
-
-
-
     <user-login v-if="isLoginModal" @closeUserLogin="isLoginModal=!isLoginModal" @openUserSignup="signupModal"></user-login>
     <user-signup v-if="isSignupModal" @closeUserSignup="isSignupModal=!isSignupModal" @openUserLogin="loginModal"></user-signup>
+    
     <router-view/>
   </div>
 </template>
@@ -48,7 +50,7 @@
       return {
         isLoginModal: false,
         isSignupModal: false,
-        navbarMobile: false
+        mobileNavbarStatus: false
       }
     },
     components: {
@@ -57,59 +59,71 @@
     },
 
     methods: {
-      toggleNavbarMobile() {
-        this.navbarMobile = !this.navbarMobile
-      },
       loginModal() {
         this.isLoginModal = true;
       },
       signupModal() {
         this.isSignupModal = true;
       },
-      // extractBackgroundImageFromRoute(path) {
-      //   const imageMap = {
-          // '/': '/img/aerial-of-photo-of-forest-and-body-of-water-2876520.4138ab26.jpg',
-        //   '/u': 
-        //   '/board': 
-        //   '/board/5f15f93ac4ad519b6bee5d9e': '/img/aerial-of-photo-of-forest-and-body-of-water-2876520.4138ab26.jpg'
-        // };
-
-    //     document.body.style.backgroundImage = `url(${imageMap[path]})`;
-    //   }
-    // },
-
-    // watch: {
-    //   '$route.path': function (path) {
-    //     this.extractBackgroundImageFromRoute(path);
-    //   }
-    // },
-
-    // created() {
-    //     this.extractBackgroundImageFromRoute(this.$route.path);
-    // }
-}
+      toggleMobileNavbar() {
+        this.mobileNavbarStatus = !this.mobileNavbarStatus;
+      }
+    }
   }
 </script>
 
 <style lang="scss">
-  .menu-button {
+.menu-button {
     display: none;
 }
 
+.navbar {
+  display: flex;
+}
+
+.mobile-navbar {
+  display: none;
+}
+
 @media (max-width: 770px) {
+  .navbar {
+    display: none;
+  }
+
+  .mobile-navbar {
+    display: block;
+  }
+
+
  .menu-button {
-        display: inline-block;
-        cursor: pointer;
-        margin-right: 10px;
-        margin-top: 15px;
-        position: relative;
-        z-index: 200;
-    }
-    .bar1, .bar2, .bar3 {
-        width: 28px;
-        height: 3px;
-        background-color: black;
-        margin: 5px 0;
-    }
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    z-index: 200;
+    padding: 10px 20px;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    left: -50%;
+    width: 50%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    transition: 0.5s left;
+    z-index: 1;
+  }
+
+  .mobile-menu-item {
+    font-size: 17px;
+    color: #ffffff;
+    font-weight: 400;
+    padding: 10px 0;
+    text-decoration: none;
+  }
+
+  .mobile-menu.open {
+    left: 0;
+  }
 }
 </style>

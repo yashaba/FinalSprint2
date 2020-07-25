@@ -55,7 +55,7 @@
         <div @click="addingTask = true" class="task-add flex justify-center align-center closer">
           <div @click="addingTask = true" class="closer" v-if="!addingTask">Add task group</div>
           <div class="add-group-inputs flex column" v-if="addingTask">
-            <input placeholder="Enter a title" type="text" v-model="newGroupTitle" />
+            <input ref="taskGroupTitle" placeholder="Enter a title" type="text" v-model="newGroupTitle" />
             <div class="flex align-center space-around">
               <button
                 class="btn-save-group"
@@ -87,11 +87,6 @@ var boardService = require("../services/board-service.js");
 import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from "../components/boardNewMemberModal.vue";
-// import memberProfileModal from '../components/memberProfileModal.vue';
-// import Chart from '@/components/Chart.vue';
-// import chartBoardLabels from '@/components/ChartBoardLabels.vue';
-// import chartBoardMembers from '@/components/ChartBoardMembers.vue';
-// import chartData from '@/components/ChartData.vue';
 import chartsModal from '../components/chartsModal.vue';
 import $ from "jquery";
 import 'jquery-sortablejs';
@@ -319,13 +314,15 @@ this.$store.dispatch({ type: "loadUsers" })
     taskEdit,
     Avatar,
     boardNewMemberModal,
-    // Chart,
-    // chartBoardLabels,
-    // chartBoardMembers,
-    // chartData,
     chartsModal
-    // memberProfileModal
+  },
+
+  updated() {
+    if (this.addingTask) {
+       this.$refs.taskGroupTitle.focus();
+    }
   }
+
 };
 </script>
 
@@ -337,17 +334,16 @@ this.$store.dispatch({ type: "loadUsers" })
   // opacity: 1;
 }
 .effect {
-  position: fixed; /* Sit on top of the page content */
-  // display: none; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
+  position: fixed; 
+  width: 100%; 
+  height: 100%; 
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
-  cursor: pointer; /* Add a pointer on hover */
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1; 
+  cursor: pointer; 
 }
 .board-page {
   width: 100%;

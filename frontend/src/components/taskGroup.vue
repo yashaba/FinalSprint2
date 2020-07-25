@@ -41,12 +41,11 @@
                 <textarea-autosize
                     class="add-textarea"
                     placeholder="Enter a title for this task..."
-                    ref="myTextarea"
+                    ref="taskDescription"
                     v-model="taskToSave.title"
                     :min-height="30"
                     :max-height="350"
                 />
-                    <!-- @focus.native="onFocusTextarea" -->
                 <button class="btn-save-task" type="submit">Add</button>
               </form>
               <button class="btn-close" @click="closeAdd">&times;</button>
@@ -230,8 +229,10 @@ export default {
      this.$emit ('duplicateTaskGroupEv' , this.taskGroup)
    },
 
-   addTask() {
-     setTimeout(()=> {this.isAdding = true;}, 0.3)
+    addTask() {
+      setTimeout(()=> {
+       this.isAdding = true;
+      }, 0.3)
       
     },
     closeAdd() {
@@ -252,11 +253,16 @@ export default {
     }
   },
 
-components: {
-  draggable,
-  taskPreview
-  
-}
+  updated() {
+    if (this.isAdding) {
+       this.$refs.taskDescription.$el.focus();
+    }
+  },
+
+  components: {
+    draggable,
+    taskPreview
+  }
 }
 </script>
 
