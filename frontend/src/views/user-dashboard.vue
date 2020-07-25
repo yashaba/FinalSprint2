@@ -1,5 +1,5 @@
 <template>
-  <section class="column align-center justify-center ">
+  <section class="user-dashboard column align-center justify-center ">
     <div class="personal-boards-container">
     <div class="column align-center justify-center">
       <h1> Personal Boards</h1> 

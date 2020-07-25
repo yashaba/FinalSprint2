@@ -28,10 +28,10 @@
           <i class="fas fa-arrow-right"></i>
           Move
         </button>
-        <button class="btn-edit-modal">
+        <!-- <button class="btn-edit-modal">
           <i class="fas fa-copy"></i>
           Copy
-        </button>
+        </button> -->
         <button class="btn-edit-modal">
           <i class="far fa-clock"></i>
           Change Due Date
