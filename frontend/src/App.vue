@@ -5,7 +5,7 @@
           <i class="fas fa-home"></i>
           <!-- Home -->
         </router-link> 
-        <h1>Logo</h1>
+        <h1>PROJIFY</h1>
       <div class="nav flex">
         <router-link class="link" to="/board">
           <i class="fas fa-border-all"></i>
