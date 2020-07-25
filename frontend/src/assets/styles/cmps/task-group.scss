@@ -10,6 +10,19 @@
         color: #263959;
         margin-left: 10px;
     }
+
+    .btn-close-title-modal {
+        @include define-close-btn;
+        font-size: 1.8rem;
+
+        &:hover {
+            background-color: #dadbe2;
+            border-radius: 4px;
+            color: #4d5b76;
+        }
+    }
+
+
     .tasks-container {
         overflow-y: auto;
         max-height: 60vh;
@@ -30,8 +43,10 @@
         }
     }
     .btn-edit {
-        margin-right: 10px;
         @include define-btn;
+        margin-right: 10px;
+        background-color: #ebecf0;
+        font-size: 1.2rem;
     }
     .btn-add-task {
         z-index: 1;

@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { eventBus, OVERLAY_EFFECT, STOP_OVERLEY_EFFECT } from '../services/event-bus.service.js';
+
 export default {
   name: "user-signup",
   data() {
@@ -45,6 +47,7 @@ export default {
 
   methods: {
     close() {
+      eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.$emit("closeUserSignup");
     },
     openLoginModal() {
@@ -57,7 +60,16 @@ export default {
       if (!cred.fullName || !cred.password || !cred.userName)
         return (this.msg = "Please fill up the form");
       this.$store.dispatch({ type: "signup", userCred: cred });
+      eventBus.$emit(STOP_OVERLEY_EFFECT, {});
     }
+  },
+
+  created() {
+    eventBus.$emit(OVERLAY_EFFECT, {});
+
+    eventBus.$on("closer-clicked", () => {
+      this.close();
+    })
   }
 };
 </script>

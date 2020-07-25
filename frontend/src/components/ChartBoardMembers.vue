@@ -1,64 +1,93 @@
 <script>
 import VueCharts from "vue-chartjs";
-import { Pie } from "vue-chartjs";
+import { Bar } from "vue-chartjs";
 
 export default {
-  extends: Pie,
+  extends: Bar,
   props: ["board"],
   data() {
     return {
-      boardLabels: [],
-      data: [],
-      bgColor: []
+      boardMembers: [],
+      todos: [],
+      done: []
     };
   },
   mounted() {
     // Overwriting base render method with actual data
     this.renderChart(
       {
-        labels: this.boardLabels,
+        labels: this.boardMembers,
         datasets: [
           {
-            label: "Labels",
-            backgroundColor: this.bgColor,
-            data: this.data
+            label: "Todo",
+            backgroundColor: "rgb(242, 214, 0)",
+            data: this.todos,
+            stack: "Stack 0"
+          },
+          {
+            label: "Done",
+            backgroundColor: "rgb(97, 189, 79)",
+            stack: "Stack 0",
+            data: this.done
           }
         ]
       },
-      { responsive: true }
+      {
+        scales: {
+          x: {
+            stacked: true
+          },
+          y: {
+            stacked: true
+          },
+          responsive: true
+        }
+      }
     );
   },
   created() {
-    let labelCount = {};
-    console.log(this.board);
+    let todosCount = {};
+    let doneCount = {};
     let board = this.$store.getters.currBoard;
     let taskGroups = this.$store.getters.getCurrBoardTaskGroups;
     taskGroups.forEach(group => {
+      let groupTitle = group.title.toLowerCase();
+
       let tasks = group.tasks;
       tasks.forEach(task => {
-        if (task.labels === undefined) {
-          console.log(task.title);
-          return;
-        }
-        task.labels.forEach(labelId => {
-          if (labelCount[labelId] === undefined) labelCount[labelId] = 0;
-          labelCount[labelId]++;
+        task.assignedUsers.forEach(user => {
+          let userId;
+          if (typeof user === "object") {
+            userId = user._id;
+          } else {
+            userId = user;
+          }
+          if (groupTitle === "complete" || groupTitle === "done") {
+            if (doneCount[userId] === undefined) doneCount[userId] = 0;
+            doneCount[userId]++;
+          } else {
+            if (todosCount[userId] === undefined) todosCount[userId] = 0;
+            todosCount[userId]++;
+          }
         });
       });
     });
-    console.log(labelCount);
-    let newData = [];
-    let labelColors = [];
-    let labels = [];
-    for (const labelId in labelCount) {
-      newData.push(labelCount[labelId]);
-      let result = board.labels.find(label => label._id === labelId);
-      labelColors.push(result.bgColor);
-      labels.push(result.name);
-    }
-    this.boardLabels = labels;
-    this.bgColor = labelColors;
-    this.data = newData;
+    let newTodos = [];
+    let newDone = [];
+    let membersNames = [];
+    let members = board.members;
+    members.forEach(member => {
+      if (typeof member !== 'object') {
+          member = this.$store.getters.getUserById(member);
+      }
+      membersNames.push(member.fullName.toUpperCase());
+      newTodos.push(todosCount[member._id]);
+      newDone.push(doneCount[member._id]);
+    });
+
+    this.boardMembers = membersNames;
+    this.todos = newTodos;
+    this.done = newDone;
   }
 };
 </script>

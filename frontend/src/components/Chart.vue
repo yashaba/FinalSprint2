@@ -17,7 +17,7 @@ export default {
       labels: this.boardLabels,
       datasets: [
         {
-          label: 'Tasks Groups',
+          label: 'Tasks',
           backgroundColor: '#f87979',
           data: this.data
         }
