@@ -1,5 +1,6 @@
 <template>
   <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}">
+    <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
     <div class="chart" v-if="isDashboards">
         <button @click="dashbordsToShow">
         <i class="fas fa-times"></i>
@@ -18,7 +19,7 @@
     <div class="info flex align-center">
     <button :board="board" @click="dashbordsToShow">Dashboards</button>
         <avatar class="members flex" :users="board.members" context="board" />
-      <button class="btn-add-member" @click="addMemberModal">Add member</button>
+      <button id="draggable" class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal
         v-if="isAddMemberModal"
         @closeAddMemberModal="closeAddMemberModal"
@@ -28,6 +29,7 @@
     <div class="board-page">
       <div class="flex closer">
         <draggable
+        
         handle=".handle , .tasks-container"
           class="list-group closer flex flex-start"
           tag="div"
@@ -44,7 +46,7 @@
             @taskGroupClickedEv='elDragableClicked'
             class="list-group-item"
               @dragEndEv= cloneDragEnd
-             
+             @updateActivityLogEv='updateActivityLog'
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
               @updateBoardEv="updateBoard(board)"
@@ -56,7 +58,7 @@
           <div @click="addingTask = true" class="closer" v-if="!addingTask">Add task group</div>
           <div class="add-group-inputs flex column" v-if="addingTask">
             <input placeholder="Enter a title" type="text" v-model="newGroupTitle" />
-            <div>
+            <div class="flex align-center space-around">
               <button
                 class="btn-save-group"
                 @click.stop="createTaskGroup(newGroupTitle),newGroupTitle = '' "
@@ -92,31 +94,30 @@ import Chart from '@/components/Chart.vue';
 import chartBoardLabels from '@/components/ChartBoardLabels.vue';
 import chartBoardMembers from '@/components/ChartBoardMembers.vue';
 import chartData from '@/components/ChartData.vue';
-
+import $ from "jquery";
+import 'jquery-sortablejs';
 
 
 import {
   eventBus,
-  SCREEN_MODE,
-  STOP_SCREEN_MODE
+  OVERLAY_EFFECT,
+  STOP_OVERLEY_EFFECT
 } from "../services/event-bus.service";
+
 
 export default {
   data() {
     return {
       dragTargetEv: null,
       isDragging: false,
-       elClone: null,
+      elClone: null,
       elementToClone: null,
       board: null,
       newGroupTitle: "",
       addingTask: false,
-      screen: {
-        isScreen: false
-      },
       isAddMemberModal: false,
+      isOverlayEffect: false,
       isDashboards: false
-      // isMemberModal: false
     };
   },
   computed: {
@@ -128,7 +129,7 @@ export default {
   },
 
   created() {
-
+    // $('#draggable').sortable();
      window.addEventListener('click', this.myFunc)
     window.addEventListener('dragstart', this.cloneDragStart)
     window.addEventListener('drag', this.cloneDrag)
@@ -150,7 +151,7 @@ this.$store.dispatch({ type: "loadUsers" })
     window.onclick = function(ev) {
       if (ev.target.classList.contains("closer")) {
         this.addingTask = false;
-        eventBus.$emit("closer-clicked");
+        // eventBus.$emit("closer-clicked");
       }
       // console.log('window clickied', ev.target.classList[0]);
     };
@@ -159,12 +160,12 @@ this.$store.dispatch({ type: "loadUsers" })
       this.addingTask = false;
     });
 
-    eventBus.$on(SCREEN_MODE, () => {
-      this.screen.isScreen = true;
+    eventBus.$on(OVERLAY_EFFECT, () => {
+      this.isOverlayEffect = true;
     });
 
-    eventBus.$on(STOP_SCREEN_MODE, () => {
-      this.screen.isScreen = false;
+    eventBus.$on(STOP_OVERLEY_EFFECT, () => {
+      this.isOverlayEffect = false;
     });
   },
   destroyed() {
@@ -176,6 +177,10 @@ this.$store.dispatch({ type: "loadUsers" })
 
 
   methods: {
+      closeOverlayEffect() {
+        this.isOverlayEffect = false;
+        eventBus.$emit("closer-clicked");
+      },
 
     dashbordsToShow(){
       this.isDashboards = !this.isDashboards
@@ -187,11 +192,13 @@ this.$store.dispatch({ type: "loadUsers" })
     },
 
      cloneDragStart(ev){
+       ev.dataTransfer.setData("text", ev.target.id);
         document.body.append(this.elClone)
         this.isDragging = true
     },
 
     cloneDrag(ev){
+        ev.dataTransfer.setData("text", ev.target.id);
         this.elClone.style.display = 'block'
         var left = ev.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
         var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
@@ -223,12 +230,32 @@ this.$store.dispatch({ type: "loadUsers" })
     updateBoard(board) {
       this.board.taskGroups.forEach(taskGroupItem => {
         taskGroupItem.tasks.forEach(
-          task => (task.taskGroup = taskGroupItem._id)
+          task => {
+           if(task.taskGroup !== taskGroupItem._id){
+               let activity = {
+              type: "MOVE", txt: ` moved this card from ${this.getTaskGroupTitle(task.taskGroup)}
+               to  ${this.getTaskGroupTitle(taskGroupItem._id)} `, task: task}
+                console.log('taslll', activity);
+               this.updateActivityLog(activity)
+                 task.taskGroup = taskGroupItem._id
+
+             }
+            
+            
+            }
         );
       });
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
+    getTaskGroupTitle(id) {
+    // console.log('task GROP', this.$store.getters.currBoard);
+    let taskGroup = this.board.taskGroups.find(taskGroupItem => taskGroupItem._id === id)
+    return taskGroup.title
+    
+
+},
+
     onUpdateBoard(board) {
       // console.log("hii board", board);
       this.$store.commit({ type: "saveBoard", board });
@@ -263,9 +290,6 @@ this.$store.dispatch({ type: "loadUsers" })
       activity.user = user
      this.$store.dispatch({ type: "updateActivityLog", activity});
     }
-    // openMemberModal() {
-    //   this.isMemberModal = !this.isMemberModal;
-    // }
   },
   computed: {
     dragOptions() {
@@ -297,7 +321,20 @@ this.$store.dispatch({ type: "loadUsers" })
 </script>
 
 <style lang="scss" >
-.board-page {
+.effect {
+  position: fixed; /* Sit on top of the page content */
+  // display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+.board-vue {
   width: 100%;
   overflow-x: auto;
   flex: 1;
@@ -380,18 +417,21 @@ this.$store.dispatch({ type: "loadUsers" })
   justify-content: center;
   align-items: center;
   .btn-close {
-    float: left;
+    // float: left;
     margin-left: 10px;
-    margin-top: 10px;
-    font-size: 16px;
+    // margin-top: 10px;
+    font-size: 1.2rem;
+    // font-size: 16px;
     border: 0;
     cursor: pointer;
     outline: none;
-    width: 30px;
-    background: rgba($color: #cfcdcd, $alpha: 0.1);
+    // width: 30px;
+    background-color: rgba(230, 220, 220, 0.0);
+    color: #172b4d;
+    // background: rgba($color: #cfcdcd, $alpha: 0.1);
 
     &:hover {
-      color: #172b4d;
+      color: black;
       // background-color: #ebecf0;
     }
   }

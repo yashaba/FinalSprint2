@@ -1,25 +1,33 @@
 <template>
-    <div id="app">
-    
-      <div class="header flex space-between align-center">
-          <h1>Logo</h1>
-          <div class="nav flex">
-            <router-link class="link" to="/">Home</router-link> 
-            <router-link class="link" to="/board">Board</router-link> 
-          <router-link to="/u">Dashboard</router-link> |
-            <a href="#" class="link" @click="loginModal">Login</a>
-            <a href="#" class="link" @click="signupModal">Signup</a>
-          </div>
+  <div id="app">
+    <div class="header flex space-between align-center">
+        <router-link class="link" to="/">
+          <i class="fas fa-home"></i>
+          <!-- Home -->
+        </router-link> 
+        <h1>Logo</h1>
+      <div class="nav flex">
+        <router-link class="link" to="/board">
+          <i class="fas fa-border-all"></i>
+          Board
+        </router-link> 
+        <router-link class="link" to="/u">Dashboard</router-link> 
+        <a href="#" class="link" @click="loginModal">Login</a>
+        <a href="#" class="link" @click="signupModal">Signup</a>
       </div>
-      <user-login v-if="isLoginModal" @closeUserLogin="isLoginModal=!isLoginModal" @openUserSignup="signupModal"></user-login>
-      <user-signup v-if="isSignupModal" @closeUserSignup="isSignupModal=!isSignupModal" @openUserLogin="loginModal"></user-signup>
-      <router-view/>
     </div>
+    <user-login v-if="isLoginModal" @closeUserLogin="isLoginModal=!isLoginModal" @openUserSignup="signupModal"></user-login>
+    <user-signup v-if="isSignupModal" @closeUserSignup="isSignupModal=!isSignupModal" @openUserLogin="loginModal"></user-signup>
+    <router-view/>
+  </div>
 </template>
 
 <script>
   import userLogin from './components/userLogin.vue';
   import userSignup from './components/userSignup.vue';
+
+  import {eventBus} from "./services/event-bus.service.js";
+
 
   export default {
     data() {
@@ -40,7 +48,7 @@
       signupModal() {
         this.isSignupModal = true;
       },
-    }
+    },
 }
 </script>
 

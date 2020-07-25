@@ -8,7 +8,8 @@
     color: rgb(23, 43, 77);
     font-family: Opensans-bold, sans-serif;
     border-radius: 4px;
-    padding: 30px;
+    // padding: 30px;
+    padding-left: 10px;
     z-index: 1;
     margin-top: 10px;
     max-width: 89%;
@@ -17,6 +18,27 @@
     // flex-direction: column;
     overflow: hidden;
     position: fixed;
+
+    .task-details-container {
+        margin-right: 5px;
+        overflow-y: auto;
+        max-height: 80vh;
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            background-color: #F5F5F5;
+        }
+        &::-webkit-scrollbar {
+            width: 8px;
+            background-color: #F5F5F5;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+            background-color: #c3cbdc;
+        }
+    }
+
     @include for-narrow-layout {
         max-width: 89%;
         min-width: 89%;
@@ -329,7 +351,7 @@
         left: 60%;
         width: 280px;
         border-radius: 4px;
-        height: 180px;
+        height: 210px;
         .checklist-modal-container {
             margin: 5px;
             .btn-close {

@@ -1,17 +1,22 @@
 <template>
   <section class="members-modal">
-      <button class="btn-close-modal">&times;</button>
-      <h5>Members</h5>
-      <hr>
-      <h6>BOARD MEMBERS</h6>
-      <div class="members-list flex column" v-if="boardMembers.length">
-          <input type="text" v-model="memberNameSearch" placeholder="Search members" />
-          <hr>
-          <div class="member" v-for="memberId in boardMembers" :key="getUsername(memberId)" @click="toggleMemberOnTask(memberId)">
-              <span>{{ getUsername(memberId) }}</span>
-              <span v-if="isUserAssignedToTask(memberId)">V</span>
-          </div>
-      </div>
+    <div class="members-modal-container">
+        <div class="flex align-center space-between">
+            <div class="flex align-center">
+                <i class="fas fa-user"></i>
+                <h5>Members</h5>
+            </div>
+            <button class="btn-close-modal" @click="close">&times;</button>
+        </div>
+        <hr>
+            <input type="text" v-model="memberNameSearch" placeholder="Search members" />
+        <div class="members-list flex column" v-if="boardMembers.length">
+            <div class="member flex space-between align-center" v-for="memberId in boardMembers" :key="getUsername(memberId)" @click="toggleMemberOnTask(memberId)">
+                <span>{{ getUsername(memberId) }}</span>
+                <i class="check fa fa-check" v-if="isUserAssignedToTask(memberId)"></i>
+            </div>
+        </div>
+    </div>
   </section>
 </template>
 
@@ -36,6 +41,9 @@ export default {
     },
 
     methods: {
+        close() {
+            this.$emit("closeMemberModal");
+        },
         getUsername(userId) {
             if (typeof userId === 'object') {
                 debugger
@@ -58,11 +66,13 @@ export default {
             console.log('toggle member',memberName );
             if (this.isUserAssignedToTask(memberId)) {
                 this.$store.dispatch('removeMemberFromTask', {userId: memberId._id, task: this.task});
-                this.updateActivityLog( "added" + " " + memberName ,"ADD" )
+                              this.updateActivityLog( " " + memberName + " " + "from" ,"REMOVE" )
+
+            
 
             } else {
                 this.$store.dispatch('addMemberToTask', {userId: memberId._id, task: this.task});
-                this.updateActivityLog( " " + memberName + " " + "from" ,"REMOVE" )
+                    this.updateActivityLog( "added" + " " + memberName ,"ADD" )
             }
         },
             updateActivityLog(txt, type) {
