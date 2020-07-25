@@ -60,7 +60,7 @@
         padding: 6px 12px;
         color: #172b4d;
         width: 200px;
-        height: 100px;
+        // height: 100px;
         border-radius: 3px;
         i {
             margin-right: 8px;
@@ -68,7 +68,7 @@
       
     }
     h3 {
-        font-size: 2rem;
+        // font-size: 2rem;
         text-align: center;
     }
     @include for-narrow-layout {
@@ -76,6 +76,12 @@
          min-width: 95%;
         left: 23%;
         top: 6%;
+        .chart-data div {
+            height: 100px;
+        }
+        h3 {
+            font-size: 2rem;
+        }
     }
     @include for-middle-layout {
         min-width: 96%;
