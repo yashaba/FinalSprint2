@@ -283,8 +283,8 @@ this.$store.dispatch({ type: "loadUsers" })
     closeAddMemberModal() {
       this.isAddMemberModal = !this.isAddMemberModal;
     },
-    addMemberToBoard(userId) {
-      this.$store.dispatch({ type: "addMemberToBoard", userId });
+    addMemberToBoard(user) {
+      this.$store.dispatch({ type: "addMemberToBoard", user });
     },
     updateActivityLog(activity){
       let user = this.$store.getters.loggedinUser
