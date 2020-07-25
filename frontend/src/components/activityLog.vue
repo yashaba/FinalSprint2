@@ -1,6 +1,6 @@
 <template>
   <div> 
-    <div v-for="activity in RelevantActivities" :key="activity.id">
+    <div v-for="(activity, idx) in RelevantActivities" :key="idx">
         <div>
         <activity-preview :activity='activity'> </activity-preview>
 
@@ -15,6 +15,7 @@
 
 <script>
 import activityPreview from './activityPreview.vue'
+import {eventBus} from '../services/event-bus.service.js'
 export default {
 props: ['task'],
 data(){ 
@@ -33,6 +34,10 @@ created(){
     console.log(this.activities);
     this.RelevantActivities =  this.getRelevantActivities()
     console.log('relevant', this.RelevantActivities);
+        eventBus.$on("force-update", () => {
+      this.RelevantActivities =  this.getRelevantActivities()
+    });
+
 },
 methods: {
     middleMessage(type){
