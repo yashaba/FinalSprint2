@@ -1,0 +1,47 @@
+.home { 
+    background-color: #0b75c2ec;
+    color: #ffff;
+    .container-home{
+        display: flex;
+        flex-direction: column;
+        padding-top: 100px;
+    }
+    .home-img{
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 294px;
+        width: 422px;
+        /* background-attachment: local; */
+        border-radius: 22px;
+        opacity: 0.8;
+    }
+    .img-page{
+      background-image: url(../imgs/meeting.jpg);
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 294px;
+        width: 422px;
+        opacity: 0.8;
+        border-top: 20px solid black;
+    }
+    .page1{
+      background-image: url(../imgs/imgProj1.png);
+       
+    }
+
+    .page2{
+        background-image: url(../imgs/imgProj2.png);
+      }
+
+      .page3{
+        background-image: url(../imgs/imgProj3.png);
+      }
+      .page4{
+        background-image: url(../imgs/imgProj4.png);
+      }
+      .page5{
+        background-image: url(../imgs/imgProj5.png);
+      }
+   
+}
+
