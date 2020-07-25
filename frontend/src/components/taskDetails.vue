@@ -177,6 +177,10 @@ export default {
     eventBus.$on(SHOW_DETAILS, task => {
       this.task = JSON.parse(JSON.stringify(task));
     });
+      eventBus.$on("force-update", (task) => {
+        console.log('task from bus', task);
+      this.task = JSON.parse(JSON.stringify(task));
+    })
   },
   destroyed() {
     eventBus.$off(SHOW_DETAILS);

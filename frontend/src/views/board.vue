@@ -120,6 +120,7 @@ export default {
   },
 
   created() {
+      
     // $('#draggable').sortable();
      window.addEventListener('click', this.myFunc)
     window.addEventListener('dragstart', this.cloneDragStart)
@@ -179,21 +180,24 @@ this.$store.dispatch({ type: "loadUsers" })
     },
 
      cloneDragStart(ev){
-       ev.dataTransfer.setData("text", ev.target.id);
+       ev.dataTransfer.setData('text', 'anything'); 
         document.body.append(this.elClone)
         this.isDragging = true
     },
 
     cloneDrag(ev){
-        ev.dataTransfer.setData("text", ev.target.id);
+        // ev.dataTransfer.setData("text", ev.target.id);
+        console.log(ev);
+        let event = ev || window.event
         this.elClone.style.display = 'block'
-        var left = ev.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
-        var top = ev.pageY  - this.dragTargetEv.offsetY+"px";
+        var left = event.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
+        var top = event.pageY  - this.dragTargetEv.offsetY+"px";
          this.elClone.style.left = left;
          this.elClone.style.top = top;
     },
 
-    cloneDragEnd(){
+    cloneDragEnd(ev){
+    //  ev.preventDefault();
       if (!this.elClone) return
       this.elClone.style.display= "none"
       this.elClone = null
@@ -284,7 +288,8 @@ this.$store.dispatch({ type: "loadUsers" })
   computed: {
     dragOptions() {
       return {
-        fallbackTolerance: 10000,
+        // forceFallback: true,
+        fallbackTolerance: 5,
         animation: 400,
         group: "description",
         disabled: false,

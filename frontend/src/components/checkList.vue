@@ -61,9 +61,11 @@ methods: {
         
         this.$emit('updateChecklistEv' , {list: this.checkListItems, idx: this.idx})
     },
-    updateActivityLog(txt , type) {
+     updateActivityLog(txt , type) {
+         this.$emit('updateActivityLogEv' , txt , type )
+      
         
-        this.$emit('updateActivityLogEv' , txt , type )
+
     },
     addItem() {
         let newItem = {
