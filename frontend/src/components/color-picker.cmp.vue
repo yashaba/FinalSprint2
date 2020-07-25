@@ -43,9 +43,8 @@ export default {
     .color-picker {
         background-color: #fff;
         border-radius: .33rem;
-        border: 1px solid #717171;
-        padding: 1rem;
-        width: 15rem;
+        padding: 0.2rem;
+        width: 12rem;
     }
     .color-picker span {
         display: flex;
