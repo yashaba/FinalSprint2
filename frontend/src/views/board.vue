@@ -1,5 +1,5 @@
 <template>
-  <section class="flex column" style="height: 100vh" v-if="board" :class="{screen: screen.isScreen}">
+  <section class="flex column" style="height: 100vh" v-if="board">
     <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
     <div class="chart" v-if="isDashboards">
         <button @click="dashbordsToShow">
