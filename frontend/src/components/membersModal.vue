@@ -9,7 +9,7 @@
             <button class="btn-close-modal" @click="close">&times;</button>
         </div>
         <hr>
-            <input type="text" v-model="memberNameSearch" placeholder="Search members" />
+            <!-- <input type="text" v-model="memberNameSearch" placeholder="Search members" /> -->
         <div class="members-list flex column" v-if="boardMembers.length">
             <div class="member flex space-between align-center" v-for="memberId in boardMembers" :key="getUsername(memberId)" @click="toggleMemberOnTask(memberId)">
                 <span>{{ getUsername(memberId) }}</span>
@@ -28,11 +28,11 @@ export default {
         'task'
     ],
 
-    data() {
-        return {
-            memberNameSearch: ''
-        }
-    },
+    // data() {
+    //     return {
+    //         memberNameSearch: ''
+    //     }
+    // },
 
     computed: {
         boardMembers() {
@@ -46,7 +46,7 @@ export default {
         },
         getUsername(userId) {
             if (typeof userId === 'object') {
-                debugger
+                // debugger
                 return userId.fullName;
             }
 

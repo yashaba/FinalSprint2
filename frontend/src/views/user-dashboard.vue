@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="user-dashboard">
     <div class="flex">
       <div v-for="board in userBoards" :key="board._id">
         <a

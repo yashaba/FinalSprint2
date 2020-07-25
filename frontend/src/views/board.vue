@@ -1,5 +1,5 @@
 <template>
-  <section class="flex column" style="height: 100vh" v-if="board">
+  <section class="board flex column" style="height: 100vh" v-if="board">
     <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
     <charts-modal v-if="isDashboards" @closeChartsModal="dashbordsToShow"></charts-modal>
   <div class="board-vue">

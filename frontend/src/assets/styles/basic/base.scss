@@ -4,12 +4,29 @@
 
 body {
     margin: 0;
+    // background-image: url(../imgs/aerial-of-photo-of-forest-and-body-of-water-2876520.jpg);
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // background-attachment: fixed;
+    // min-height: 100vh;
+    font-family: Opensans, sans-serif;
+}
+
+.board {
     background-image: url(../imgs/aerial-of-photo-of-forest-and-body-of-water-2876520.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    // min-height: 100vh;
-    font-family: Opensans, sans-serif;
+}
+
+.home { 
+    background-color: #0e76c0;
+    height: 100vh;
+}
+
+.user-dashboard {
+    background-color: #6B75CD;
+    height: 100vh;
 }
 
 h1,
