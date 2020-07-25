@@ -82,6 +82,17 @@
             <check-list @updateActivityLogEv='updateActivityLog' @updateChecklistEv="updateCheckLists" :idx="idx" :checkList="checkList"></check-list>
           </div>
         </div>
+
+                    <div> 
+          Activity log: <br />
+          <activity-log :task="task"></activity-log>
+
+
+        </div>
+        </div>
+
+
+
         <div class="details-actions">
           <h3>ADD TO TASK</h3>
           <button class="btn-details-actions" @click="toggleMembersModal">
@@ -109,12 +120,13 @@
             <i class="far fa-trash-alt"></i>Remove
           </button>
         </div>
-                <div> 
+                <!-- <div> 
           Activity log: <br />
           <activity-log :task="task"></activity-log>
 
 
-        </div>
+        </div> -->
+      <!-- </div> -->
       </div>
 
       <div class="checklist-modal" v-if="isChecklistModal">
