@@ -17,7 +17,7 @@
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateActivityLogEv='updateActivityLog' @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
     <div class="info flex align-center">
-    <button :board="board" @click="dashbordsToShow">Dashboards</button>
+    <button :board="board" @click="dashbordsToShow"><i class="fas fa-chart-line"></i></button>
         <avatar class="members flex" :users="board.members" context="board" />
       <button id="draggable" class="btn-add-member" @click="addMemberModal">Add member</button>
       <board-new-member-modal
