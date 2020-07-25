@@ -16,6 +16,8 @@
     left: 25%;
     overflow: hidden;
     position: fixed;
+    top: 5%;
+
    
     .charts-container{
         flex-wrap: wrap;
@@ -61,7 +63,6 @@
         padding: 6px 12px;
         color: #172b4d;
         width: 200px;
-        // height: 100px;
         border-radius: 3px;
         i {
             margin-right: 8px;
