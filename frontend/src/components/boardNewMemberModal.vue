@@ -10,7 +10,7 @@
       </div>
       <hr />
         <input type="text" v-model="userNameSearch" placeholder="Search users" />
-        <div class="member-list">
+        <div class="user-list">
           <div class="user" v-for="user in users" :key="user._id" @click="addNewMember(user)">
             <span>{{ user.fullName }}</span>
           </div>

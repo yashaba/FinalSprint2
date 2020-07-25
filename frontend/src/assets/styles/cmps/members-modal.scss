@@ -5,23 +5,8 @@
     width: 280px;
     border-radius: 4px;
     z-index: 4;
-    height: 250px;
-    overflow-y: auto;
-
-        &::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            background-color: #F5F5F5;
-        }
-        &::-webkit-scrollbar {
-            width: 8px;
-            background-color: #F5F5F5;
-        }
-        &::-webkit-scrollbar-thumb {
-            border-radius: 8px;
-            background-color: #c3cbdc;
-        }
-
+    // height: 250px;
+   
         .members-modal-container {
             margin: 5px;
 
@@ -61,12 +46,37 @@
                 margin-bottom: 15px;
             }
 
+            .members-list {
+                height: 170px;
+                overflow-y: auto;
+                overflow-x: hidden;
+
+                &::-webkit-scrollbar-track {
+                    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                    border-radius: 8px;
+                    background-color: #F5F5F5;
+                }
+                &::-webkit-scrollbar {
+                    width: 8px;
+                    background-color: #F5F5F5;
+                }
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 8px;
+                    background-color: #c3cbdc;
+                }
+        
+            }
+
             .member {
                 color: #172b4d;
                 text-transform: capitalize;
                 margin: 5px;
                 width: 100%;
                 cursor: pointer;
+            }
+
+            .fa-check {
+                margin-right: 5px;
             }
         }
 }

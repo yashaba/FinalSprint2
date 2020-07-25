@@ -11,9 +11,9 @@ const io = require('socket.io')(http);
 
 // Express App Config
 app.use(cookieParser())
-app.use(bodyParser.json({limit: '10mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
-// app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb', extended: true }))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
+    // app.use(bodyParser.json());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
@@ -35,17 +35,17 @@ if (process.env.NODE_ENV === 'production') {
 const boardRoutes = require('./api/board/board.routes')
 const authRoutes = require('./api/auth/auth.routes')
 const userRoutes = require('./api/user/user.routes')
-// const reviewRoutes = require('./api/review/review.routes')
-// const connectSockets = require('./api/socket/socket.routes')
-// const authRoutes = require('./api/auth/auth.routes')
-// const userRoutes = require('./api/user/user.routes')
-// const reviewRoutes = require('./api/review/review.routes')
+    // const reviewRoutes = require('./api/review/review.routes')
+    // const connectSockets = require('./api/socket/socket.routes')
+    // const authRoutes = require('./api/auth/auth.routes')
+    // const userRoutes = require('./api/user/user.routes')
+    // const reviewRoutes = require('./api/review/review.routes')
 const connectSockets = require('./api/socket/socket.routes')
 
 
 // routes
 app.use('/api/board', boardRoutes)
-// app.use('/api/u', userRoutes)
+    // app.use('/api/u', userRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 
@@ -53,7 +53,7 @@ app.use('/api/user', userRoutes)
 // connectSockets(io)
 // app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
-// app.use('/api/review', reviewRoutes)
+    // app.use('/api/review', reviewRoutes)
 connectSockets(io)
 
 
