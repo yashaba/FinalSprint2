@@ -31,7 +31,7 @@
         <draggable
         
         handle=".handle , .tasks-container"
-          class="list-group closer flex flex-start"
+          class="list-group closer flex flex-start sortable-fallback"
           tag="div"
           v-bind="dragOptions"
           v-model="board.taskGroups"
@@ -39,12 +39,12 @@
           @start="drag=true"
           @end="drag=false ; updateBoard(board) , cloneDragEnd()"
         >
-          <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
+          <div class="sortable-fallback" v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
             <task-group 
             :id="taskGroup._id"
             @previewClickedEv="elDragableClicked"
             @taskGroupClickedEv='elDragableClicked'
-            class="list-group-item"
+            class="list-group-item sortable-fallback"
               @dragEndEv= cloneDragEnd
              @updateActivityLogEv='updateActivityLog'
               @duplicateTaskGroupEv="duplicateTaskGroup"
@@ -131,13 +131,13 @@ export default {
   created() {
       
     // $('#draggable').sortable();
-     window.addEventListener('click', this.myFunc)
-    window.addEventListener('dragstart', this.cloneDragStart)
-    window.addEventListener('drag', this.cloneDrag)
-    // window.addEventListener('mousemove', this.cloneDrag)
-    window.addEventListener('dragend', this.cloneDragEnd)
-    window.addEventListener('drop', this.cloneDragEnd)
-    window.addEventListener('mouseup', this.cloneDragEnd)
+    //  window.addEventListener('click', this.myFunc)
+    // window.addEventListener('dragstart', this.cloneDragStart)
+    // window.addEventListener('drag', this.cloneDrag)
+    // // window.addEventListener('mousemove', this.cloneDrag)
+    // window.addEventListener('dragend', this.cloneDragEnd)
+    // window.addEventListener('drop', this.cloneDragEnd)
+    // window.addEventListener('mouseup', this.cloneDragEnd)
 
 this.$store.dispatch({ type: "loadUsers" })
     this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
@@ -200,7 +200,7 @@ this.$store.dispatch({ type: "loadUsers" })
 
     cloneDrag(ev){
         // ev.dataTransfer.setData("text", ev.target.id);
-        console.log(ev);
+        // console.log(ev);
         let event = ev || window.event
         this.elClone.style.display = 'block'
         var left = event.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
@@ -298,8 +298,13 @@ this.$store.dispatch({ type: "loadUsers" })
   computed: {
     dragOptions() {
       return {
-        // forceFallback: true,
-        fallbackTolerance: 5,
+        filter: ".ignore-elements",
+        forceFallback: true,  // ignore the HTML5 DnD behaviour and force the fallback to kick in
+       	fallbackClass: "sortable-fallback",  // Class name for the cloned DOM Element when using forceFallback
+	      fallbackOnBody: true,  // Appends the cloned DOM Element into the Document's Body
+      	fallbackTolerance: 5, // Specify in pixels how far the mouse should move before it's considered as a drag.
+        touchStartThreshold: 5,
+        // fallbackTolerance: 5,
         animation: 400,
         group: "description",
         disabled: false,
@@ -326,6 +331,12 @@ this.$store.dispatch({ type: "loadUsers" })
 </script>
 
 <style lang="scss" >
+.sortable-drag{
+  // opacity: 1;
+}
+.sortable-chosen{
+  // opacity: 1;
+}
 .effect {
   position: fixed; /* Sit on top of the page content */
   // display: none; /* Hidden by default */
@@ -378,15 +389,24 @@ this.$store.dispatch({ type: "loadUsers" })
   }
 }
 .tghost {
-  opacity: 0;
+  opacity: 1;
+  
 }
 .tchosen-class {
-  opacity: 0;
-  // .tdrag-class {
-  //   rotate: 10deg;
-  //   background: rgba($color: #e71818, $alpha: 1);
-  // }
+  opacity: 0.3;
 }
+    .tdrag-class {
+      opacity: 1!important;
+      transition: rotate 1s;
+      transform: rotate(10deg)
+      // background: rgba($color: #e71818, $alpha: 1);
+    }
+  .tree-node.dragging{
+    opacity: 1!important;
+  }
+  .sortable-fallback {
+   
+  }
 .clone {
   // position: absolute;
   // transition: rotate 0.3;
@@ -417,6 +437,7 @@ this.$store.dispatch({ type: "loadUsers" })
     background-color: #61bd4f;
   }
 }
+
 .add-group-inputs {
   margin-top: 10px;
   justify-content: center;

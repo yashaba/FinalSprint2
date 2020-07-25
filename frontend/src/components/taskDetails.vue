@@ -190,6 +190,7 @@ export default {
       this.task = JSON.parse(JSON.stringify(task));
     });
       eventBus.$on("force-update", (task) => {
+        if (this.task === null) return
         console.log('task from bus', task);
       this.task = JSON.parse(JSON.stringify(task));
     })
@@ -269,6 +270,9 @@ export default {
         activity.type = type
         this.$emit('updateActivityLogEv' , activity )
     },
+  },
+  destroyed(){
+  eventBus.$off("force-update")
   },
   computed: {},
   components: {
