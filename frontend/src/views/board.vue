@@ -1,31 +1,29 @@
 <template>
   <section class="flex column" style="height: 100vh" v-if="board">
     <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
-    <div class="chart" v-if="isDashboards">
-        <button @click="dashbordsToShow">
-        <i class="fas fa-times"></i>
-      </button>
-  <chartData class="chart-data" />
-  <div class="charts-container">
-  <chartBoardMembers class="chart-members"/>
-  <chart  class="chart-tasks-group"/>
-  <chartBoardLabels class="chart-labels"/>
-  </div>
-  </div>
+    <charts-modal v-if="isDashboards" @closeChartsModal="dashbordsToShow"></charts-modal>
   <div class="board-vue">
-    <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateActivityLogEv='updateActivityLog' @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
-    <div class="info flex align-center">
-    <button :board="board" @click="dashbordsToShow">Dashboards</button>
-        <avatar class="members flex" :users="board.members" context="board" />
-      <button id="draggable" class="btn-add-member" @click="addMemberModal">Add member</button>
+    <div class="info flex align-center space-between">
+      <avatar class="members flex" :users="board.members" context="board" />
+      <div>
+        <button class="btn-dashboards" @click="dashbordsToShow">
+          <i class="fas fa-chart-pie"></i>
+          <!-- Dashboards -->
+        </button>
+        <button id="draggable" class="btn-add-member" @click="addMemberModal">
+          <i class="fas fa-user-plus"></i>
+          <!-- Add member -->
+        </button>
+      </div>
       <board-new-member-modal
         v-if="isAddMemberModal"
         @closeAddMemberModal="closeAddMemberModal"
         @addMemberToBoard="addMemberToBoard"
       ></board-new-member-modal>
     </div>
+  </div>
     <div class="board-page">
       <div class="flex closer">
         <draggable
@@ -71,7 +69,7 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
   </section>
 </template>
 
@@ -90,10 +88,11 @@ import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from "../components/boardNewMemberModal.vue";
 // import memberProfileModal from '../components/memberProfileModal.vue';
-import Chart from '@/components/Chart.vue';
-import chartBoardLabels from '@/components/ChartBoardLabels.vue';
-import chartBoardMembers from '@/components/ChartBoardMembers.vue';
-import chartData from '@/components/ChartData.vue';
+// import Chart from '@/components/Chart.vue';
+// import chartBoardLabels from '@/components/ChartBoardLabels.vue';
+// import chartBoardMembers from '@/components/ChartBoardMembers.vue';
+// import chartData from '@/components/ChartData.vue';
+import chartsModal from '../components/chartsModal.vue';
 import $ from "jquery";
 import 'jquery-sortablejs';
 
@@ -174,7 +173,6 @@ this.$store.dispatch({ type: "loadUsers" })
     SocketService.terminate();
     window.onclick = null;
   },
-
 
   methods: {
       closeOverlayEffect() {
@@ -311,10 +309,11 @@ this.$store.dispatch({ type: "loadUsers" })
     taskEdit,
     Avatar,
     boardNewMemberModal,
-    Chart,
-    chartBoardLabels,
-    chartBoardMembers,
-    chartData,
+    // Chart,
+    // chartBoardLabels,
+    // chartBoardMembers,
+    // chartData,
+    chartsModal
     // memberProfileModal
   }
 };
@@ -334,7 +333,7 @@ this.$store.dispatch({ type: "loadUsers" })
   z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
 }
-.board-vue {
+.board-page {
   width: 100%;
   overflow-x: auto;
   flex: 1;
@@ -363,13 +362,38 @@ this.$store.dispatch({ type: "loadUsers" })
   border-radius: 4px;
   border: 0;
   outline: 0;
-  width: 115px;
+  // width: 115px;
+  width: 45px;
   height: 33px;
   // float: right;
   cursor: pointer;
   // transition: ease-in 0.9;
   &:hover {
     background-color: rgba($color: #c5bebe, $alpha: 0.5);
+  }
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+.btn-dashboards {
+  background-color: rgba($color: #e6dcdc, $alpha: 0.5);
+  margin-left: 15px;
+  border-radius: 4px;
+  border: 0;
+  outline: 0;
+  // width: 115px;
+  width: 45px;
+  height: 33px;
+  // float: right;
+  cursor: pointer;
+  // transition: ease-in 0.9;
+  &:hover {
+    background-color: rgba($color: #c5bebe, $alpha: 0.5);
+  }
+
+    i {
+    font-size: 1.2rem;
   }
 }
 .tghost {

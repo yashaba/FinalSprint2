@@ -1,6 +1,7 @@
 <template>
-  <chart board="test" class="chart" style="width: 400px; margin: auto; margin-top: 5%"/>
-
+  <section>
+     <chart v-if="false" board="test" class="chart" style="width: 400px; margin: auto; margin-top: 5%"/>
+  </section>
 </template>
 
 <script>
@@ -14,5 +15,4 @@ components: {
 </script>
 
 <style>
-
 </style>
