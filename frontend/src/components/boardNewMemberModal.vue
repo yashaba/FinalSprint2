@@ -11,7 +11,7 @@
       <hr />
         <input type="text" v-model="userNameSearch" placeholder="Search users" />
         <div class="member-list">
-          <div class="user" v-for="user in users" :key="user._id" @click="addNewMember(user._id)">
+          <div class="user" v-for="user in users" :key="user._id" @click="addNewMember(user)">
             <span>{{ user.fullName }}</span>
           </div>
         </div>
@@ -53,8 +53,8 @@ export default {
       this.$emit("closeAddMemberModal");
     },
 
-    addNewMember(userId) {
-      this.$emit("addMemberToBoard", userId);
+    addNewMember(user) {
+      this.$emit("addMemberToBoard", user);
       this.close();
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
     }

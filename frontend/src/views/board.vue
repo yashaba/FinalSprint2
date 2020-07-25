@@ -1,37 +1,35 @@
 <template>
   <section class="flex column" style="height: 100vh" v-if="board">
     <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
-    <div class="chart" v-if="isDashboards">
-        <button @click="dashbordsToShow">
-        <i class="fas fa-times"></i>
-      </button>
-  <chartData class="chart-data" />
-  <div class="charts-container">
-  <chartBoardMembers class="chart-members"/>
-  <chart  class="chart-tasks-group"/>
-  <chartBoardLabels class="chart-labels"/>
-  </div>
-  </div>
+    <charts-modal v-if="isDashboards" @closeChartsModal="dashbordsToShow"></charts-modal>
   <div class="board-vue">
-    <!-- <div @click="log" class="overlay"> test</div> -->
     <task-edit @removeTaskEv="removeTask" />
     <task-details @updateActivityLogEv='updateActivityLog' @updateTaskEv="updateTask" @removeTaskEv="removeTask"></task-details>
-    <div class="info flex align-center">
-    <button :board="board" @click="dashbordsToShow"><i class="fas fa-chart-line"></i></button>
-        <avatar class="members flex" :users="board.members" context="board" />
-      <button id="draggable" class="btn-add-member" @click="addMemberModal">Add member</button>
+    <div class="info flex align-center space-between">
+      <avatar class="members flex" :users="board.members" context="board" />
+      <div>
+        <button class="btn-dashboards" @click="dashbordsToShow">
+          <i class="fas fa-chart-pie"></i>
+          <!-- Dashboards -->
+        </button>
+        <button id="draggable" class="btn-add-member" @click="addMemberModal">
+          <i class="fas fa-user-plus"></i>
+          <!-- Add member -->
+        </button>
+      </div>
       <board-new-member-modal
         v-if="isAddMemberModal"
         @closeAddMemberModal="closeAddMemberModal"
         @addMemberToBoard="addMemberToBoard"
       ></board-new-member-modal>
     </div>
+  </div>
     <div class="board-page">
       <div class="flex closer">
         <draggable
         
         handle=".handle , .tasks-container"
-          class="list-group closer flex flex-start"
+          class="list-group closer flex flex-start sortable-fallback"
           tag="div"
           v-bind="dragOptions"
           v-model="board.taskGroups"
@@ -39,12 +37,12 @@
           @start="drag=true"
           @end="drag=false ; updateBoard(board) , cloneDragEnd()"
         >
-          <div v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
+          <div class="sortable-fallback" v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
             <task-group 
             :id="taskGroup._id"
             @previewClickedEv="elDragableClicked"
             @taskGroupClickedEv='elDragableClicked'
-            class="list-group-item"
+            class="list-group-item sortable-fallback"
               @dragEndEv= cloneDragEnd
              @updateActivityLogEv='updateActivityLog'
               @duplicateTaskGroupEv="duplicateTaskGroup"
@@ -71,7 +69,7 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
   </section>
 </template>
 
@@ -90,10 +88,11 @@ import SocketService from "../services/SocketService";
 import Avatar from "../components/avatar.vue";
 import boardNewMemberModal from "../components/boardNewMemberModal.vue";
 // import memberProfileModal from '../components/memberProfileModal.vue';
-import Chart from '@/components/Chart.vue';
-import chartBoardLabels from '@/components/ChartBoardLabels.vue';
-import chartBoardMembers from '@/components/ChartBoardMembers.vue';
-import chartData from '@/components/ChartData.vue';
+// import Chart from '@/components/Chart.vue';
+// import chartBoardLabels from '@/components/ChartBoardLabels.vue';
+// import chartBoardMembers from '@/components/ChartBoardMembers.vue';
+// import chartData from '@/components/ChartData.vue';
+import chartsModal from '../components/chartsModal.vue';
 import $ from "jquery";
 import 'jquery-sortablejs';
 
@@ -131,13 +130,13 @@ export default {
   created() {
       
     // $('#draggable').sortable();
-     window.addEventListener('click', this.myFunc)
-    window.addEventListener('dragstart', this.cloneDragStart)
-    window.addEventListener('drag', this.cloneDrag)
-    // window.addEventListener('mousemove', this.cloneDrag)
-    window.addEventListener('dragend', this.cloneDragEnd)
-    window.addEventListener('drop', this.cloneDragEnd)
-    window.addEventListener('mouseup', this.cloneDragEnd)
+    //  window.addEventListener('click', this.myFunc)
+    // window.addEventListener('dragstart', this.cloneDragStart)
+    // window.addEventListener('drag', this.cloneDrag)
+    // // window.addEventListener('mousemove', this.cloneDrag)
+    // window.addEventListener('dragend', this.cloneDragEnd)
+    // window.addEventListener('drop', this.cloneDragEnd)
+    // window.addEventListener('mouseup', this.cloneDragEnd)
 
 this.$store.dispatch({ type: "loadUsers" })
     this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
@@ -176,7 +175,6 @@ this.$store.dispatch({ type: "loadUsers" })
     window.onclick = null;
   },
 
-
   methods: {
       closeOverlayEffect() {
         this.isOverlayEffect = false;
@@ -200,7 +198,7 @@ this.$store.dispatch({ type: "loadUsers" })
 
     cloneDrag(ev){
         // ev.dataTransfer.setData("text", ev.target.id);
-        console.log(ev);
+        // console.log(ev);
         let event = ev || window.event
         this.elClone.style.display = 'block'
         var left = event.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
@@ -285,8 +283,8 @@ this.$store.dispatch({ type: "loadUsers" })
     closeAddMemberModal() {
       this.isAddMemberModal = !this.isAddMemberModal;
     },
-    addMemberToBoard(userId) {
-      this.$store.dispatch({ type: "addMemberToBoard", userId });
+    addMemberToBoard(user) {
+      this.$store.dispatch({ type: "addMemberToBoard", user });
     },
     updateActivityLog(activity){
       let user = this.$store.getters.loggedinUser
@@ -298,8 +296,13 @@ this.$store.dispatch({ type: "loadUsers" })
   computed: {
     dragOptions() {
       return {
-        // forceFallback: true,
-        fallbackTolerance: 5,
+        filter: ".ignore-elements",
+        forceFallback: true,  // ignore the HTML5 DnD behaviour and force the fallback to kick in
+       	fallbackClass: "sortable-fallback",  // Class name for the cloned DOM Element when using forceFallback
+	      fallbackOnBody: true,  // Appends the cloned DOM Element into the Document's Body
+      	fallbackTolerance: 5, // Specify in pixels how far the mouse should move before it's considered as a drag.
+        touchStartThreshold: 5,
+        // fallbackTolerance: 5,
         animation: 400,
         group: "description",
         disabled: false,
@@ -316,16 +319,23 @@ this.$store.dispatch({ type: "loadUsers" })
     taskEdit,
     Avatar,
     boardNewMemberModal,
-    Chart,
-    chartBoardLabels,
-    chartBoardMembers,
-    chartData,
+    // Chart,
+    // chartBoardLabels,
+    // chartBoardMembers,
+    // chartData,
+    chartsModal
     // memberProfileModal
   }
 };
 </script>
 
 <style lang="scss" >
+.sortable-drag{
+  // opacity: 1;
+}
+.sortable-chosen{
+  // opacity: 1;
+}
 .effect {
   position: fixed; /* Sit on top of the page content */
   // display: none; /* Hidden by default */
@@ -339,7 +349,7 @@ this.$store.dispatch({ type: "loadUsers" })
   z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
   cursor: pointer; /* Add a pointer on hover */
 }
-.board-vue {
+.board-page {
   width: 100%;
   overflow-x: auto;
   flex: 1;
@@ -368,7 +378,8 @@ this.$store.dispatch({ type: "loadUsers" })
   border-radius: 4px;
   border: 0;
   outline: 0;
-  width: 115px;
+  // width: 115px;
+  width: 45px;
   height: 33px;
   // float: right;
   cursor: pointer;
@@ -376,17 +387,50 @@ this.$store.dispatch({ type: "loadUsers" })
   &:hover {
     background-color: rgba($color: #c5bebe, $alpha: 0.5);
   }
+
+  i {
+    font-size: 1.2rem;
+  }
+}
+.btn-dashboards {
+  background-color: rgba($color: #e6dcdc, $alpha: 0.5);
+  margin-left: 15px;
+  border-radius: 4px;
+  border: 0;
+  outline: 0;
+  // width: 115px;
+  width: 45px;
+  height: 33px;
+  // float: right;
+  cursor: pointer;
+  // transition: ease-in 0.9;
+  &:hover {
+    background-color: rgba($color: #c5bebe, $alpha: 0.5);
+  }
+
+    i {
+    font-size: 1.2rem;
+  }
 }
 .tghost {
-  opacity: 0;
+  opacity: 1;
+  
 }
 .tchosen-class {
-  opacity: 0;
-  // .tdrag-class {
-  //   rotate: 10deg;
-  //   background: rgba($color: #e71818, $alpha: 1);
-  // }
+  opacity: 0.3;
 }
+    .tdrag-class {
+      opacity: 1!important;
+      transition: rotate 1s;
+      transform: rotate(10deg)
+      // background: rgba($color: #e71818, $alpha: 1);
+    }
+  .tree-node.dragging{
+    opacity: 1!important;
+  }
+  .sortable-fallback {
+   
+  }
 .clone {
   // position: absolute;
   // transition: rotate 0.3;
@@ -417,6 +461,7 @@ this.$store.dispatch({ type: "loadUsers" })
     background-color: #61bd4f;
   }
 }
+
 .add-group-inputs {
   margin-top: 10px;
   justify-content: center;

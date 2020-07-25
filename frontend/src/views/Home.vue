@@ -1,5 +1,4 @@
 <template>
-
 </template>
 
 <script>
@@ -11,5 +10,4 @@ components: {
 </script>
 
 <style>
-
 </style>

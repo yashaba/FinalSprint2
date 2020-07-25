@@ -48,8 +48,29 @@
       signupModal() {
         this.isSignupModal = true;
       },
-    },
+      // extractBackgroundImageFromRoute(path) {
+      //   const imageMap = {
+          // '/': '/img/aerial-of-photo-of-forest-and-body-of-water-2876520.4138ab26.jpg',
+        //   '/u': 
+        //   '/board': 
+        //   '/board/5f15f93ac4ad519b6bee5d9e': '/img/aerial-of-photo-of-forest-and-body-of-water-2876520.4138ab26.jpg'
+        // };
+
+    //     document.body.style.backgroundImage = `url(${imageMap[path]})`;
+    //   }
+    // },
+
+    // watch: {
+    //   '$route.path': function (path) {
+    //     this.extractBackgroundImageFromRoute(path);
+    //   }
+    // },
+
+    // created() {
+    //     this.extractBackgroundImageFromRoute(this.$route.path);
+    // }
 }
+  }
 </script>
 
 <style lang="scss">

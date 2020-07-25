@@ -94,8 +94,8 @@ export const boardStore = {
             state.currBoard.members.splice(index, 1);
             // boardService.save(state.currBoard);
         },
-        addMemberToBoard(state, { userId }) {
-            state.currBoard.members.push(userId);
+        addMemberToBoard(state, { user }) {
+            state.currBoard.members.push(user);
             // boardService.save(state.currBoard);
         },
         toggleShowFullLabel(state) {
@@ -220,8 +220,8 @@ export const boardStore = {
             context.commit('removeMemberFromAllTasks', { userId });
             boardService.save(context.getters.currBoard);
         },
-        addMemberToBoard(context, { userId }) {
-            context.commit('addMemberToBoard', { userId });
+        addMemberToBoard(context, { user }) {
+            context.commit('addMemberToBoard', { user });
             boardService.save(context.getters.currBoard);
         },
         toggleShowFullLabel({ commit }) {

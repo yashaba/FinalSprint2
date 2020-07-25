@@ -22,13 +22,13 @@ module.exports = {
 
 async function query(filterBy) {
     console.log(filterBy);
-    
+
     // const criteria = _buildCriteria(filterBy)
     // console.log('criteria:',criteria);
-    
+
     const collection = await dbService.getCollection('board')
     try {
-        const boards = await collection.find({'members._id': `${filterBy.id}`}).toArray();
+        const boards = await collection.find({ 'members._id': `${filterBy.id}` }).toArray();
         console.log(boards);
         return boards
     } catch (err) {
