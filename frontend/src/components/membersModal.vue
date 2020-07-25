@@ -46,7 +46,6 @@ export default {
         },
         getUsername(userId) {
             if (typeof userId === 'object') {
-                debugger
                 return userId.fullName;
             }
 
