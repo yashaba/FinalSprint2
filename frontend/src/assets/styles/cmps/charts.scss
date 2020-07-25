@@ -17,7 +17,8 @@
     overflow: hidden;
     position: fixed;
     top: 5%;
-
+    overflow-y: auto;
+    height: 10vh;
    
     .charts-container{
         flex-wrap: wrap;
@@ -39,6 +40,7 @@
         border: 0px;
         outline: 0;
         margin-bottom: 10px;
+        position: fixed;
     }
     button:hover {
         background-color: rgba(9, 30, 66, .08);
@@ -155,10 +157,10 @@
         // }
     }
     @include for-wide-layout {
-        max-width: 90%;
-        min-width: 90%;
-        left: 28%;
-        top: 10%;
+        max-width: 75%;
+        min-width: 75%;
+        left: 34%;
+        top: 6%;
     }
 }
 

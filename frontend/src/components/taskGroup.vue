@@ -1,20 +1,20 @@
 <template>
   <!-- <div> -->
-    <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer">
+    <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer sortable-fallback">
       <div class="closer relative flex space-between align-center handle">
         <p class="group-title">{{taskGroup.title}}</p> 
-        <button v-if="!taskModalShown" class="btn-edit closer" @click="openTaskGroupModal">...</button>
-        <button v-else class="btn-close-title-modal" @click="closeTaskModal">&times;</button>
+        <button v-if="!taskModalShown" class="btn-edit closer ignore-elements" @click="openTaskGroupModal">...</button>
+        <button v-else class="btn-close-title-modal ignore-elements" @click="closeTaskModal">&times;</button>
         <div v-if="taskModalShown" class="title-modal column ">
-           <div @click="isAdding = true , taskModalShown = false"> 
+           <div class="ignore-elements" @click="isAdding = true , taskModalShown = false"> 
              <i class="fas fa-plus"></i> 
              Add new task
             </div>
-           <div @click="duplicateTaskGroup">
+           <div class="ignore-elements" @click="duplicateTaskGroup">
              <i class="fas fa-copy"></i> 
              Duplicate List
             </div>
-           <div @click="removeTaskGroup">
+           <div class="ignore-elements" @click="removeTaskGroup">
             <i class="far fa-trash-alt"></i> 
             Remove list
           </div>
@@ -116,13 +116,19 @@ export default {
   computed: {
     dragOptions() {
       return {
-        // forceFallback: true,
+        filter: ".ignore-elements",
+        forceFallback: true,  // ignore the HTML5 DnD behaviour and force the fallback to kick in
+       	fallbackClass: "sortable-fallback",  // Class name for the cloned DOM Element when using forceFallback
+	      fallbackOnBody: true,  // Appends the cloned DOM Element into the Document's Body
+      	fallbackTolerance: 5, // Specify in pixels how far the mouse should move before it's considered as a drag.
+        touchStartThreshold: 5,
+        // fallbackTolerance: 5,
         animation: 400,
         group: "description",
         disabled: false,
-        ghostClass: "ghost",
-        chosenClass: "chosen-class",
-        dragClass: "drag-class",
+        ghostClass: "tghost",
+        chosenClass: "tchosen-class",
+        dragClass: "tdrag-class"
       
 
       };

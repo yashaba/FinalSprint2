@@ -11,7 +11,9 @@ const io = require('socket.io')(http);
 
 // Express App Config
 app.use(cookieParser())
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '10mb', extended: true}))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
+// app.use(bodyParser.json());
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
