@@ -16,6 +16,8 @@
     left: 25%;
     overflow: hidden;
     position: fixed;
+    top: 5%;
+
    
     .charts-container{
         flex-wrap: wrap;
@@ -42,6 +44,7 @@
         background-color: rgba(9, 30, 66, .08);
     }
 
+
     .chart-data {
         display: flex;
         flex-wrap: wrap;
@@ -60,7 +63,6 @@
         padding: 6px 12px;
         color: #172b4d;
         width: 200px;
-        height: 100px;
         border-radius: 3px;
         i {
             margin-right: 8px;
@@ -68,14 +70,45 @@
       
     }
     h3 {
-        font-size: 2rem;
+        // font-size: 2rem;
         text-align: center;
     }
+    .chart-members {
+        width: 322px;
+        height: 322px;
+    }
+    .chart-tasks-group {
+        width: 322px;
+        height: 322px;
+    }
+    .chart-labels {
+        width: 322px;
+        height: 322px;
+    }
+
     @include for-narrow-layout {
         max-width: 95%;
          min-width: 95%;
         left: 23%;
         top: 6%;
+        .chart-data div {
+            height: 100px;
+        }
+        h3 {
+            font-size: 2rem;
+        }
+        .chart-members {
+            width: 328px;
+            height: 340px;
+        }
+        .chart-tasks-group {
+            width: 328px;
+            height: 340px;
+        }
+        .chart-labels {
+            width: 328px;
+            height: 280px;
+        }
     }
     @include for-middle-layout {
         min-width: 96%;
