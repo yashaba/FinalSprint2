@@ -33,9 +33,8 @@ export default {
     },
 
     methods: {
-        labelClicked() {
-            debugger
-            // this.$emit('labelClicked', this.clickedLabel);
+        labelClicked(){
+            this.$emit('labelClicked', this.clickedLabel);
         }
     }
 }

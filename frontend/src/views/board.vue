@@ -130,7 +130,6 @@ this.$store.dispatch({ type: "loadUsers" })
     
       SocketService.setup();
       SocketService.emit("boardJoined", this.board._id);
-      SocketService.on("taskUpdate", this.onUpdateTask);
       SocketService.on("boardUpdate", this.onUpdateBoard);
      
     });
@@ -155,7 +154,6 @@ this.$store.dispatch({ type: "loadUsers" })
     });
   },
   destroyed() {
-    SocketService.off("taskUpdate", this.onUpdateTask);
     SocketService.off("boardUpdate", this.onUpdateBoard);
     SocketService.terminate();
     window.onclick = null;
@@ -202,7 +200,6 @@ this.$store.dispatch({ type: "loadUsers" })
 },
 
     onUpdateBoard(board) {
-      // console.log("hii board", board);
       this.$store.commit({ type: "saveBoard", board });
       this.board = board;
     },

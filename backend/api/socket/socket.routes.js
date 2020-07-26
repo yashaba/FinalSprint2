@@ -4,13 +4,6 @@ module.exports = connectSockets
 function connectSockets(io) {
     io.on('connection', socket => {
         console.log('connection');
-        
-        socket.on('taskUpdate', task=>{
-            console.log(task, 'taskUpdate')
-            // io.emit('chat addMsg', msg)
-            // emits only to sockets in the same room
-            io.to(socket.boardId).emit('taskUpdate', task)
-        })
 
         socket.on('boardUpdate', board=>{
             console.log(board, 'boardUpdate')

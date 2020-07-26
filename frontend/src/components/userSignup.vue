@@ -61,6 +61,8 @@ export default {
         return (this.msg = "Please fill up the form");
       this.$store.dispatch({ type: "signup", userCred: cred });
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
+      this.$router.push('/u');
+      this.close();
     }
   },
 
