@@ -35,26 +35,26 @@ methods: {
     
         formatActivity(type){
    switch (type) {
-  case "REMOVE":
-    return `removed  ${this.activity.content} from this task`
-    break;
-  case "ADD":
-   return ` added ${this.activity.content} to this task`
-    break;
-  case "MOVE":
-     return this.activity.content
-    break;
-  case "CREATE":
-    return 'created this task'
-    break;
-  case "ADD_CHECKLIST_ITEM":
-    return `added ${this.activity.content}`
-    break;
-  case "REMOVE":
-    return `removed  ${this.activity.content}  this task` 
-    break;
-  case "SET":
-    return `set this task to be due at: ${this.activity.content}`
+    case "REMOVE":
+        return `removed  ${this.activity.content} from this task`
+        break;
+    case "ADD":
+    return ` added ${this.activity.content} to this task`
+        break;
+    case "MOVE":
+        return this.activity.content
+        break;
+    case "CREATE":
+        return 'created this task'
+        break;
+    case "ADD_CHECKLIST_ITEM":
+        return `added ${this.activity.content}`
+        break;
+    case "REMOVE":
+        return `removed  ${this.activity.content}  this task` 
+        break;
+    case "SET":
+        return `set this task to be due at: ${this.activity.content}`
 }
 }
 

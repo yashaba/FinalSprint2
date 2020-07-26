@@ -35,15 +35,14 @@
           v-model="board.taskGroups"
           group="columns"
           @start="drag=true"
-          @end="drag=false ; updateBoard(board) , cloneDragEnd()"
+          @end="drag=false ; updateBoard(board)"
         >
           <div class="sortable-fallback" v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
             <task-group 
             :id="taskGroup._id"
-            @previewClickedEv="elDragableClicked"
-            @taskGroupClickedEv='elDragableClicked'
+           
             class="list-group-item sortable-fallback"
-              @dragEndEv= cloneDragEnd
+             
              @updateActivityLogEv='updateActivityLog'
               @duplicateTaskGroupEv="duplicateTaskGroup"
               @removeTaskGroupEv="removeTaskGroup"
@@ -123,15 +122,7 @@ export default {
   },
 
   created() {
-      
-    // $('#draggable').sortable();
-    //  window.addEventListener('click', this.myFunc)
-    // window.addEventListener('dragstart', this.cloneDragStart)
-    // window.addEventListener('drag', this.cloneDrag)
-    // // window.addEventListener('mousemove', this.cloneDrag)
-    // window.addEventListener('dragend', this.cloneDragEnd)
-    // window.addEventListener('drop', this.cloneDragEnd)
-    // window.addEventListener('mouseup', this.cloneDragEnd)
+
 
 this.$store.dispatch({ type: "loadUsers" })
     this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
@@ -180,45 +171,7 @@ this.$store.dispatch({ type: "loadUsers" })
       this.isDashboards = !this.isDashboards
     },
 
-      elDragableClicked(elDraggable){
-      this.elementToClone = elDraggable.id
-      this.clone(elDraggable.ev)
-    },
 
-     cloneDragStart(ev){
-       ev.dataTransfer.setData('text', 'anything'); 
-        document.body.append(this.elClone)
-        this.isDragging = true
-    },
-
-    cloneDrag(ev){
-        // ev.dataTransfer.setData("text", ev.target.id);
-        // console.log(ev);
-        let event = ev || window.event
-        this.elClone.style.display = 'block'
-        var left = event.pageX - this.dragTargetEv.offsetX +"px"; // המיקומים כרגע לא 100% ן 
-        var top = event.pageY  - this.dragTargetEv.offsetY+"px";
-         this.elClone.style.left = left;
-         this.elClone.style.top = top;
-    },
-
-    cloneDragEnd(ev){
-    //  ev.preventDefault();
-      if (!this.elClone) return
-      this.elClone.style.display= "none"
-      this.elClone = null
-    },
-        clone(ev){
-      let clone = null
-      let elem = document.querySelector(`#${this.elementToClone}`);
-      clone = elem.cloneNode(true);
-      clone.id = taskGroupService.makeId() //////   זה הכנה לאם נרצה למחוק אותו מהדום לגמריי אז שיהיה לו אידי שונה ממי שעשיתי לו קלון
-       clone.style.position = 'absolute'; //  זה לא עובד משום מה אם אני מעביר את זה כקלאס
-       clone.style.display = 'none'
-       clone.classList.add('clone')
-       this.elClone = clone
-       this.dragTargetEv = ev
-    },
 
     removeTask(task) {
       this.$store.dispatch({ type: "removeTask", task });
@@ -241,28 +194,11 @@ this.$store.dispatch({ type: "loadUsers" })
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     getTaskGroupTitle(id) {
     // console.log('task GROP', this.$store.getters.currBoard);
     let taskGroup = this.board.taskGroups.find(taskGroupItem => taskGroupItem._id === id)
     return taskGroup.title
-    
-
 },
 
     onUpdateBoard(board) {

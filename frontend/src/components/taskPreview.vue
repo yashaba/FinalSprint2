@@ -1,5 +1,5 @@
 <template>
-  <div @mousedown.stop="previewClickedEv" :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
+  <div  :style="{ 'background-color': task.bgColor }" @click="onDetails" class="task-preview">
     <div class="edit" @click.stop="editTask"></div>
 
     <div class="preview-header">
@@ -52,19 +52,8 @@ export default {
   taskGroup: this.task.taskGroup
   }
   },
-  //  watch: {
-  //   // whenever question changes, this function will run
-  //   task: function (newTaskGroup, oldTaskGroup) {
-  //     console.log('task changed',newTaskGroup.taskGroup, oldTaskGroup.taskGroup );
-  //   }
-  //  },
+
   methods: {
-    previewClickedEv(event){
-    this.$emit('previewClickedEv', {ev: event, id: this.task._id} )
-    },
-    logClickEv(ev){
-    this.$emit('testLog', ev)
-    },
     onDetails() {
       eventBus.$emit(OVERLAY_EFFECT, {});
       eventBus.$emit(SHOW_DETAILS, this.task);
