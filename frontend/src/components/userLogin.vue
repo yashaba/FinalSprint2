@@ -10,7 +10,7 @@
       <!-- v-else -->
       <form @submit.prevent="doLogin">
         <input type="text" placeholder="Email" required v-model="loginCred.userName" />
-        <input type="password" placeholder="Password" required v-model="loginCred.password"/>
+        <input type="password" placeholder="Password" required v-model="loginCred.password" />
         <button class="btn-login">Login</button>
       </form>
       <hr />
@@ -23,7 +23,11 @@
 </template>
 
 <script>
-import { eventBus, OVERLAY_EFFECT, STOP_OVERLEY_EFFECT } from '../services/event-bus.service.js';
+import {
+  eventBus,
+  OVERLAY_EFFECT,
+  STOP_OVERLEY_EFFECT
+} from "../services/event-bus.service.js";
 
 export default {
   name: "user-login",
@@ -31,8 +35,8 @@ export default {
     return {
       loginCred: {
         userName: "dani@tt.com",
-        password: "12345",
-      },
+        password: "12345"
+      }
     };
   },
 
@@ -46,12 +50,17 @@ export default {
       this.close();
     },
     async doLogin() {
-      const cred = this.loginCred
-      if(!cred.userName || !cred.password) return this.msg = 'Please enter user/password'
-      await this.$store.dispatch({type :'login', userCred:cred})
+      const cred = this.loginCred;
+      if (!cred.userName || !cred.password)
+        return (this.msg = "Please enter user/password");
+      let user = await this.$store.dispatch({ type: "login", userCred: cred });
       this.loginCred = {};
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
-    },   
+      if (user) {
+        this.$router.push("/u");
+        this.close();
+      }
+    }
   },
 
   created() {
@@ -59,7 +68,7 @@ export default {
 
     eventBus.$on("closer-clicked", () => {
       this.close();
-    })
+    });
   }
 };
 </script>

@@ -36,8 +36,9 @@ export default {
   },
 
   methods: {
-    labelClicked() {
+    labelClicked(label) {
       this.$store.dispatch('toggleShowFullLabel');
+      // this.$emit('labelClicked', label);
     }
   },
 }

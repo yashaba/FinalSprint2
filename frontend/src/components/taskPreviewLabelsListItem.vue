@@ -14,7 +14,11 @@
 // :class="{close: !showFullLabel}"
 export default {
     name: "task-preview-labels-list-item",
-
+    data(){
+        return {
+            clickedLabel: null
+        }
+    },
     props: [
         'labelId',
         'showFullLabel'
@@ -22,13 +26,15 @@ export default {
 
     computed: {
         label() {
-            return this.$store.getters.getLabels.find(label => label._id === this.labelId);
+            // debugger
+            this.clickedLabel = this.$store.getters.getLabels.find(label => label._id === this.labelId)
+            return this.clickedLabel;
         }
     },
 
     methods: {
-        labelClicked() {
-            this.$emit('labelClicked');
+        labelClicked(){
+            this.$emit('labelClicked', this.clickedLabel);
         }
     }
 }
