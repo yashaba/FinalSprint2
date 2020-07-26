@@ -1,6 +1,6 @@
 <template>
   <!-- <div> -->
-    <div @mousedown.stop="taskGroupClickedEv" ref="taskgroup"  :style="{ transform: transformString }" class="task-group flex column closer sortable-fallback">
+    <div  ref="taskgroup"   class="task-group flex column closer sortable-fallback">
       <div class="closer relative flex space-between align-center handle">
         <p class="group-title">{{taskGroup.title}}</p> 
         <button v-if="!taskModalShown" class="btn-edit closer ignore-elements" @click="openTaskGroupModal">...</button>
@@ -27,7 +27,7 @@
           tag="div"   
           v-bind="dragOptions" v-model="taskGroup.tasks" group="people" @start="drag=true, isDragging= true" @end="drag=false;updateBoardEv();isDragging=false;dragEndEv()">
           <div v-for="task in taskGroup.tasks" :key="task.id">
-            <task-preview @logClickEv='logClick' @previewClickedEv="previewClickedEv" :id="task._id" :task="task"></task-preview>
+            <task-preview  :id="task._id" :task="task"></task-preview>
           </div>
           </draggable>
         </div>
@@ -104,7 +104,6 @@ export default {
   },
   created() {
    
-    console.log(this.$refs);
     eventBus.$on('closer-clicked', () => {
              
              this.isAdding = false
@@ -132,75 +131,11 @@ export default {
 
       };
     },
-    transformString() {
-     const { x, y } = this.interactPosition
-     return `translate3D(${x}px, ${y}px, 0)`
-   }
+
   },
 
   methods: {
-      taskGroupClickedEv(event){
-      console.log('emited');
-    this.$emit('taskGroupClickedEv', {ev: event, id: this.taskGroup._id} )
-    },
-    myFunc() {
-      console.log('clicked');
-    },
-   
-    previewClickedEv(res){
-      this.$emit('previewClickedEv', res)
-      
-      
-    },
-    logClick(ev){
-      // this.elementToClone = id
-      console.log('tete',ev)
-    },
-    clone(ev){
-      let clone = null
-      console.log('is dragging' , this.isDragging);
-      console.log('clone start',this.elementToClone);
-      let elem = document.querySelector(`#${this.elementToClone}`);
-      console.log(elem);
-      clone = elem.cloneNode(true);
-      clone.id = taskGroupService.makeId()
-       clone.style.position = 'absolute';
-       clone.style.width = '252px'
-       clone.style.display = 'none'
-       clone.classList.add('rotate')
-      //  clone.style.transform = 'rotate(10deg)'
-       clone.classList.add('elem2')
-       var elContainer = document.querySelector('.list-group')
-       this.elClone = clone
 
-
-      // window.addEventListener('dragstart',function(e){
-  
-      //   }
-
-// );
-          //  window.addEventListener('dragend', function(e){
-          //    let cloneEl = document.getElementById(`${clone.id}`)
-          //    console.log('drag end' , cloneEl );
-          //   // elContainer.removeChild(cloneEl)
-          //   // console.log('body', body);
-          //   //  clone.parentNode.removeChild(clone);
-          //    clone.style.display = 'none'
-          //    clone = null
-
-            //  window.removeEventListener('drag',true)
-            //  }
-    //  );
-        //  window.addEventListener('drag', function(e){
-       
-        //  var left = e.pageX - ev.offsetX +"px";
-        //  var top = e.pageY-ev.offsetY+"px";
-        //  clone.style.left = left;
-        //  clone.style.top = top;
-        //           }
-        //   );
-
-    },
     openTaskGroupModal() {
       setTimeout(()=> {
         
