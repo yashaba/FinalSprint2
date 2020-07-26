@@ -89,7 +89,13 @@ export default {
         close() {
             this.$emit('closeLabelsModal');
         }
-      }
+      },
+
+    updated() {
+        if (this.addingTask) {
+            this.$refs.taskGroupTitle.focus();
+        }
+    }
 }
 </script>
 

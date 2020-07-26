@@ -38,7 +38,6 @@
         }
         &::-webkit-scrollbar-thumb {
             border-radius: 8px;
-            // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
             background-color: #c3cbdc;
         }
     }
@@ -74,6 +73,7 @@
         margin: 10px;
         outline: none;
         padding: 10px;
+        outline: none;
     }
     .btn-save-task {
         @include define-green-btn;
@@ -94,10 +94,6 @@
     transition: transform 0s;
 }
 
-// .ghost {
-//     opacity: 1;
-//     background: #c8ebfb;
-// }
 .list-group {
     min-height: 20px;
     -moz-user-select: none
@@ -107,24 +103,3 @@
     cursor: move;
     -moz-user-select: none
 }
-
-// .list-group-item i {
-//   cursor: pointer;
-// } 
-// .tasks-wrapper {
-//   display: flex;
-//   justify-content: space-evenly;
-// }
-// .tasks-wrapper .todo-drag {
-//  background-color: red;
-//  opacity: 1;
-// }
-// .chosen-class {
-//     opacity: 1;
-// }
-// .drag-class {
-//     // opacity: 1;
-//     // background-color: rgba($color: #ec1b1b, $alpha: 1.0);
-//     // transition-delay: 1s;
-//     rotate: 4deg;
-// }
