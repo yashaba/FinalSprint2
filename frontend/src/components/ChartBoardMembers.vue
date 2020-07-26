@@ -63,8 +63,9 @@ export default {
             userId = user;
           }
           if (groupTitle === "complete" || groupTitle === "done") {
-            if (doneCount[userId] === undefined) doneCount[userId] = 0;
-            doneCount[userId]++;
+            doneCount[userId] = (doneCount[userId]) ? doneCount[userId]+1 : 1
+            // if (doneCount[userId] === undefined) doneCount[userId] = 0;
+            // doneCount[userId]++;
           } else {
             if (todosCount[userId] === undefined) todosCount[userId] = 0;
             todosCount[userId]++;
