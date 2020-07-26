@@ -5,7 +5,7 @@
     <div class="personal-boards-container">
        <div class="column align-center justify-center">
          <h1> Personal Boards</h1> 
-         <div class="flex">
+         <div class="cards-wrapper flex wrap">
             <div  v-for="board in userBoards" :key="board._id">
            <a
           :href="'#/board/'+ board._id"
@@ -155,6 +155,9 @@ export default {
         margin: 50px 0 50px 0;
       }
 }
+.cards-wrapper {
+  
+}
 .card {
   display: block;
   line-height: 140px;
@@ -162,7 +165,7 @@ export default {
   color: rgba($color: #ffffff, $alpha: 1);
   width: 225px;
   height: 140px;
-  margin-right: 30px;
+  margin: 0px 30px 20px 0;
   text-decoration: none;
   border-radius: 5%;
   background-repeat: no-repeat;
