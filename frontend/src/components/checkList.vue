@@ -39,7 +39,7 @@ computed: {
      return  this.task.checkLists[0].list.length === this.calcDone
  },
  calcPrecentDone: function() {
-     return  Math.trunc(this.calcDone / this.checkListItems.length  * 100)
+      if (this.checkListItems.length) return Math.trunc(this.calcDone / this.checkListItems.length  * 100)
  },
  calcSucsess() {
      if ( this.calcPrecentDone === 100) {
