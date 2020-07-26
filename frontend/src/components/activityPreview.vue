@@ -8,7 +8,7 @@
         :username="activity.by.fullName"
         backgroundColor="#dfe1e6"
         color="#172b4d"
-      /> <p> <span v-if="activity.by.fullName" class="span-name"> {{activity.by.fullName}}</span> &nbsp;  {{middleMessage(activity.type)}} <br> <span>{{ activity.at | moment("from") }}</span> </p>
+      /> <p> <span  class="span-name"> {{activity.by.fullName}}</span> &nbsp;  {{formatActivity(activity.type)}} <br> <span>{{ activity.at | moment("from") }}</span> </p>
       </div> 
 </div>
 
@@ -20,32 +20,43 @@ import Avatar from "vue-avatar";
 
 export default {
 props: ['activity'],
-data(){ 
-    return{
-      
-
-
-    }
-},
-computed: {
-    },
-created(){
-    console.log(this.activity.type);
-    
-},
 methods: {
-    middleMessage(type){
-        if (type === "DELETE_TASK") return 'deleted'
-    if (type === "DELETE_TYPE") return 'deleted'
-    if (type === "REMOVE") return `removed  ${this.activity.content}  this card` 
-    if (type === 'MOVE') return this.activity.content
-    if (type === 'ADD' ) return ` added ${this.activity.content} to this card`
-    if (type === "ADD_CHECKLIST_ITEM") return `added ${this.activity.content}`
-    if (type === 'COMPLETED') return 'completed "place holder" on this card'
-    if (type === 'SET') return 'set this card to be due at:'
-    if (type === 'CREATE') return 'created this card'
-                },
-
+    // middleMessage(type){
+    // if (type === "DELETE_TASK") return 'deleted'
+    // if (type === "DELETE_TYPE") return 'deleted'
+    // if (type === "REMOVE") return `removed  ${this.activity.content}  this task` 
+    // if (type === 'MOVE') return this.activity.content
+    // if (type === 'ADD' ) return ` added ${this.activity.content} to this task`
+    // if (type === "ADD_CHECKLIST_ITEM") return `added ${this.activity.content}`
+    // if (type === 'COMPLETED') return `completed ${this.activity.content} on this card`
+    // if (type === 'SET') return `set this task to be due at: ${this.activity.content}`
+    // if (type === 'CREATE') return 'created this task'
+    //             },
+    
+        formatActivity(type){
+   switch (type) {
+  case "REMOVE":
+    return `removed  ${this.activity.content} from this task`
+    break;
+  case "ADD":
+   return ` added ${this.activity.content} to this task`
+    break;
+  case "MOVE":
+     return this.activity.content
+    break;
+  case "CREATE":
+    return 'created this task'
+    break;
+  case "ADD_CHECKLIST_ITEM":
+    return `added ${this.activity.content}`
+    break;
+  case "REMOVE":
+    return `removed  ${this.activity.content}  this task` 
+    break;
+  case "SET":
+    return `set this task to be due at: ${this.activity.content}`
+}
+}
 
 },
 components: {
