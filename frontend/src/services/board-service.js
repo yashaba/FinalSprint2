@@ -6,7 +6,8 @@ export const boardService = {
     save,
     getById,
     getEmptyBoard,
-    getUserBoards
+    getUserBoards,
+    createBoard
 }
 
 // function _getUrl(id = '') {
@@ -48,6 +49,56 @@ function getEmptyBoard() {
     return {
 
     }
+}
+
+function createBoard(by, bgImg, boardName) {
+    let boardToAdd = {
+        createdBy: by,
+        backgroundImg: bgImg,
+        boardName: boardName,
+        activites: [],
+        members: [by],
+        labels: [{
+                _id: "aaa",
+                name: "Done",
+                bgColor: "#61BD4F",
+            },
+            {
+                _id: "bbb",
+                name: "New",
+                bgColor: "#F2D600",
+            },
+            {
+                _id: "ccc",
+                name: "In progress",
+                bgColor: "#FF9F1A",
+            },
+            {
+                _id: "ddd",
+                name: "Error",
+                bgColor: "#EB5A46",
+            },
+            {
+                _id: "eee",
+                name: "Design",
+                bgColor: "#C377E0",
+            },
+            {
+                _id: "fff",
+                name: "Important",
+                bgColor: "#0079BF",
+            },
+            {
+                _id: "ggg",
+                name: "Low priority",
+                bgColor: "#00C2E0"
+            }
+        ],
+        taskGroups: []
+    }
+
+    httpService.post("board/add", boardToAdd)
+
 }
 
 async function getById(id) {
