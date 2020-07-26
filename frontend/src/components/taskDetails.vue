@@ -270,12 +270,12 @@ export default {
         this.$emit('updateActivityLogEv' , activity )
     },
     labelClicked(labelId){
-      let isLabel = this.task.labels.find(label => label._id === labelId)
-      if(isLabel) {
-        let labelIdx = this.task.labels.findIndex(isLabel)
+      let labelIdx = this.task.labels.findIndex(label => label === labelId)
+      if (labelIdx === -1) {
+        this.task.labels.push(labelId);
+      } else {
         this.task.labels.splice(labelIdx, 1)
       }
-      this.task.labels.push(labelId);
     }
   },
   destroyed(){
