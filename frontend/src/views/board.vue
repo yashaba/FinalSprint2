@@ -241,28 +241,11 @@ this.$store.dispatch({ type: "loadUsers" })
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     getTaskGroupTitle(id) {
     // console.log('task GROP', this.$store.getters.currBoard);
     let taskGroup = this.board.taskGroups.find(taskGroupItem => taskGroupItem._id === id)
     return taskGroup.title
-    
-
 },
 
     onUpdateBoard(board) {
