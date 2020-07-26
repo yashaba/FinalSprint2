@@ -275,7 +275,6 @@ export default {
         this.$emit('updateActivityLogEv' , activity )
     },
     labelClicked(labelId){
-      debugger
       let isLabel = this.task.labels.find(label => label._id === labelId)
       if(isLabel) {
         let labelIdx = this.task.labels.findIndex(isLabel)
