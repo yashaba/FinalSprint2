@@ -86,7 +86,6 @@ export default {
         },
 
         labelClicked(labelId) {
-            debugger
             this.$store.dispatch('toggleLabelInTask', {labelId, task: this.task});
             this.$emit('labelClicked', labelId);
 
