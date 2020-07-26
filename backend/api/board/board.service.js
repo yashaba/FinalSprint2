@@ -28,8 +28,10 @@ async function query(filterBy) {
 
     const collection = await dbService.getCollection('board')
     try {
-        // const boards = await collection.find({ 'members._id': `${filterBy.id}` }).toArray();
-        const boards = await collection.find().toArray();
+        // const boards = await collection.find({ 'members._id': ""id"" `${filterBy.id}` }).toArray();
+        const boards = await collection.find({ "members._id": filterBy.id }).toArray();
+        // const boards = await collection.find().toArray();
+
 
         console.log(boards);
         return boards

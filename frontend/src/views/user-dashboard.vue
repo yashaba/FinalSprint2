@@ -93,7 +93,7 @@ export default {
     this.$store
       .dispatch({ type: "getUserBoards", userId: user._id })
       .then(boards => {
-        this.userBoards = boards.filter(board => board._id !== "5f19d0dc61fc800a7cb9e96c");
+        this.userBoards = boards
         this.publicBoards = boards.filter(board => board._id === "5f19d0dc61fc800a7cb9e96c");
       });
   }
@@ -141,6 +141,7 @@ export default {
 .main-wrapper {
   padding: 200px 50px 0 50px;
       h1 {
+        //  font-family: euro;
         margin: 50px 0 50px 0;
       }
 }
