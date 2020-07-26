@@ -19,11 +19,9 @@ export const boardStore = {
             return state.currBoard;
         },
         getCurrBoardTaskGroups(state) {
-            // debugger
             return state.currBoard.taskGroups;
         },
         getCurrBoardMembers(state) {
-            // debugger
             return state.currBoard.members;
         },
         getLabels(state) {

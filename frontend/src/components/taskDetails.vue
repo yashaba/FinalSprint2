@@ -176,16 +176,12 @@ export default {
     };
   },
 
-  computed: {
-    board() {
-    }
-  },
-
   created() {
     eventBus.$on("closer-clicked", () => {
       this.task = null;
       this.isLabelsModal = false; 
       this.isChecklistModal = false;
+      this.isMembersModal = false;
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
@@ -193,10 +189,10 @@ export default {
     });
       eventBus.$on("force-update", (task) => {
         if (this.task === null) return
-        console.log('task from bus', task);
       this.task = JSON.parse(JSON.stringify(task));
     })
   },
+
   destroyed() {
     eventBus.$off(SHOW_DETAILS);
   },
@@ -226,7 +222,6 @@ export default {
     },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
-      console.log('updated checklist' , this.task.checkLists[updatedCheckList.idx] );
       this.updateTask();
     },
     updateTask() {
@@ -236,6 +231,8 @@ export default {
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.task = null;
       this.isLabelsModal = false; 
+      this.isMembersModal = false;
+      this.isChecklistModal = false;
     },
 
     onRemove() {
@@ -267,8 +264,6 @@ export default {
       this.isLabelsModal = !this.isLabelsModal;
     },
         updateActivityLog(txt, type) {
-          console.log("activity log in details",  type);
-
         let activity = {txt: txt, task: this.task}
         activity.type = type
         this.$emit('updateActivityLogEv' , activity )
