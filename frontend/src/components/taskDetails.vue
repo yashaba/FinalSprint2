@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="details-labels">
-              <span class="labels-title">Labels</span>
+              <span class="labels-title">LABELS</span>
               <task-preview-labels-list :labels="task.labels" />
             </div>
             <div v-if="task.dueDate.date" class="details-labels">
@@ -51,7 +51,7 @@
               <i class="fas fa-align-left"></i>
               <span>Description</span>
             </div>
-            <textarea placeholder="Add a more details description..." rows="1">{{task.desc}}</textarea>
+            <textarea placeholder="Add a more details description..." rows="1" v-model="task.desc">{{task.desc}}</textarea>
           </div>
           <div class="details-attachments">
             <i class="fas fa-paperclip"></i>
@@ -101,7 +101,7 @@
           <button class="btn-details-actions" @click="toggleLabelsModal">
             <i class="fas fa-tag"></i>Labels
           </button>
-          <labels-modal v-if="isLabelsModal" :task="task" @closeLabelsModal="toggleLabelsModal" />
+          <labels-modal v-if="isLabelsModal" :task="task" @closeLabelsModal="toggleLabelsModal" @labelClicked="labelClicked"/>
           <button class="btn-details-actions" @click="toggleChecklistModal">
             <i class="far fa-check-square"></i>CheckList
           </button>
@@ -233,6 +233,7 @@ export default {
       this.$emit("updateTaskEv", this.task);
     },
     closeDetails() {
+      this.updateTask();
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.task = null;
       this.isLabelsModal = false; 
@@ -273,6 +274,15 @@ export default {
         activity.type = type
         this.$emit('updateActivityLogEv' , activity )
     },
+    labelClicked(labelId){
+      debugger
+      let isLabel = this.task.labels.find(label => label._id === labelId)
+      if(isLabel) {
+        let labelIdx = this.task.labels.findIndex(isLabel)
+        this.task.labels.splice(labelIdx, 1)
+      }
+      this.task.labels.push(labelId);
+    }
   },
   destroyed(){
   eventBus.$off("force-update")

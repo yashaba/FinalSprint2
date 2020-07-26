@@ -41,7 +41,8 @@ export default {
     data() {
         return {
             editingLabelId: null,
-            editedLabelName: null
+            editedLabelName: null,
+            clickedLabel: null
         }
     },
 
@@ -62,7 +63,8 @@ export default {
         },
 
         getLabel(labelId) {
-            return this.labels.find(label => label._id === labelId)
+            this.clickedLabel = this.$store.getters.getLabels.find(label => label._id === this.labelId)
+            return this.clickedLabel;
         },
 
         setLabelUnderEditing(labelId) {
@@ -84,7 +86,10 @@ export default {
         },
 
         labelClicked(labelId) {
+            debugger
             this.$store.dispatch('toggleLabelInTask', {labelId, task: this.task});
+            this.$emit('labelClicked', labelId);
+
         },
         close() {
             this.$emit('closeLabelsModal');
