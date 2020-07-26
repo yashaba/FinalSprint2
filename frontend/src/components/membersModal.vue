@@ -65,22 +65,22 @@ export default {
             console.log('toggle member',memberName );
             if (this.isUserAssignedToTask(memberId)) {
                 this.$store.dispatch('removeMemberFromTask', {userId: memberId._id, task: this.task});
-                              this.updateActivityLog( " " + memberName + " " + "from" ,"REMOVE" )
+                this.updateActivityLog( memberName ,"REMOVE" )
 
             
 
             } else {
                 this.$store.dispatch('addMemberToTask', {userId: memberId._id, task: this.task});
-                    this.updateActivityLog( "added" + " " + memberName ,"ADD" )
+                this.updateActivityLog( memberName ,"ADD" )
             }
         },
             updateActivityLog(txt, type) {
-          console.log("activity log in details",  type);
-
-        let activity = {txt: txt, task: this.task}
-        activity.type = type
-      let user = this.$store.getters.loggedinUser
-      activity.user = user
+       let activity = {
+            txt: txt,
+             task: this.task,
+             type: type,
+             user: this.$store.getters.loggedinUser
+             }
      this.$store.dispatch({ type: "updateActivityLog", activity});
       
     },

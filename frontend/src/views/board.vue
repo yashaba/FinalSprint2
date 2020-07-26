@@ -229,22 +229,34 @@ this.$store.dispatch({ type: "loadUsers" })
         taskGroupItem.tasks.forEach(
           task => {
            if(task.taskGroup !== taskGroupItem._id){
-               let activity = {
+             let activity = {
               type: "MOVE", txt: ` moved this card from ${this.getTaskGroupTitle(task.taskGroup)}
-               to  ${this.getTaskGroupTitle(taskGroupItem._id)} `, task: task}
-                console.log('taslll', activity);
-               this.updateActivityLog(activity)
-                 task.taskGroup = taskGroupItem._id
-
-             }
-            
-            
-            }
+                to  ${this.getTaskGroupTitle(taskGroupItem._id)} `, task: task}
+                  this.updateActivityLog(activity)
+                   task.taskGroup = taskGroupItem._id
+           }
+          }
         );
       });
 
       this.$store.dispatch({ type: "updateBoard", board });
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     getTaskGroupTitle(id) {
     // console.log('task GROP', this.$store.getters.currBoard);
     let taskGroup = this.board.taskGroups.find(taskGroupItem => taskGroupItem._id === id)

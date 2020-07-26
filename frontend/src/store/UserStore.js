@@ -1,10 +1,16 @@
-import {userService} from '../services/user.service.js'
+import { userService } from '../services/user.service.js'
 
 var localLoggedinUser = null;
-if (sessionStorage.user) localLoggedinUser = JSON.parse(sessionStorage.user);
+localLoggedinUser = (sessionStorage.user) ? localLoggedinUser = JSON.parse(sessionStorage.user) : {
+    _id: "5f19b12f643d505854ff0d15",
+    userName: "guest@tt.com",
+    password: "$2b$10$dgsV3TJniRm8Vgv8SYGd4e7i0uEUQh8rIqwpGtVCXf5Yuh8DcGrf.",
+    fullName: "Guesty",
+    imgUrl: "http://some-img"
+}
 export const userStore = {
     state: {
-        loggedinUser : localLoggedinUser,
+        loggedinUser: localLoggedinUser,
         users: []
     },
     getters: {
@@ -23,46 +29,46 @@ export const userStore = {
         }
     },
     mutations: {
-        setUser(state, {user}) {
+        setUser(state, { user }) {
             state.loggedinUser = user;
         },
-        setUsers(state, {users}) {
+        setUsers(state, { users }) {
             // debugger
             state.users = users;
         },
-        removeUser(state, {userId}) {
+        removeUser(state, { userId }) {
             state.users = state.users.filter(user => user._id !== userId)
         },
     },
     actions: {
-        async login(context, {userCred}) {
+        async login(context, { userCred }) {
             const user = await userService.login(userCred);
             console.log(user);
-            context.commit({type: 'setUser', user})
+            context.commit({ type: 'setUser', user })
             return user;
         },
-        async signup(context, {userCred}) {
+        async signup(context, { userCred }) {
             const user = await userService.signup(userCred)
-            context.commit({type: 'setUser', user})
+            context.commit({ type: 'setUser', user })
             return user;
-            
+
         },
         async logout(context) {
             await userService.logout()
-            context.commit({type: 'setUsers', users: []})
-            context.commit({type: 'setUser', user: null})
+            context.commit({ type: 'setUsers', users: [] })
+            context.commit({ type: 'setUser', user: null })
         },
         async loadUsers(context) {
             const users = await userService.query();
-            context.commit({type: 'setUsers', users})
+            context.commit({ type: 'setUsers', users })
         },
-        async removeUser(context, {userId}) {
+        async removeUser(context, { userId }) {
             await userService.remove(userId);
-            context.commit({type: 'removeUser', userId})
+            context.commit({ type: 'removeUser', userId })
         },
-        async updateUser(context, {user}) {
+        async updateUser(context, { user }) {
             user = await userService.update(user);
-            context.commit({type: 'setUser', user})
+            context.commit({ type: 'setUser', user })
         }
     }
 }
