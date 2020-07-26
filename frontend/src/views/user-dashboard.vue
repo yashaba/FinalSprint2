@@ -9,7 +9,7 @@
             <div  v-for="board in userBoards" :key="board._id">
            <a
           :href="'#/board/'+ board._id"
-          :style="{backgroundImage: 'url('+board.backgroundImg+')' }"
+          :style="{backgroundImage: 'url('+ require(`../assets/imgs/board-img-${board.backgroundImg}.jpg`)+')' }"
           class="card"
            >
             <div>{{board.boardName}}</div>
@@ -104,6 +104,7 @@ export default {
       let img = "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?ixlib=rb-1.2.1&w=1000&q=80"
     boardService.createBoard(this.loggedinUser, img, this.newBoardTitle)
     this.newBoardTitle = ""
+    this.isCreating = false
     }
   }
 };
@@ -164,6 +165,8 @@ export default {
   margin-right: 30px;
   text-decoration: none;
   border-radius: 5%;
+  background-repeat: no-repeat;
+  background-size: 225px;
 }
 .create-button{
   background-color: rgb(236, 233, 233);

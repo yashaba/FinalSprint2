@@ -1,5 +1,5 @@
 <template>
-  <section class="board flex column" style="height: 100vh" v-if="board">
+  <section  :style="{backgroundImage: 'url('+bgImg+')' }" class="board flex column" style="height: 100vh" v-if="board">
     <div v-if="isOverlayEffect" class="effect" @click="closeOverlayEffect"></div>
     <charts-modal v-if="isDashboards" @closeChartsModal="dashbordsToShow"></charts-modal>
   <div class="board-vue">
@@ -110,7 +110,8 @@ export default {
       addingTask: false,
       isAddMemberModal: false,
       isOverlayEffect: false,
-      isDashboards: false
+      isDashboards: false,
+      bgImg: null
     };
   },
   computed: {
@@ -118,7 +119,10 @@ export default {
       return this.addingTask;
       // this.$store.getters.currBoard
     },
+    isBoardReady() {
+             if (this.board) return 
     
+  },
   },
 
   created() {
@@ -127,6 +131,7 @@ export default {
 this.$store.dispatch({ type: "loadUsers" })
     this.$store.dispatch({ type: 'loadBoard' , id: this.$route.params.id }).then(board => {
       this.board = board;
+      this.bgImg = require(`../assets/imgs/board-img-${this.board.backgroundImg}.jpg`) 
     
       SocketService.setup();
       SocketService.emit("boardJoined", this.board._id);
@@ -271,7 +276,7 @@ this.$store.dispatch({ type: "loadUsers" })
     }
   }
 
-};
+}
 </script>
 
 <style lang="scss" >
