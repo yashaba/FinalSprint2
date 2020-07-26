@@ -4,12 +4,11 @@
         <textarea-autosize
           class="edit-textarea"
           placeholder="Type something here..."
-          ref="myTextarea"
+          ref="taskDescription"
           v-model="task.title"
           :min-height="30"
           :max-height="350"
         />
-          <!-- @focus.native="onFocusTextarea" -->
         <button class="btn-save-task" @click="saveTask">Save</button>
         <button class="btn-close" @click="close({}, true)">&times;</button>
       </div>
@@ -63,7 +62,8 @@ export default {
         positionX: null,
         positionY: null,
         isLabelsModal: false,
-        isMembersModal: false
+        isMembersModal: false,
+        firstFocus: null
       }
     },
 
@@ -73,6 +73,7 @@ export default {
           eventBus.$emit(STOP_OVERLEY_EFFECT, {});
           this.task = null;
           this.isLabelsModal = false;
+          this.isMembersModal = false;
         }
       },
       saveTask() {
@@ -80,6 +81,7 @@ export default {
         eventBus.$emit(STOP_OVERLEY_EFFECT, {});
         this.task = null;
         this.isLabelsModal = false;
+        this.isMembersModal = false;
         },
       onRemove() {
         this.$emit("removeTaskEv", this.task);
@@ -92,29 +94,30 @@ export default {
       toggleMembersModal() {
         this.isMembersModal = !this.isMembersModal;
       }
-      // onFocusTextarea() {
-      //   this.$nextTick(() => {
-      //   this.$refs.myTextarea.focus()
-      // })
-        // this.$refs.myTextarea.$el.select()
-      //   this.$refs.myTextarea.focus();
-      // }
     },
 
     created() {
       eventBus.$on("closer-clicked", () => {
-      eventBus.$emit(STOP_OVERLEY_EFFECT, {});
-      this.task = null;
-      this.isLabelsModal = false;
-      this.isMembersModal = false;
+        eventBus.$emit(STOP_OVERLEY_EFFECT, {});
+        this.task = null;
+        this.isLabelsModal = false;
+        this.isMembersModal = false;
       })
 
       eventBus.$on(SHOW_EDIT_TASK, task=>{
         this.task = task.task;
         this.positionX = `${task.position.positionX}px`;
         this.positionY = `${task.position.positionY}px`;
+        this.firstFocus = false;
       })
       window.addEventListener('keydown', this.close);
+  },
+
+  updated() {
+    if (this.task && !this.firstFocus) {
+      this.$refs.taskDescription.$el.select()
+      this.firstFocus = true;
+    }
   },
 
   destroyed(){
