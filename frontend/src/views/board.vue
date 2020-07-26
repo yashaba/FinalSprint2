@@ -35,7 +35,7 @@
           v-model="board.taskGroups"
           group="columns"
           @start="drag=true"
-          @end="drag=false ; updateBoard(board) , cloneDragEnd()"
+          @end="drag=false ; updateBoard(board)"
         >
           <div class="sortable-fallback" v-for="taskGroup in board.taskGroups" :key="taskGroup.id">
             <task-group 
