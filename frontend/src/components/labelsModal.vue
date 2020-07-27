@@ -15,6 +15,7 @@
             >
                 <div class="label-name" :style="{ 'background-color': label.bgColor }">
                     <input
+                        ref="taskLabel"
                         type="text"
                         v-model="editedLabelName"
                         v-if="editingLabelId == label._id"
@@ -42,7 +43,9 @@ export default {
         return {
             editingLabelId: null,
             editedLabelName: null,
-            clickedLabel: null
+            clickedLabel: null,
+            isUnderEditing: false,
+            fisrtFocus: false
         }
     },
 
@@ -63,13 +66,14 @@ export default {
         },
 
         getLabel(labelId) {
-            this.clickedLabel = this.$store.getters.getLabels.find(label => label._id === this.labelId)
+            this.clickedLabel = this.$store.getters.getLabels.find(label => label._id === labelId)
             return this.clickedLabel;
         },
 
         setLabelUnderEditing(labelId) {
             this.editingLabelId = labelId;
             this.editedLabelName = this.getLabel(labelId).name;
+            this.isUnderEditing = true;
         },
 
         saveLabelChanges() {
@@ -96,8 +100,9 @@ export default {
       },
 
     updated() {
-        if (this.addingTask) {
-            this.$refs.taskGroupTitle.focus();
+        if (this.isUnderEditing && !this.fisrtFocus) {
+            this.$refs.taskLabel[0].select();
+            this.fisrtFocus = true;
         }
     }
 }

@@ -232,10 +232,9 @@ this.$store.dispatch({ type: "loadUsers" })
       this.$store.dispatch({ type: "addMemberToBoard", user });
     },
     updateActivityLog(activity){
-      let user = this.$store.getters.loggedinUser
-      console.log('activityyyy', activity);
-      activity.user = user
-     this.$store.dispatch({ type: "updateActivityLog", activity});
+      
+      activity.user = this.$store.getters.loggedinUser
+      this.$store.dispatch({ type: "updateActivityLog", activity});
     }
   },
   computed: {

@@ -2,30 +2,10 @@
     background-color: #ffffff;
     padding: 10px;
     position: relative;
-    width: 185px;
+    width: 280px;
     border-radius: 4px;
     height: 430px;
 
-
-    // @include for-narrow-layout {
-    //     max-width: 50%;
-    //     min-width: 89%;
-    //     left: 25%;
-    // }
-    // @include for-middle-layout {
-    //     min-width: 72%;
-    //     left: 35%;
-    // }
-    // @include for-normal-layout {
-    //     max-width: 64%;
-    //     min-width: 64%;
-    //     left: 40%;
-    // }
-    // @include for-wide-layout {
-    //     max-width: 50%;
-    //     min-width: 50%;
-    //     left: 44%;
-    // }
 
     .btn-close {
         @include define-close-btn;
