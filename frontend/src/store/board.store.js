@@ -44,13 +44,13 @@ export const boardStore = {
                     if (Array.isArray(task.assignedUsers)) {
                         task.assignedUsers.forEach(assignedUser => {
                             if (typeof assignedUser === 'object') {
-                                if (assignedUser._id === userId) {
-                                    let userIndex = task.assignedUsers.findIndex(user => user._id === userId);
+                                if (assignedUser._id === userId._id) {
+                                    let userIndex = task.assignedUsers.findIndex(user => user._id === userId._id);
                                     task.assignedUsers.splice(userIndex, 1);
                                 }
                             } else {
-                                if (assignedUser === userId) {
-                                    let userIndex = task.assignedUsers.findIndex(user => user === userId);
+                                if (assignedUser === userId._id) {
+                                    let userIndex = task.assignedUsers.findIndex(user => user === userId._id);
                                     task.assignedUsers.splice(userIndex, 1);
                                 }
                             }
