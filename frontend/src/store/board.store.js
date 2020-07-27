@@ -150,9 +150,9 @@ export const boardStore = {
             const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
             state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
             boardService.save(state.currBoard);
-            
+
             SocketService.emit("boardUpdate", state.currBoard);
-            
+
         },
         addTaskGroup(state, newTaskGroup) {
             state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
@@ -176,20 +176,6 @@ export const boardStore = {
             boardService.save(state.currBoard);
         },
 
-        updateLabel(state, { id, name }) {
-            let label = state.currBoard.labels.find(labelElement => labelElement._id === id);
-            label.name = name;
-
-            boardService.save(state.currBoard);
-        },
-        updateActivityLog(state, { activityToAdd }) {
-            console.log("MUTATOR", activityToAdd);
-            state.currBoard.activites.unshift(activityToAdd)
-
-            boardService.save(state.currBoard);
-            eventBus.$emit("force-update")
-
-        },
 
         toggleLabelInTask(state, { labelId, task }) {
             let taskGroup = state.currBoard.taskGroups.find(taskGroupElement => taskGroupElement._id === task.taskGroup);
@@ -207,9 +193,39 @@ export const boardStore = {
             }
 
             boardService.save(state.currBoard);
-        }
+        },
+        updateLabel(state, { id, name }) {
+            let label = state.currBoard.labels.find(labelElement => labelElement._id === id);
+            label.name = name;
+
+            boardService.save(state.currBoard);
+        },
+        updateActivityLog(state, { activityToAdd }) {
+            console.log("MUTATOR", activityToAdd);
+            state.currBoard.activites.unshift(activityToAdd)
+
+            boardService.save(state.currBoard);
+            eventBus.$emit("force-update")
+
+        },
     },
     actions: {
+        updateActivityLog({ commit }, { activity }) {
+            // return boardService.save(board)
+            //     .then((savedBoard) => {
+
+            console.log('action one', activity);
+
+            let activityToAdd = activityLogService.createActivity(activity.user, activity.type, activity.task, activity.txt)
+            console.log("ACTION", activityToAdd);
+            commit({ type: 'updateActivityLog', activityToAdd })
+                // SocketService.emit("boardUpdate", board);
+                // return savedBoard;
+                // }
+                // )
+                // commit({ type: 'updateBoard', board })
+
+        },
         removeMemberFromTask(context, { userId, task }) {
             context.commit('removeMemberFromTask', { userId, task });
             boardService.save(context.getters.currBoard);
@@ -291,25 +307,7 @@ export const boardStore = {
                 })
                 // commit({ type: 'updateBoard', board })
         },
-        updateActivityLog({ commit }, { activity }) {
-            // debugger
-            // return boardService.save(board)
-            //     .then((savedBoard) => {
-            // console.log('activitylog', savedBoard);
-            // console.log('test', activity.txt, activity.user);
-            // debugger
-            console.log('action one', activity);
 
-            let activityToAdd = activityLogService.createActivity(activity.user, activity.type, activity.task, 'placeholder', activity.txt)
-            console.log("ACTION", activityToAdd);
-            commit({ type: 'updateActivityLog', activityToAdd })
-                // SocketService.emit("boardUpdate", board);
-                // return savedBoard;
-                // }
-                // )
-                // commit({ type: 'updateBoard', board })
-
-        },
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
             return boardService.save(taskGroup)

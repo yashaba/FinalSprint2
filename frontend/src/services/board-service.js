@@ -51,7 +51,7 @@ function getEmptyBoard() {
     }
 }
 
-function createBoard(by, bgImg, boardName) {
+async function createBoard(by, bgImg, boardName) {
     let boardToAdd = {
         createdBy: by,
         backgroundImg: bgImg,
@@ -97,7 +97,8 @@ function createBoard(by, bgImg, boardName) {
         taskGroups: []
     }
 
-    httpService.post("board/add", boardToAdd)
+    const res = await httpService.post("board/add", boardToAdd)
+    return res
 
 }
 

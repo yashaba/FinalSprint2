@@ -21,24 +21,23 @@
          <div @click="isCreating=false" class="effect flex justify-center align-center" v-if="isCreating" > 
               
 
-              <div @click.stop="" class="board-creation-modal flex">
+              <div @click.stop="" class="board-creation-modal">
 
-              <div class="imgs-container flex ">
-              <img class="bg-option"  src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
-              <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
-              <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
-              <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
-              <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
-              <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
+              <div  class="imgs-container flex relative">
+               <div class="relative" @click="bgToDisplay = bgOption" v-for="(bgOption , idx) in bgOptions" :key="idx">
+              <img  class="bg-option"  :src=" require(`../assets/imgs/board-img-${bgOption}.jpg`)" alt="">
+              <i v-if="bgToDisplay === bgOption " class="el-icon-check"></i>
+              </div> 
+              
               </div>
 
               <div class="relative">
-              <img width="300" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
+              <img width="300" height="200" :src=" require(`../assets/imgs/board-img-${bgToDisplay}.jpg`)" alt="">
                <el-input class="title-input" placeholder="Board Title" v-model="newBoardTitle"></el-input>
                <el-button @click.prevent="createBoard" class="submit-button" type="primary">Create</el-button>
                </div>
 
-              <div class="imgs-container flex ">
+              <!-- <div class="imgs-container flex ">
               <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
               <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
               <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
@@ -46,7 +45,7 @@
               <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
               <img class="bg-option" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
 
-              </div>
+              </div> -->
               </div>
            
             </div>
@@ -85,33 +84,45 @@ export default {
       isCreating: false,
       bgSrc: null,
       newBoardTitle: "",
-      loggedinUser: null
+      loggedinUser: null,
+      bgOptions: [2,3,4,5,6,7],
+      bgToDisplay: 2
 
     };
   },
 
   created() {
     this.loggedinUser = this.$store.getters.loggedinUser;
-    this.$store
+    this.loadBoards()
+  },
+  methods: {
+    async createBoard(){
+    const res = await boardService.createBoard(this.loggedinUser, this.bgToDisplay, this.newBoardTitle)
+    this.newBoardTitle = ""
+    this.isCreating = false
+    this.loadBoards()
+
+
+    },
+    loadBoards(){
+ this.$store
       .dispatch({ type: "getUserBoards", userId: this.loggedinUser._id })
       .then(boards => {
         this.userBoards = boards
-        this.publicBoards = boards.filter(board => board._id === "5f19d0dc61fc800a7cb9e96c");
       });
-  },
-  methods: {
-    createBoard(){
-      let img = "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?ixlib=rb-1.2.1&w=1000&q=80"
-    boardService.createBoard(this.loggedinUser, img, this.newBoardTitle)
-    this.newBoardTitle = ""
-    this.isCreating = false
     }
   }
 };
 </script>
 
 <style lang='scss'>
-
+ .el-icon-check {
+   position: absolute;
+   left: 35px;
+   bottom: 35px;
+   color: #00fc22;
+   font-size: 30px;
+ }
 .bg-option {
   width: 90px;
   height: 90px;
@@ -132,6 +143,8 @@ export default {
     left: 50px;
     bottom: 50px;
   }
+  display: flex;
+  // flex-direction: column-reverse;
 }
 .imgs-container {
   flex-wrap: wrap;
@@ -140,6 +153,10 @@ export default {
   // padding: 10px; 
   img {
     margin: 3px;
+    cursor: pointer;
+  }
+  div {
+    position: relative;
   }
 }
 .personal-boards-container {
@@ -173,5 +190,6 @@ export default {
 }
 .create-button{
   background-color: rgb(236, 233, 233);
+  cursor: pointer;
 }
 </style>

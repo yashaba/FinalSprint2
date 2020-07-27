@@ -267,11 +267,10 @@ export default {
       this.isLabelsModal = !this.isLabelsModal;
     },
         updateActivityLog(txt, type) {
-          console.log("activity log in details",  type);
 
-        let activity = {txt: txt, task: this.task}
-        activity.type = type
+        let activity = {txt, task: this.task , type}
         this.$emit('updateActivityLogEv' , activity )
+        
     },
     labelClicked(labelId){
       let labelIdx = this.task.labels.findIndex(label => label === labelId)
