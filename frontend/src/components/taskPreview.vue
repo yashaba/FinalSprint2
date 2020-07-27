@@ -59,7 +59,6 @@ export default {
       eventBus.$emit(SHOW_DETAILS, this.task);
     },
     editTask() {
-      // eventBus.$emit(SHOW_EDIT_TASK, this.task);
       eventBus.$emit(OVERLAY_EFFECT, {});
       eventBus.$emit(SHOW_EDIT_TASK, {
         task: this.task,
@@ -67,12 +66,7 @@ export default {
       });
     }
   },
-  // editTask() {
-  //   eventBus.$emit(SHOW_EDIT_TASK, {
-  //     task: this.task,
-  //     position: { positionX: event.clientX, positionY: event.clientY }
-  //   });
-  // },
+  
   components: {
     Avatar,
     checkListPreview,

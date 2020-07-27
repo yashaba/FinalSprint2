@@ -5,11 +5,12 @@
     width: 280px;
     border-radius: 4px;
     z-index: 4;
-    // height: 250px;
-   
         .members-modal-container {
             margin: 5px;
 
+            .title {
+                height: 30px;
+            }
             .btn-close-modal {
                 @include define-close-btn;
                 background-color: #ffffff;

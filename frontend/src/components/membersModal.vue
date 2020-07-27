@@ -2,7 +2,7 @@
   <section class="members-modal">
     <div class="members-modal-container">
       <div class="flex align-center space-between">
-        <div class="flex align-center">
+        <div class="title flex align-center">
           <i class="fas fa-user"></i>
           <h5>Members</h5>
         </div>
@@ -65,7 +65,7 @@ export default {
 
     toggleMemberOnTask(memberId) {
       let memberName = this.$store.getters.getUserFullnameById(memberId._id);
-      console.log("toggle member", memberName);
+
       if (this.isUserAssignedToTask(memberId)) {
         this.$store.dispatch("removeMemberFromTask", {
           userId: memberId._id,

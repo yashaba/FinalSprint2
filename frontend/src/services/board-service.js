@@ -16,7 +16,6 @@ export const boardService = {
 // }
 
 function _getUrl(id) {
-    console.log('get url', );
     return `board/${id}`;
 }
 
@@ -59,40 +58,40 @@ async function createBoard(by, bgImg, boardName) {
         activites: [],
         members: [by],
         labels: [{
-                _id: "aaa",
-                name: "Done",
-                bgColor: "#61BD4F",
-            },
-            {
-                _id: "bbb",
-                name: "New",
-                bgColor: "#F2D600",
-            },
-            {
-                _id: "ccc",
-                name: "In progress",
-                bgColor: "#FF9F1A",
-            },
-            {
-                _id: "ddd",
-                name: "Error",
-                bgColor: "#EB5A46",
-            },
-            {
-                _id: "eee",
-                name: "Design",
-                bgColor: "#C377E0",
-            },
-            {
-                _id: "fff",
-                name: "Important",
-                bgColor: "#0079BF",
-            },
-            {
-                _id: "ggg",
-                name: "Low priority",
-                bgColor: "#00C2E0"
-            }
+            _id: "aaa",
+            name: "Done",
+            bgColor: "#61BD4F",
+        },
+        {
+            _id: "bbb",
+            name: "New",
+            bgColor: "#F2D600",
+        },
+        {
+            _id: "ccc",
+            name: "In progress",
+            bgColor: "#FF9F1A",
+        },
+        {
+            _id: "ddd",
+            name: "Error",
+            bgColor: "#EB5A46",
+        },
+        {
+            _id: "eee",
+            name: "Design",
+            bgColor: "#C377E0",
+        },
+        {
+            _id: "fff",
+            name: "Important",
+            bgColor: "#0079BF",
+        },
+        {
+            _id: "ggg",
+            name: "Low priority",
+            bgColor: "#00C2E0"
+        }
         ],
         taskGroups: []
     }

@@ -25,7 +25,6 @@ export default {
     }, {responsive: true})
   },
   created() {
-    console.log(this.board);
     let taskGroups = this.$store.getters.getCurrBoardTaskGroups;
     taskGroups.forEach(group => {
     this.boardLabels.push(group.title);

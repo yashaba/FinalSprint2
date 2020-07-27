@@ -26,15 +26,17 @@ export default {
 
     computed: {
         label() {
-            // debugger
             this.clickedLabel = this.$store.getters.getLabels.find(label => label._id === this.labelId)
             return this.clickedLabel;
         }
     },
 
     methods: {
-        labelClicked(){
-            this.$emit('labelClicked', this.clickedLabel);
+        labelClicked() {
+            this.$emit('labelClicked');
+        // labelClicked(){
+        //     this.$emit('labelClicked', this.clickedLabel);
+        // }
         }
     }
 }

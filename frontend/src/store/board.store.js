@@ -19,11 +19,9 @@ export const boardStore = {
             return state.currBoard;
         },
         getCurrBoardTaskGroups(state) {
-            // debugger
             return state.currBoard.taskGroups;
         },
         getCurrBoardMembers(state) {
-            // debugger
             return state.currBoard.members;
         },
         getLabels(state) {
@@ -31,7 +29,13 @@ export const boardStore = {
         },
         showFullLabel(state) {
             return state.showFullLabel;
-        }
+        },
+        getTaskByTaskObject: (state) => (task) => {
+            const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
+            const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
+
+            return state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex];
+        },
     },
     mutations: {
         removeMemberFromAllTasks(state, { userId }) {
@@ -40,13 +44,13 @@ export const boardStore = {
                     if (Array.isArray(task.assignedUsers)) {
                         task.assignedUsers.forEach(assignedUser => {
                             if (typeof assignedUser === 'object') {
-                                if (assignedUser._id === userId) {
-                                    let userIndex = task.assignedUsers.findIndex(user => user._id === userId);
+                                if (assignedUser._id === userId._id) {
+                                    let userIndex = task.assignedUsers.findIndex(user => user._id === userId._id);
                                     task.assignedUsers.splice(userIndex, 1);
                                 }
                             } else {
-                                if (assignedUser === userId) {
-                                    let userIndex = task.assignedUsers.findIndex(user => user === userId);
+                                if (assignedUser === userId._id) {
+                                    let userIndex = task.assignedUsers.findIndex(user => user === userId._id);
                                     task.assignedUsers.splice(userIndex, 1);
                                 }
                             }
@@ -307,7 +311,30 @@ export const boardStore = {
                 })
                 // commit({ type: 'updateBoard', board })
         },
+        <<
+        << << < HEAD
 
+        ===
+        === =
+        updateActivityLog({ commit }, { activity }) {
+            // debugger
+            // return boardService.save(board)
+            //     .then((savedBoard) => {
+            // console.log('activitylog', savedBoard);
+            // console.log('test', activity.txt, activity.user);
+            // debugger
+
+            let activityToAdd = activityLogService.createActivity(activity.user, activity.type, activity.task, 'placeholder', activity.txt)
+            commit({ type: 'updateActivityLog', activityToAdd })
+                // SocketService.emit("boardUpdate", board);
+                // return savedBoard;
+                // }
+                // )
+                // commit({ type: 'updateBoard', board })
+
+        },
+        >>>
+        >>> > b69cc08e8861329a1f22b0ebfc7c7a4e3fd87ed2
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
             return boardService.save(taskGroup)

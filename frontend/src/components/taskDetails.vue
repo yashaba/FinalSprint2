@@ -21,7 +21,11 @@
 
                   <div class="add">
                     <i class="fas fa-plus" @click="toggleMembersModal"></i>
-                    <members-modal v-if="isMembersModal" :task="task" @closeMemberModal="toggleMembersModal"/>
+                    <members-modal
+                      v-if="isMembersModal"
+                      :task="task"
+                      @closeMemberModal="toggleMembersModal"
+                    />
                   </div>
                 </div>
               </div>
@@ -131,7 +135,7 @@
 
       <div class="checklist-modal" v-if="isChecklistModal">
         <div class="checklist-modal-container">
-          <div class="flex align-center space-between">
+          <div class="title flex align-center space-between">
             <h5>Add CheckList</h5>
             <button class="btn-close" @click="toggleChecklistModal">&times;</button>
           </div>
@@ -176,27 +180,25 @@ export default {
     };
   },
 
-  computed: {
-    board() {
-    }
-  },
-
   created() {
     eventBus.$on("closer-clicked", () => {
       this.task = null;
       this.isLabelsModal = false; 
       this.isChecklistModal = false;
+      this.isMembersModal = false;
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
-      this.task = JSON.parse(JSON.stringify(task));
+      this.task = this.$store.getters.getTaskByTaskObject(task);
+      // this.task = JSON.parse(JSON.stringify(task));
     });
-      eventBus.$on("force-update", (task) => {
-        if (this.task === null) return
-        console.log('task from bus', task);
+    
+    eventBus.$on("force-update", (task) => {
+      if (this.task === null) return
       this.task = JSON.parse(JSON.stringify(task));
     })
   },
+
   destroyed() {
     eventBus.$off(SHOW_DETAILS);
   },
@@ -226,7 +228,6 @@ export default {
     },
     updateCheckLists(updatedCheckList) {
       this.task.checkLists[updatedCheckList.idx].list = updatedCheckList.list;
-      console.log('updated checklist' , this.task.checkLists[updatedCheckList.idx] );
       this.updateTask();
     },
     updateTask() {
@@ -236,6 +237,8 @@ export default {
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.task = null;
       this.isLabelsModal = false; 
+      this.isMembersModal = false;
+      this.isChecklistModal = false;
     },
 
     onRemove() {
@@ -270,7 +273,7 @@ export default {
 
         let activity = {txt, task: this.task , type}
         this.$emit('updateActivityLogEv' , activity )
-        
+
     },
     labelClicked(labelId){
       let labelIdx = this.task.labels.findIndex(label => label === labelId)
