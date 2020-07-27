@@ -311,11 +311,7 @@ export const boardStore = {
                 })
                 // commit({ type: 'updateBoard', board })
         },
-        <<
-        << << < HEAD
 
-        ===
-        === =
         updateActivityLog({ commit }, { activity }) {
             // debugger
             // return boardService.save(board)
@@ -333,8 +329,7 @@ export const boardStore = {
                 // commit({ type: 'updateBoard', board })
 
         },
-        >>>
-        >>> > b69cc08e8861329a1f22b0ebfc7c7a4e3fd87ed2
+
         savetaskGroup({ commit }, { taskGroup }) {
             const type = (taskGroup._id) ? 'updateTaskGroup' : 'addTaskGroup'
             return boardService.save(taskGroup)
