@@ -25,7 +25,8 @@ body {
 .user-dashboard {
   background-color: #122961c7;
   color: white;
-    height: 100vh;
+    min-height: 100vh;
+    max-height: 100%;
 }
 
 h1,

@@ -5,7 +5,7 @@
           <h1><span>P</span>rojify</h1>
             <h2>Brings Your Ideas To Create Together</h2>
   <div class="home-link">
-            <a href="http://localhost:8080/#/board/5f15f93ac4ad519b6bee5d9e">TRY NOW</a>
+            <a href="/#/board/5f15f93ac4ad519b6bee5d9e">TRY NOW</a>
             </div>
             <h3>Management tool that is designed to help visualize your work and maximize the efficiency.</h3>
       </div>
