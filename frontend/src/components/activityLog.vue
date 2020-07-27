@@ -24,9 +24,8 @@ data(){
 computed: {
     },
 created(){
-
     this.RelevantActivities =  this.getRelevantActivities()
-        eventBus.$on("force-update", () => {
+    eventBus.$on("force-update", () => {
       this.RelevantActivities =  this.getRelevantActivities()
     });
 

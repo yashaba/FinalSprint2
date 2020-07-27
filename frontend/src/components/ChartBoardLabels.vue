@@ -30,14 +30,12 @@ export default {
   },
   created() {
     let labelCount = {};
-    console.log(this.board);
     let board = this.$store.getters.currBoard;
     let taskGroups = this.$store.getters.getCurrBoardTaskGroups;
     taskGroups.forEach(group => {
       let tasks = group.tasks;
       tasks.forEach(task => {
         if (task.labels === undefined) {
-          console.log(task.title);
           return;
         }
         task.labels.forEach(labelId => {
@@ -46,7 +44,6 @@ export default {
         });
       });
     });
-    console.log(labelCount);
     let newData = [];
     let labelColors = [];
     let labels = [];

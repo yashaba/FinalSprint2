@@ -65,7 +65,7 @@ export default {
 
     toggleMemberOnTask(memberId) {
       let memberName = this.$store.getters.getUserFullnameById(memberId._id);
-      console.log("toggle member", memberName);
+
       if (this.isUserAssignedToTask(memberId)) {
         this.$store.dispatch("removeMemberFromTask", {
           userId: memberId._id,

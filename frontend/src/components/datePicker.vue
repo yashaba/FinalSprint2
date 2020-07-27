@@ -14,7 +14,6 @@ export default {
         // date: this.dueDate
     }},
     created() {
-    console.log(this.dueDate)
     },
     computed: {
         formatDate: function() {

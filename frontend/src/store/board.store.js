@@ -29,7 +29,13 @@ export const boardStore = {
         },
         showFullLabel(state) {
             return state.showFullLabel;
-        }
+        },
+        getTaskByTaskObject: (state) => (task) => {
+            const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
+            const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
+            
+            return state.currBoard.taskGroups[taskGroupIndex].tasks[taskIndex];
+        },
     },
     mutations: {
         removeMemberFromAllTasks(state, { userId }) {
@@ -148,9 +154,9 @@ export const boardStore = {
             const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
             state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
             boardService.save(state.currBoard);
-            
+
             SocketService.emit("boardUpdate", state.currBoard);
-            
+
         },
         addTaskGroup(state, newTaskGroup) {
             state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
@@ -181,7 +187,6 @@ export const boardStore = {
             boardService.save(state.currBoard);
         },
         updateActivityLog(state, { activityToAdd }) {
-            console.log("MUTATOR", activityToAdd);
             state.currBoard.activites.unshift(activityToAdd)
 
             boardService.save(state.currBoard);
@@ -287,7 +292,7 @@ export const boardStore = {
                     SocketService.emit("boardUpdate", board);
                     return savedBoard;
                 })
-                // commit({ type: 'updateBoard', board })
+            // commit({ type: 'updateBoard', board })
         },
         updateActivityLog({ commit }, { activity }) {
             // debugger
@@ -296,16 +301,14 @@ export const boardStore = {
             // console.log('activitylog', savedBoard);
             // console.log('test', activity.txt, activity.user);
             // debugger
-            console.log('action one', activity);
 
             let activityToAdd = activityLogService.createActivity(activity.user, activity.type, activity.task, 'placeholder', activity.txt)
-            console.log("ACTION", activityToAdd);
             commit({ type: 'updateActivityLog', activityToAdd })
-                // SocketService.emit("boardUpdate", board);
-                // return savedBoard;
-                // }
-                // )
-                // commit({ type: 'updateBoard', board })
+            // SocketService.emit("boardUpdate", board);
+            // return savedBoard;
+            // }
+            // )
+            // commit({ type: 'updateBoard', board })
 
         },
         savetaskGroup({ commit }, { taskGroup }) {

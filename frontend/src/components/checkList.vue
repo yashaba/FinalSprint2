@@ -48,7 +48,6 @@ computed: {
  }
 },
 created(){
-    console.log(this.calcPrecentDone);
 },
 methods: {
  

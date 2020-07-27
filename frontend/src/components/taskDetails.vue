@@ -21,7 +21,11 @@
 
                   <div class="add">
                     <i class="fas fa-plus" @click="toggleMembersModal"></i>
-                    <members-modal v-if="isMembersModal" :task="task" @closeMemberModal="toggleMembersModal"/>
+                    <members-modal
+                      v-if="isMembersModal"
+                      :task="task"
+                      @closeMemberModal="toggleMembersModal"
+                    />
                   </div>
                 </div>
               </div>
@@ -185,10 +189,12 @@ export default {
     });
 
     eventBus.$on(SHOW_DETAILS, task => {
-      this.task = JSON.parse(JSON.stringify(task));
+      this.task = this.$store.getters.getTaskByTaskObject(task);
+      // this.task = JSON.parse(JSON.stringify(task));
     });
-      eventBus.$on("force-update", (task) => {
-        if (this.task === null) return
+    
+    eventBus.$on("force-update", (task) => {
+      if (this.task === null) return
       this.task = JSON.parse(JSON.stringify(task));
     })
   },
