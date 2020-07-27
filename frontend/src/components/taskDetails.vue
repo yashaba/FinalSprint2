@@ -135,7 +135,7 @@
 
       <div class="checklist-modal" v-if="isChecklistModal">
         <div class="checklist-modal-container">
-          <div class="flex align-center space-between">
+          <div class="title flex align-center space-between">
             <h5>Add CheckList</h5>
             <button class="btn-close" @click="toggleChecklistModal">&times;</button>
           </div>

@@ -8,42 +8,47 @@
     color: rgb(23, 43, 77);
     font-family: Opensans-bold, sans-serif;
     border-radius: 4px;
-    padding: 30px;
+    // padding: 30px;
+    // padding-left: 10px;
+    // padding-right: 10px;
     z-index: 1;
-    margin-top: 10px;
+    // margin-top: 10px;
     max-width: 89%;
     min-width: 89%;
     left: 25%;
     overflow: hidden;
     position: fixed;
     top: 5%;
-    overflow-y: auto;
-    height: 10vh;
+    // overflow-y: auto;
+    // height: 10vh;
 
-
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 80vh;
-    &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        border-radius: 8px;
-        background-color: #F5F5F5;
+    .container {
+        margin: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 700px;
+        max-height: 90vh;
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            background-color: #F5F5F5;
+        }
+        &::-webkit-scrollbar {
+            width: 8px;
+            background-color: #F5F5F5;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            background-color: #c3cbdc;
+        }
     }
-    &::-webkit-scrollbar {
-        width: 8px;
-        background-color: #F5F5F5;
-    }
-    &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background-color: #c3cbdc;
-    }
-
     .charts-container{
         flex-wrap: wrap;
         display: flex;
         justify-content: space-evenly;
         margin-top: 10px;
     }
+
     button {
         border: none;
         font-size: 18px;
@@ -58,7 +63,7 @@
         border: 0px;
         outline: 0;
         margin-bottom: 10px;
-        position: fixed;
+        // position: fixed;
     }
     button:hover {
         background-color: rgba(9, 30, 66, .08);

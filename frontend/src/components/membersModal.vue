@@ -2,7 +2,7 @@
   <section class="members-modal">
     <div class="members-modal-container">
       <div class="flex align-center space-between">
-        <div class="flex align-center">
+        <div class="title flex align-center">
           <i class="fas fa-user"></i>
           <h5>Members</h5>
         </div>

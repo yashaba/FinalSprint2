@@ -1,13 +1,15 @@
 <template>
     <div class="chart">
-      <button @click="close">
-        <i class="fas fa-times"></i>
-      </button>
-      <chartData class="chart-data" />
-      <div class="charts-container">
-        <chartBoardMembers class="chart-members"/>
-        <chart class="chart-tasks-group"/>
-        <chartBoardLabels class="chart-labels"/>
+      <div class="container">
+        <button @click="close">
+          <i class="fas fa-times"></i>
+        </button>
+        <chartData class="chart-data" />
+        <div class="charts-container">
+          <chartBoardMembers class="chart-members"/>
+          <chart class="chart-tasks-group"/>
+          <chartBoardLabels class="chart-labels"/>
+        </div>
       </div>
     </div>
 </template>
