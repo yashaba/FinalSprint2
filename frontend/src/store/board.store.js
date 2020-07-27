@@ -142,12 +142,15 @@ export const boardStore = {
             boardService.save(state.currBoard);
         },
         updateTask(state, { task }) {
+            // debugger
             const idx = state.currBoard.taskGroups.findIndex(taskGroupItem => taskGroupItem._id === task.taskGroup);
             let currTaskGroup = state.currBoard.taskGroups[idx];
             const taskIdx = currTaskGroup.tasks.findIndex(taskItem => taskItem._id === task._id);
             state.currBoard.taskGroups[idx].tasks.splice(taskIdx, 1, task);
             boardService.save(state.currBoard);
-            SocketService.emit("taskUpdate", task);
+            
+            SocketService.emit("boardUpdate", state.currBoard);
+            
         },
         addTaskGroup(state, newTaskGroup) {
             state.currBoard.taskGroups.push(newTaskGroup.newTaskGroup)
@@ -269,6 +272,7 @@ export const boardStore = {
 
         },
         updateTask({ commit }, { task }) {
+            // debugger;
             console.log(task);
 
             commit({ type: 'updateTask', task })

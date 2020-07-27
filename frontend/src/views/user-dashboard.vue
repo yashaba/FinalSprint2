@@ -5,11 +5,11 @@
     <div class="personal-boards-container">
        <div class="column align-center justify-center">
          <h1> Personal Boards</h1> 
-         <div class="flex">
+         <div class="cards-wrapper flex wrap">
             <div  v-for="board in userBoards" :key="board._id">
            <a
           :href="'#/board/'+ board._id"
-          :style="{backgroundImage: 'url('+board.backgroundImg+')' }"
+          :style="{backgroundImage: 'url('+ require(`../assets/imgs/board-img-${board.backgroundImg}.jpg`)+')' }"
           class="card"
            >
             <div>{{board.boardName}}</div>
@@ -35,7 +35,7 @@
               <div class="relative">
               <img width="300" src="https://i.pinimg.com/originals/ae/36/13/ae3613e021f920efb6006c01392b3697.jpg" alt="">
                <el-input class="title-input" placeholder="Board Title" v-model="newBoardTitle"></el-input>
-               <el-button class="submit-button" type="primary">Create</el-button>
+               <el-button @click.prevent="createBoard" class="submit-button" type="primary">Create</el-button>
                </div>
 
               <div class="imgs-container flex ">
@@ -76,6 +76,7 @@
 <script>
 import { boardStore } from "../store/board.store.js";
 import { userStore } from "../store/UserStore.js";
+import {boardService} from "../services/board-service.js"
 export default {
   data() {
     return {
@@ -83,19 +84,28 @@ export default {
       publicBoards: null,
       isCreating: false,
       bgSrc: null,
-      newBoardTitle: ""
+      newBoardTitle: "",
+      loggedinUser: null
+
     };
   },
 
   created() {
-    let user = this.$store.getters.loggedinUser;
-    let userId = user._id;
+    this.loggedinUser = this.$store.getters.loggedinUser;
     this.$store
-      .dispatch({ type: "getUserBoards", userId: user._id })
+      .dispatch({ type: "getUserBoards", userId: this.loggedinUser._id })
       .then(boards => {
         this.userBoards = boards
         this.publicBoards = boards.filter(board => board._id === "5f19d0dc61fc800a7cb9e96c");
       });
+  },
+  methods: {
+    createBoard(){
+      let img = "https://images.unsplash.com/photo-1542281286-9e0a16bb7366?ixlib=rb-1.2.1&w=1000&q=80"
+    boardService.createBoard(this.loggedinUser, img, this.newBoardTitle)
+    this.newBoardTitle = ""
+    this.isCreating = false
+    }
   }
 };
 </script>
@@ -145,6 +155,9 @@ export default {
         margin: 50px 0 50px 0;
       }
 }
+.cards-wrapper {
+  
+}
 .card {
   display: block;
   line-height: 140px;
@@ -152,9 +165,11 @@ export default {
   color: rgba($color: #ffffff, $alpha: 1);
   width: 225px;
   height: 140px;
-  margin-right: 30px;
+  margin: 0px 30px 20px 0;
   text-decoration: none;
   border-radius: 5%;
+  background-repeat: no-repeat;
+  background-size: 225px;
 }
 .create-button{
   background-color: rgb(236, 233, 233);

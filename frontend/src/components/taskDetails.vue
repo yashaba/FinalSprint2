@@ -51,7 +51,7 @@
               <i class="fas fa-align-left"></i>
               <span>Description</span>
             </div>
-            <textarea placeholder="Add a more details description..." rows="1" v-model="task.desc">{{task.desc}}</textarea>
+            <textarea placeholder="Add a more details description..." rows="1" v-model="task.desc" @blur="updateTask()">{{task.desc}}</textarea>
           </div>
           <div class="details-attachments">
             <i class="fas fa-paperclip"></i>
@@ -228,7 +228,6 @@ export default {
       this.$emit("updateTaskEv", this.task);
     },
     closeDetails() {
-      this.updateTask();
       eventBus.$emit(STOP_OVERLEY_EFFECT, {});
       this.task = null;
       this.isLabelsModal = false; 
@@ -276,6 +275,8 @@ export default {
       } else {
         this.task.labels.splice(labelIdx, 1)
       }
+      this.updateTask();
+
     }
   },
   destroyed(){

@@ -34,7 +34,9 @@ export default {
     methods: {
         labelClicked() {
             this.$emit('labelClicked');
-        }
+        // labelClicked(){
+        //     this.$emit('labelClicked', this.clickedLabel);
+        // }
     }
 }
 </script>
