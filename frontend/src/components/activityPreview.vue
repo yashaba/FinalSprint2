@@ -21,18 +21,7 @@ import Avatar from "vue-avatar";
 export default {
 props: ['activity'],
 methods: {
-    // middleMessage(type){
-    // if (type === "DELETE_TASK") return 'deleted'
-    // if (type === "DELETE_TYPE") return 'deleted'
-    // if (type === "REMOVE") return `removed  ${this.activity.content}  this task` 
-    // if (type === 'MOVE') return this.activity.content
-    // if (type === 'ADD' ) return ` added ${this.activity.content} to this task`
-    // if (type === "ADD_CHECKLIST_ITEM") return `added ${this.activity.content}`
-    // if (type === 'COMPLETED') return `completed ${this.activity.content} on this card`
-    // if (type === 'SET') return `set this task to be due at: ${this.activity.content}`
-    // if (type === 'CREATE') return 'created this task'
-    //             },
-    
+
         formatActivity(type){
    switch (type) {
     case "REMOVE":

@@ -4,7 +4,6 @@ var localLoggedinUser = null;
 localLoggedinUser = (sessionStorage.user) ? localLoggedinUser = JSON.parse(sessionStorage.user) : {
     _id: "5f19b12f643d505854ff0d15",
     userName: "guest@tt.com",
-    password: "$2b$10$dgsV3TJniRm8Vgv8SYGd4e7i0uEUQh8rIqwpGtVCXf5Yuh8DcGrf.",
     fullName: "Guesty",
     imgUrl: "http://some-img"
 }

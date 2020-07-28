@@ -194,8 +194,9 @@ export default {
     });
     
     eventBus.$on("force-update", (task) => {
-      if (this.task === null) return
+      if (!task)
       this.task = JSON.parse(JSON.stringify(task));
+
     })
   },
 
@@ -269,7 +270,7 @@ export default {
     toggleLabelsModal() {
       this.isLabelsModal = !this.isLabelsModal;
     },
-        updateActivityLog(txt, type) {
+     updateActivityLog(txt, type) {
 
         let activity = {txt, task: this.task , type}
         this.$emit('updateActivityLogEv' , activity )

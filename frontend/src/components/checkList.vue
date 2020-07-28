@@ -7,7 +7,7 @@
     </div>
     <form action="">
         
-        <el-input  style="width: 88%; margin-right: 5px; margin-top: 15px" v-if="addingItem" placeholder="New task name" v-model="itemToAdd"></el-input>
+        <el-input  style="width: 88%; margin-right: 5px; margin-top: 15px" v-if="addingItem" placeholder="New task name" v-model="checkListItemTxt"></el-input>
         <el-button v-if="addingItem" @click.prevent="addCheckListItem"  type="success" icon="el-icon-check" circle></el-button>
     <!-- <button v-if="addingItem" @click.prevent="addItem" type="submit"> <i class="fas fa-check"></i></button> -->
     
@@ -29,7 +29,7 @@ data() {return {
     checkListItems: this.checkList.list,
     isEditing: false,
     addingItem: false,
-    itemToAdd: null
+    checkListItemTxt: null
 }},
 computed: {
  calcDone: function() {
@@ -62,24 +62,22 @@ methods: {
     },
     addCheckListItem() {
         let newCheckListItem = {
-            id: utilsService.makeId(),
-          txt: this.itemToAdd,
-                    isDone: false,
-                    isBeingEdited: false}
+         id: utilsService.makeId(),
+         txt: this.checkListItemTxt,
+         isDone: false,
+         isBeingEdited: false
+         }
         this.checkListItems.push(JSON.parse(JSON.stringify(newCheckListItem)))
-        this.itemToAdd = ''
+        this.checkListItemTxt = ''
         this.addingItem = false
 
         this.updateTask()
         newCheckListItem.txt += " " + "to"+" " +this.checkList.title
-        this.updateActivityLog(newCheckListItem.txt, "ADD_CHECKLIST_ITEM")
+
+       this.$emit('updateActivityLogEv' , newCheckListItem.txt , "ADD_CHECKLIST_ITEM" )
 
     },
 
-       updateActivityLog(txt , type) {
-       this.$emit('updateActivityLogEv' , txt , type )
-
-    },
 },
 components: {
     checkListItem

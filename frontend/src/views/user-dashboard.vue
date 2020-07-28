@@ -26,7 +26,7 @@
               <div  class="imgs-container flex relative">
                <div class="relative" @click="bgToDisplay = bgOption" v-for="(bgOption , idx) in bgOptions" :key="idx">
               <img  class="bg-option"  :src=" require(`../assets/imgs/board-img-${bgOption}.jpg`)" alt="">
-              <i v-if="bgToDisplay === bgOption " class="el-icon-check"></i>
+              <i v-if="bgToDisplay === bgOption " class="el-icon-check dash"></i>
               </div> 
               
               </div>
@@ -115,14 +115,8 @@ export default {
 };
 </script>
 
-<style lang='scss'>
- .el-icon-check {
-   position: absolute;
-   left: 35px;
-   bottom: 35px;
-   color: #00fc22;
-   font-size: 30px;
- }
+<style lang='scss' >
+ 
 .bg-option {
   width: 90px;
   height: 90px;
@@ -158,6 +152,13 @@ export default {
   div {
     position: relative;
   }
+  .el-icon-check {
+   position: absolute;
+   left: 35px;
+   bottom: 35px;
+   color: #00fc22;
+   font-size: 30px;
+ }
 }
 .personal-boards-container {
   // margin-top: 150px;
