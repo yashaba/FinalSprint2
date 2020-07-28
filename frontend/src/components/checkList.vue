@@ -74,7 +74,7 @@ methods: {
         this.updateTask()
         newCheckListItem.txt += " " + "to"+" " +this.checkList.title
 
-       this.$emit('updateActivityLogEv' , newCheckListItem.txt , "ADD_CHECKLIST_ITEM" )
+        this.$emit('updateActivityLogEv' , newCheckListItem.txt , "ADD_CHECKLIST_ITEM" )
 
     },
 

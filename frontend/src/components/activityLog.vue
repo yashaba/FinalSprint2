@@ -1,6 +1,6 @@
 <template>
   <div> 
-    <div v-for="(activity, idx) in RelevantActivities" :key="idx">
+    <div v-for="(activity, idx) in getRelevantActivities" :key="idx">
         <div>
         <activity-preview :activity='activity'> </activity-preview>
          </div>
@@ -18,23 +18,23 @@ props: ['task'],
 data(){ 
     return{
         activities: this.$store.getters.currBoard.activites ,
-        RelevantActivities : null
+        // RelevantActivities : null
     }
 },
 computed: {
+    getRelevantActivities(){
+       return this.$store.getters.currBoard.activites.filter(activity => activity.task._id === this.task._id)
+    }
     },
 created(){
-    this.RelevantActivities =  this.getRelevantActivities()
-    eventBus.$on("force-update", () => {
-      this.RelevantActivities =  this.getRelevantActivities()
-    });
+    // this.RelevantActivities =  this.getRelevantActivities()
+    // eventBus.$on("force-update", () => {
+    //   this.RelevantActivities =  this.getRelevantActivities()
+    // });
 
 },
 methods: {
 
- getRelevantActivities(){
-    return this.activities.filter(activity => activity.task._id === this.task._id)
- }
 },
 components: {
     activityPreview

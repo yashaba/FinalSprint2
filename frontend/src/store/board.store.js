@@ -31,6 +31,7 @@ export const boardStore = {
             return state.showFullLabel;
         },
         getTaskByTaskObject: (state) => (task) => {
+            console.log("task obj", task);
             const taskGroupIndex = state.currBoard.taskGroups.findIndex(taskGroup => taskGroup._id === task.taskGroup);
             const taskIndex = state.currBoard.taskGroups[taskGroupIndex].tasks.findIndex(taskElement => taskElement._id === task._id);
 
@@ -176,7 +177,7 @@ export const boardStore = {
 
             state.currBoard.taskGroups[taskGroupidx].tasks[taskidx].checkLists.push(checklistToSave);
 
-            eventBus.$emit("force-update", state.currBoard.taskGroups[taskGroupidx].tasks[taskidx])
+            // eventBus.$emit("force-update", state.currBoard.taskGroups[taskGroupidx].tasks[taskidx])
             boardService.save(state.currBoard);
         },
 
@@ -215,7 +216,8 @@ export const boardStore = {
             commit({ type: 'updateActivityLog', activityToAdd })
             let savedBoard = await boardService.save(this.getters.currBoard);
             SocketService.emit("boardUpdate", savedBoard);
-            eventBus.$emit("force-update")
+
+
 
         },
         removeMemberFromTask(context, { userId, task }) {

@@ -180,6 +180,8 @@ export default {
       this.$store.dispatch({ type: 'saveTask', task: taskToSaveCopy, taskGroup: this.taskGroup });
       this.isAdding = !this.isAdding;
       this.taskToSave.title = ''  
+      this.taskToSave._id = taskGroupService.makeId() 
+
       this.updateActivityLog("" ,taskToSaveCopy, "CREATE")  
     },
      updateActivityLog(txt , task,type) {

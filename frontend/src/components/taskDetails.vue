@@ -194,7 +194,7 @@ export default {
     });
     
     eventBus.$on("force-update", (task) => {
-      if (!task)
+      if (!task) return
       this.task = JSON.parse(JSON.stringify(task));
 
     })
