@@ -4,12 +4,14 @@
     position: fixed;
     width: 100vw;
     top: 0px;
+    z-index: 3;
     .logo {
         font-family: euro;
         font-size: 1.1rem;
         color: ghostwhite;
         margin-left: 260px;
         text-decoration: none;
+        margin-top: -12px;
     }
     .link {
         text-decoration: none;

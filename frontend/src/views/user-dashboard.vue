@@ -167,7 +167,7 @@ export default {
   //     }
 }
 .main-wrapper {
-  padding: 200px 50px 0 50px;
+  padding: 59px 50px 0 50px;
       h1 {
         //  font-family: euro;
         margin: 50px 0 50px 0;
@@ -188,9 +188,12 @@ export default {
   border-radius: 5%;
   background-repeat: no-repeat;
   background-size: 225px;
+  box-shadow: 0px 0px 20px 1px rgba(139, 139, 139, 0.49);
+  text-shadow: 2px 2px 4px #000000;
+  font-size: x-large;
 }
 .create-button{
-  background-color: rgb(236, 233, 233);
+  background-color: #c5c5c5a1;;
   cursor: pointer;
 }
 </style>

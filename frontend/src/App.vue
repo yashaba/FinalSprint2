@@ -6,7 +6,7 @@
           <!-- Home -->
         </router-link> 
         <router-link to="/" class="logo">
-          <h1>PROJIFY</h1>
+            <h1 class="logo-navbar"><span>P</span>rojify</h1>
         </router-link>
         <div class="nav flex">
         <!-- <router-link class="link" to="/board">
@@ -75,6 +75,17 @@
 <style lang="scss">
 .menu-button {
     display: none;
+}
+.logo-navbar{
+    font-size: 31px;
+    font-family: pacifico, sans-serif;
+
+
+    span{
+      font-family: monoton, sans-serif;
+      font-size: 29px;
+
+        }
 }
 
 .navbar {
